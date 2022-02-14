@@ -24,9 +24,8 @@ on:
         default: 'dev'
 
 env:
-  IMAGE: ${{ github.event.inputs.image }}
-  VERSION: ${{ github.event.inputs.version }}
-  TAG: ${{ github.event.inputs.tag }}
+  IMAGE_VERSION: ${{ github.event.inputs.image }}-${{ github.event.inputs.version }}
+
 
 jobs:
   build-and-push:
@@ -51,7 +50,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: ./
-        file: ./containers/$IMAGE/Dockerfile.$IMAGE-$VERSION
+        file: ./containers/${{ github.event.inputs.image }}/Dockerfile.${{ env.IMAGE_VERSION }}
         builder: ${{ steps.buildx.outputs.name }}
         push: true
-        tags: ${{ secrets.DOCKER_HUB_ID }}/$IMAGE-$VERSION:$TAG
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ env.IMAGE_VERSION }}:${{ github.event.inputs.tag }}
