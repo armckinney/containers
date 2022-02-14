@@ -3,7 +3,7 @@
 name: DockerPush
 
 on: 
-  workflow_dispatch
+  workflow_dispatch:
     inputs:
       image:
         description: 'Name of Image to push'
