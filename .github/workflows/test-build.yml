@@ -1,0 +1,39 @@
+# Scope: Build and Push Docker Image
+
+name: Test
+
+on:
+  push:
+    paths: '**/Dockerfile**'
+  pull_request:
+    paths: '**/Dockerfile**'
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Get Change Files
+      id: change_files
+      uses: jitterbit/get-changed-files@v1
+
+    - name: Test Build
+      id: docker_build
+      run: |
+        for change_file in ${{ steps.change_files.outputs.added }} ${{ steps.change_files.outputs.modified }} ${{ steps.change_files.outputs.added_modified }};
+        do
+          echo $change_file
+          if [[ "$change_file" == *"/Dockerfile."* ]]; 
+          then
+            # docker build -f ${change_file}
+            echo "MATCH $change_file"
+          fi
+        done
