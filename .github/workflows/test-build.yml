@@ -28,7 +28,7 @@ jobs:
     - name: Test Build
       id: docker_build
       run: |
-        for change_file in ${{ steps.change_files.outputs.added }} ${{ steps.change_files.outputs.modified }} ${{ steps.change_files.outputs.added_modified }};
+        for change_file in ${{ steps.change_files.outputs.added_modified }};
         do
           echo $change_file
           if [[ "$change_file" == *"/Dockerfile."* ]]; 
