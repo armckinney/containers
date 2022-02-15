@@ -30,10 +30,9 @@ jobs:
       run: |
         for change_file in ${{ steps.change_files.outputs.added_modified }};
         do
-          echo $change_file
           if [[ "$change_file" == *"/Dockerfile."* ]]; 
           then
-            # docker build -f ${change_file}
-            echo "MATCH $change_file"
+            printf "\n\nTEST BUILDING $change_file"
+            # docker build -f ${change_file} -q
           fi
         done
