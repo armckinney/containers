@@ -33,6 +33,6 @@ jobs:
           if [[ "$change_file" == *"/Dockerfile."* ]]; 
           then
             printf "\n\nTEST BUILDING $change_file"
-            docker build -f ${change_file} -q
+            docker build ${change_file}
           fi
         done
