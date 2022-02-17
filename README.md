@@ -64,6 +64,6 @@ View all of these images hosted at my dockerhub account, [armck](https://hub.doc
 These images can be manually copied or downloaded from GitHub for individual use, or you can just build on top of them with the publicly hosted iamges.
 
 ### Contributing
-When adding new images to the repository, ensure the `image` and `version` are both defined in the [docker-push.yml](.github\workflows\docker-push.yml) workflow.
+When adding new images to the repository, ensure the `image` and `version` are both defined in the [DockerPush](.github\workflows\docker-push.yml) workflow.
 
-A brief documentation summary should also be included in [containers.md](containers\containers.md).
+A brief documentation summary should also be included in [docs](containers\README.md).
