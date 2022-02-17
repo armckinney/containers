@@ -1,21 +1,35 @@
 FROM armck/ubuntu-base:latest
 
+ARG PYTHON_VERSION=3.8.8
+ARG POETRY_VERSION=1.1.3
+
 # Avoid warnings by switching to noninteractive
-ENV DEBIAN_FRONTEND=noninteractive \
-    PYTHON_VERSION=3.8.8 \
-    POETRY_VERSION=1.1.3
+ENV DEBIAN_FRONTEND=noninteractive 
 
 # ----- Primary Installs -----
 
-RUN apt-get update \
-    # Making install directory
-    && mkdir /tmp/dockerinstall \
+RUN mkdir /tmp/dockerinstall \
     && cd /tmp/dockerinstall \
+    # Install setup packages
+    && apt-get update && apt-get -y install \
+        build-essential \
+        gettext-base \
+        git \
+        libbz2-dev \
+        libffi-dev \
+        libgdbm-dev \
+        libncurses5-dev \
+        libnss3-dev \
+        libreadline-dev \
+        libssl-dev \
+        unixodbc-dev \
+        unzip \
+        zip \
+        zlib1g-dev \
     # Install python
-    && apt-get -y install \
-    && curl -O https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tar.xz \
-    && tar -xf Python-${PYTHON_VERSION}.tar.xz \
-    && cd Python-${PYTHON_VERSION} && ./configure --enable-optimizations \
+    && curl -O https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tar.xz \
+    && tar -xf Python-$PYTHON_VERSION.tar.xz \
+    && cd Python-$PYTHON_VERSION && ./configure --enable-optimizations \
     && make install \
     # Install poetry
     && curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | POETRY_VERSION=${POETRY_VERSION} python3 - \
@@ -27,12 +41,6 @@ RUN apt-get update \
 
 ENV PATH=$PATH:/root/.local/bin/
 
-# ----- Poetry Installs -----
-
-COPY poetry.lock pyproject.toml ${WORKSPACE}/
-RUN cd $WORKSPACE && poetry install --no-root
-
 WORKDIR ${WORKSPACE}
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog
-
