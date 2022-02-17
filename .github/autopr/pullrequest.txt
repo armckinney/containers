@@ -1,1 +1,1 @@
-Resolve-8-Add-Python-Base-Image
+Resolve-7-Update-Ubuntu-Base-Image
