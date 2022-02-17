@@ -11,6 +11,7 @@ on:
         type: choice
         options:
         - ubuntu
+        - python
       version:
         description: 'Version of Image to push'
         required: true
