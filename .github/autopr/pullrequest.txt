@@ -1,1 +1,1 @@
-Resolve-7-Update-Ubuntu-Base-Image
+Resolve-17-Fix-python-base-Image
