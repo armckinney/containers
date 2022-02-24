@@ -1,0 +1,26 @@
+FROM armck/python-base:latest
+
+ARG ZULU_VERSION=8.56.0.21
+ARG JDK_VERSION=8.0.302
+
+# Avoid warnings by switching to noninteractive
+ENV DEBIAN_FRONTEND=noninteractive 
+
+# ----- Primary Installs -----
+
+RUN mkdir /tmp/dockerinstall \
+    && cd /tmp/dockerinstall \
+    # Install Java major version to match Databricks 9.1 runtime
+    && curl -O https://cdn.azul.com/zulu/bin/zulu${ZULU_VERSION}-ca-jdk${JDK_VERSION}-linux_amd64.deb \
+    && apt-get update \
+    && apt-get -y install ./zulu${ZULU_VERSION}-ca-jdk${JDK_VERSION}-linux_amd64.deb \
+    # Clean up
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/dockerinstall
+
+# Switch back to dialog for any ad-hoc use of apt-get
+ENV DEBIAN_FRONTEND=dialog
+
+ENV PYSPARK_PIN_THREAD=true

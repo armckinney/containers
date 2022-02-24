@@ -12,6 +12,7 @@ on:
         options:
         - ubuntu
         - python
+        - pyspark
       version:
         description: 'Version of Image to push'
         required: true

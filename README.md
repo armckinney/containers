@@ -9,7 +9,7 @@
     <p>
     <!-- Shields -->
         <a href="https://github.com/armck-hub/containers/LICENSE.txt">
-            <img alt="License" src="https://img.shields.io/github/license/ARMcK-hub/containers.svg" />
+            <img alt="License" src="https://img.shields.io/github/license/armck-hub/containers.svg" />
         </a>
         <a href="https://github.com/armck-hub/containers/actions">
             <img alt="Tests Passing" src="https://github.com/armck-hub/containers/workflows/Test/badge.svg" />
@@ -31,9 +31,9 @@
     <!-- Links -->
         <a href="#demo">View Demo</a>
         ·
-        <a href="https://github.com/anuraghazra/github-readme-stats/issues/new/choose">Report Bug</a>
+        <a href="https://github.com/armck-hub/containers/issues/new/choose">Report Bug</a>
         ·
-        <a href="https://github.com/anuraghazra/github-readme-stats/issues/new/choose">Request Feature</a>
+        <a href="https://github.com/armck-hub/containers/issues/new/choose">Request Feature</a>
     </p>
 </div>
 <br>
