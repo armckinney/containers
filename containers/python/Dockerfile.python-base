@@ -1,4 +1,4 @@
-FROM armck/ubuntu-base:latest
+FROM armck/ubuntu-base:1.1
 
 ARG PYTHON_VERSION=3.8.8
 ARG POETRY_VERSION=1.1.3
