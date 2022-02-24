@@ -12,3 +12,9 @@
   **Description**: Python image with standardized development tools  
   **From**: [ubuntu-base](https://hub.docker.com/repository/docker/armck/ubuntu-base)  
   **Features**: poetry (dependency management)  
+
+## *Python*
+> **[pyspark-base](https://hub.docker.com/repository/docker/armck/pyspark-base)**  
+  **Description**: Enhanced Python image with Java installed for pyspark  
+  **From**: [python-base](https://hub.docker.com/repository/docker/armck/python-base)  
+  **Features**: Zulu Java SDK
