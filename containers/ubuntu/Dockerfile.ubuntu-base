@@ -5,21 +5,24 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # ----- Primary Installs -----
 
-RUN apt-get update \
+RUN mkdir /tmp/dockerinstall \
+    && cd /tmp/dockerinstall \
+    && apt-get update \
     # Install supporting packages
     && apt-get -y install --no-install-recommends \
-    apt-utils \
-    ca-certificates \
-    curl \
-    dialog \
-    git \
-    gnupg \
-    lsb-release \
-    2>&1 \
+        apt-utils \
+        ca-certificates \
+        curl \
+        dialog \
+        git \
+        gnupg \
+        lsb-release \
+        2>&1 \
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/dockerinstall
 
 
 # Switch back to dialog for any ad-hoc use of apt-get
