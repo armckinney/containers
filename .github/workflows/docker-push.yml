@@ -13,6 +13,7 @@ on:
         - ubuntu
         - python
         - pyspark
+        - dotnet
       version:
         description: 'Version of Image to push'
         required: true
