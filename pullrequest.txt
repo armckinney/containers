@@ -1,0 +1,1 @@
+Resolve-10-Add-dotnet-Base-Image
