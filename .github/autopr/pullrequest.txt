@@ -1,1 +1,1 @@
-Resolve-10-Add-dotnet-Base-Image
+Resolve-26-Downgrade-poetry-to-1.0.4
