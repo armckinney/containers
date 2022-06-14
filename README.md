@@ -23,7 +23,7 @@
         <a href="https://github.com/armckinney/containers/pulls">
             <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/armckinney/containers" />
         </a>
-        <a href="https://stackshare.io/armckinney/containers">
+        <a href="https://stackshare.io/armck/containers">
             <img alt="StackShare.io" src="http://img.shields.io/badge/tech-stack-0690fa.svg?label=StackShare.io">
         </a>
     </p>
