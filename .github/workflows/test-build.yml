@@ -9,13 +9,19 @@ on:
     paths: '**/Dockerfile**'
 
 jobs:
-  test-build:
+  identify-build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_ID }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Set up Docker Buildx
       id: buildx
@@ -26,13 +32,35 @@ jobs:
       uses: jitterbit/get-changed-files@v1
 
     - name: Test Build
-      id: docker_build
+      id: identify_build
       run: |
-        for change_file in ${{ steps.change_files.outputs.added_modified }};
+        change_files=${{ steps.change_files.outputs.added_modified }}
+        
+        for index in "${!change_files[@]}";
         do
-          if [[ "$change_file" == *"/Dockerfile."* ]]; 
+          if [[ "${change_files[$index]}" != *"/Dockerfile."* ]]; 
           then
-            printf "\n\nTEST BUILDING $change_file"
-            docker build -f ${change_file} .
+            unset -v 'array[$index]'
           fi
         done
+
+        change_files = TODO set output to be acquired
+        
+
+  test-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      matrix: 
+        dockerfile: ${{ todo.steps.identify_build.output.dockerfiles }} TODO get output from identify_build
+
+    steps:
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./
+        file: ${{ matrix.dockerfile }}
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ todo.get.image.name.from.output }}:dev
