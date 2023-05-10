@@ -1,7 +1,7 @@
 FROM armck/ubuntu-base:1.1
 
-ARG PYTHON_VERSION=3.8.8
-ARG POETRY_VERSION=1.3.2
+ARG PYTHON_VERSION=3.9.5
+ARG POETRY_VERSION=1.4.2
 
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive 
