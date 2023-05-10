@@ -1,6 +1,6 @@
 FROM armck/ubuntu-base:1.1
 
-ARG DOTNET_VERSION=6.0
+ARG DOTNET_VERSION=7.0
 
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
