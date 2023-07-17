@@ -29,8 +29,6 @@
     </p>
     <p>
     <!-- Links -->
-        <a href="#demo">View Demo</a>
-        ·
         <a href="https://github.com/armckinney/containers/issues/new/choose">Report Bug</a>
         ·
         <a href="https://github.com/armckinney/containers/issues/new/choose">Request Feature</a>
