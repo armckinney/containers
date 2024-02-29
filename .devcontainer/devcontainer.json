@@ -1,0 +1,17 @@
+{
+    "name": "containers",
+    "context": "..",
+    "dockerFile": "Dockerfile",
+    "runArgs": ["-v", "azure-config:/root/.Azure"],
+    "appPort": [7071],
+    "postCreateCommand": "cd $WORKSPACE/",
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "ms-azuretools.vscode-docker",
+          "github.vscode-github-actions"
+        ]
+      }
+    }
+  }
+  
