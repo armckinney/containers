@@ -26,7 +26,8 @@ on:
         default: 'dev'
 
 env:
-  IMAGE_VERSION: ${{ github.event.inputs.image }}-${{ github.event.inputs.version }}
+  DEPLOY_IMAGE: ${{ github.event.inputs.image }}
+  DEPLOY_VERSION: ${{ github.event.inputs.version }}
 
 
 jobs:
@@ -34,6 +35,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Set Image Version
+      id: set_image_version
+      run: |
+        if [[ -z $DEPLOY_VERSION ]]; then
+          IMAGE_VERSION=$DEPLOY_VERSION;
+        else
+          IMAGE_VERSION=$DEPLOY_IMAGE-$DEPLOY_VERSION
+        fi
+        echo "IMAGE_VERSION=$IMAGE_VERSION" >> "$GITHUB_OUTPUT"
+
     - name: Checkout repository
       uses: actions/checkout@v2
 
