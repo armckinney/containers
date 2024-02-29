@@ -43,7 +43,6 @@ jobs:
         else
           echo "IMAGE_VERSION=$DEPLOY_IMAGE-$DEPLOY_VERSION" >> "$GITHUB_OUTPUT";
         fi
-        echo $IMAGE_VERSION
 
     - name: Checkout repository
       uses: actions/checkout@v2
