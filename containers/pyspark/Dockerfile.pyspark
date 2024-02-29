@@ -1,4 +1,4 @@
-FROM armck/python-base:2.0
+FROM armck/python:0.1.0
 
 ARG ZULU_VERSION=8.68.0.21
 ARG JDK_VERSION=8.0.362

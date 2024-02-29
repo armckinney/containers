@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM armck/ubuntu:0.1.0
 
 # Set Workspace directory
 ARG WORKSPACE=/workspaces/dps-terraform
@@ -11,10 +11,7 @@ RUN mkdir /tmp/dockerinstall && cd /tmp/dockerinstall \
     # Supporting Installs
     && apt-get update && apt-get install -y \
         apt-transport-https \
-        ca-certificates \
-        curl \
         libicu-dev \
-        lsb-release gnupg \
         software-properties-common \
         wget \
     # Microsoft Signing Keys
