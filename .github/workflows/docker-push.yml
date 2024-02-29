@@ -17,7 +17,7 @@ on:
         - ubuntu
       version:
         description: 'Version of Image to push'
-        required: true
+        required: false
         type: string
       tag:
         description: 'Image Tag (Version) to push'
