@@ -1,4 +1,4 @@
-FROM armck/ubuntu-base:latest
+FROM armck/ubuntu:20.04
 
 # Set Workspace directory
 ARG WORKSPACE=/workspaces/containers

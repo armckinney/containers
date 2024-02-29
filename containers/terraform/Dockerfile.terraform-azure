@@ -1,4 +1,4 @@
-FROM armck/ubuntu:0.1.0
+FROM armck/ubuntu:20.04
 
 # Set Workspace directory
 ARG WORKSPACE=/workspaces/dps-terraform
