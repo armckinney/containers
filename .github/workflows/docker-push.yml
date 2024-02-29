@@ -38,11 +38,12 @@ jobs:
     - name: Set Image Version
       id: set_image_version
       run: |
-        if [[ -z ${{ env.DEPLOY_VERSION }} ]]; then
-          echo "IMAGE_VERSION=${{ env.DEPLOY_IMAGE }}" >> "$GITHUB_OUTPUT";
+        if [[ -z $DEPLOY_VERSION ]]; then
+          echo "IMAGE_VERSION=$DEPLOY_IMAGE" >> "$GITHUB_OUTPUT";
         else
-          echo "IMAGE_VERSION=${{ env.DEPLOY_IMAGE }}-${{ env.DEPLOY_VERSION }}" >> "$GITHUB_OUTPUT";
+          echo "IMAGE_VERSION=$DEPLOY_IMAGE-$DEPLOY_VERSION" >> "$GITHUB_OUTPUT";
         fi
+        echo $IMAGE_VERSION
 
     - name: Checkout repository
       uses: actions/checkout@v2
