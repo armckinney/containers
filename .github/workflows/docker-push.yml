@@ -7,7 +7,7 @@ on:
     inputs:
       image:
         description: 'Name of Image to push'
-        require: true
+        required: true
         type: choice
         options:
         - ubuntu
