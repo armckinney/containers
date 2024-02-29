@@ -9,7 +9,7 @@
 
 ## *Terraform*
 > **[terraform-azure](https://hub.docker.com/repository/docker/armck/terraform-azure)**  
-  **Description**: Python image with standardized development tools  
+  **Description**: Enhanced Ubuntu image with tools for Azure Terraform Infrastructure Management  
   **From**: [ubuntu](https://hub.docker.com/repository/docker/armck/ubuntu)  
   **Features**: terraform, azure-cli, aztfexport  
 
