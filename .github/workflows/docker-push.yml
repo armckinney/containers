@@ -10,16 +10,15 @@ on:
         required: true
         type: choice
         options:
-        - ubuntu
-        - python
-        - pyspark
         - dotnet
+        - pyspark
+        - python
+        - terraform
+        - ubuntu
       version:
         description: 'Version of Image to push'
         required: true
-        type: choice
-        options:
-        - base
+        type: string
       tag:
         description: 'Image Tag (Version) to push'
         required: true
