@@ -7,19 +7,18 @@ on:
     inputs:
       image:
         description: 'Name of Image to push'
-        require: true
-        type: choice
-        options:
-        - ubuntu
-        - python
-        - pyspark
-        - dotnet
-      version:
-        description: 'Version of Image to push'
         required: true
         type: choice
         options:
-        - base
+        - dotnet
+        - pyspark
+        - python
+        - terraform
+        - ubuntu
+      version:
+        description: 'Version of Image to push'
+        required: false
+        type: string
       tag:
         description: 'Image Tag (Version) to push'
         required: true
@@ -27,7 +26,8 @@ on:
         default: 'dev'
 
 env:
-  IMAGE_VERSION: ${{ github.event.inputs.image }}-${{ github.event.inputs.version }}
+  DEPLOY_IMAGE: ${{ github.event.inputs.image }}
+  DEPLOY_VERSION: ${{ github.event.inputs.version }}
 
 
 jobs:
@@ -35,6 +35,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Set Image Version
+      id: set_image_version
+      run: |
+        if [[ -z $DEPLOY_VERSION ]]; then
+          echo "IMAGE_VERSION=$DEPLOY_IMAGE" >> "$GITHUB_OUTPUT";
+        else
+          echo "IMAGE_VERSION=$DEPLOY_IMAGE-$DEPLOY_VERSION" >> "$GITHUB_OUTPUT";
+        fi
+
     - name: Checkout repository
       uses: actions/checkout@v2
 
@@ -53,7 +62,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: ./
-        file: ./containers/${{ github.event.inputs.image }}/Dockerfile.${{ env.IMAGE_VERSION }}
+        file: ./containers/${{ github.event.inputs.image }}/Dockerfile.${{ steps.set_image_version.outputs.IMAGE_VERSION }}
         builder: ${{ steps.buildx.outputs.name }}
         push: true
-        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ env.IMAGE_VERSION }}:${{ github.event.inputs.tag }}
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ steps.set_image_version.outputs.IMAGE_VERSION }}:${{ github.event.inputs.tag }}
