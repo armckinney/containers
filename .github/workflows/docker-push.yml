@@ -65,4 +65,5 @@ jobs:
         file: ./containers/${{ github.event.inputs.image }}/Dockerfile.${{ steps.set_image_version.outputs.IMAGE_VERSION }}
         builder: ${{ steps.buildx.outputs.name }}
         push: true
+        provenance: true
         tags: ${{ secrets.DOCKER_HUB_ID }}/${{ steps.set_image_version.outputs.IMAGE_VERSION }}:${{ github.event.inputs.tag }}
