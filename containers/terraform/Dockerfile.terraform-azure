@@ -1,4 +1,4 @@
-FROM armck/ubuntu:20.04
+FROM armck/terraform:latest
 
 # Set Workspace directory
 ARG WORKSPACE=/workspaces/dps-terraform
@@ -12,23 +12,17 @@ RUN mkdir /tmp/dockerinstall && cd /tmp/dockerinstall \
     && apt-get update && apt-get install -y \
         apt-transport-https \
         libicu-dev \
-        software-properties-common \
-        wget \
     # Microsoft Signing Keys
     && curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.gpg \
     # Microsoft Registry for azure-cli
     && echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list \
     # Microsoft Repository for aztfexport
     && apt-add-repository https://packages.microsoft.com/ubuntu/20.04/prod \
-    # Terraform Keys & Registry
-    && wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg \
-    && echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list \
     # Primary Installs
     && apt-get update && ACCEPT_EULA=Y apt-get install -y  \
         aztfexport \
         azure-cli \
         jq \
-        terraform \
     #  Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
