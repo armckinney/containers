@@ -8,10 +8,15 @@
   **Template Repositories**: [template-ubuntu](https://github.com/armckinney/template-ubuntu)  
 
 ## *Terraform*
-> **[terraform-azure](https://hub.docker.com/repository/docker/armck/terraform-azure)**  
-  **Description**: Enhanced Ubuntu image with tools for Azure Terraform Infrastructure Management  
+> **[terraform](https://hub.docker.com/repository/docker/armck/terraform)**  
+  **Description**: Enhanced Ubuntu image with tools for Terraform Infrastructure Management  
   **From**: [ubuntu](https://hub.docker.com/repository/docker/armck/ubuntu)  
-  **Features**: terraform, azure-cli, aztfexport  
+  **Features**: terraform  
+
+> **[terraform-azure](https://hub.docker.com/repository/docker/armck/terraform-azure)**  
+  **Description**: Enhanced Terraform image with tools for Azure Terraform Infrastructure Management  
+  **From**: [terraform](https://hub.docker.com/repository/docker/armck/terraform)  
+  **Features**: azure-cli, aztfexport  
 
 ## *Python*
 > **[python](https://hub.docker.com/repository/docker/armck/python)**  
