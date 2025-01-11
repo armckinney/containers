@@ -1,0 +1,35 @@
+FROM armck/terraform:latest
+
+# Set Workspace directory
+ARG WORKSPACE=/workspaces/dps-terraform
+ENV WORKSPACE=${WORKSPACE}
+
+# Avoid warnings by switching to noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN mkdir /tmp/dockerinstall && cd /tmp/dockerinstall \
+    # Supporting Installs
+    && apt-get update && apt-get install -y \
+        apt-transport-https \
+        libicu-dev \
+    # Microsoft Signing Keys
+    && curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.gpg \
+    # Microsoft Registry for azure-cli
+    && echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list \
+    # Microsoft Repository for aztfexport
+    && apt-add-repository https://packages.microsoft.com/ubuntu/20.04/prod \
+    # Primary Installs
+    && apt-get update && ACCEPT_EULA=Y apt-get install -y  \
+        aztfexport \
+        azure-cli \
+        jq \
+    #  Clean up
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/dockerinstall
+
+
+WORKDIR ${WORKSPACE}
+# Switch back to dialog for any ad-hoc use of apt-get
+ENV DEBIAN_FRONTEND=dialog

@@ -1,30 +1,40 @@
 # Images
 
 ## *Ubuntu*
-> **[ubuntu-base](https://hub.docker.com/repository/docker/armck/ubuntu-base)**  
+> **[ubuntu](https://hub.docker.com/repository/docker/armck/ubuntu)**  
   **Description**: Ubuntu image with standardized development tools  
-  **From**: [ubuntu:20.04](https://hub.docker.com/repository/docker/armck/ubuntu-base)  
+  **From**: [ubuntu:20.04](https://hub.docker.com/repository/docker/armck/ubuntu)  
   **Features**: apt-utils, curl, git, and more..  
-  **Template Repositories**: [template-ubuntu](https://github.com/ARMcK-hub/template-ubuntu)  
+  **Template Repositories**: [template-ubuntu](https://github.com/armckinney/template-ubuntu)  
 
+## *Terraform*
+> **[terraform](https://hub.docker.com/repository/docker/armck/terraform)**  
+  **Description**: Enhanced Ubuntu image with tools for Terraform Infrastructure Management  
+  **From**: [ubuntu](https://hub.docker.com/repository/docker/armck/ubuntu)  
+  **Features**: terraform  
+
+> **[terraform-azure](https://hub.docker.com/repository/docker/armck/terraform-azure)**  
+  **Description**: Enhanced Terraform image with tools for Azure Terraform Infrastructure Management  
+  **From**: [terraform](https://hub.docker.com/repository/docker/armck/terraform)  
+  **Features**: azure-cli, aztfexport  
 
 ## *Python*
-> **[python-base](https://hub.docker.com/repository/docker/armck/python-base)**  
+> **[python](https://hub.docker.com/repository/docker/armck/python)**  
   **Description**: Python image with standardized development tools  
-  **From**: [ubuntu-base](https://hub.docker.com/repository/docker/armck/ubuntu-base)  
+  **From**: [ubuntu](https://hub.docker.com/repository/docker/armck/ubuntu)  
   **Features**: poetry (dependency management)  
-  **Template Repositories**: [template-python](https://github.com/ARMcK-hub/template-python)
+  **Template Repositories**: [template-python](https://github.com/armckinney/template-python)
 
 ## *Pyspark*
-> **[pyspark-base](https://hub.docker.com/repository/docker/armck/pyspark-base)**  
+> **[pyspark](https://hub.docker.com/repository/docker/armck/pyspark)**  
   **Description**: Enhanced Python image with Java installed for pyspark  
-  **From**: [python-base](https://hub.docker.com/repository/docker/armck/python-base)  
+  **From**: [python](https://hub.docker.com/repository/docker/armck/python)  
   **Features**: Zulu Java SDK  
-  **Template Repositories**: [template-pyspark](https://github.com/ARMcK-hub/template-pyspark)
+  **Template Repositories**: [template-pyspark](https://github.com/armckinney/template-pyspark)
 
 ## *.NET*
-> **[dotnet-base](https://hub.docker.com/repository/docker/armck/dotnet-base)**  
+> **[dotnet](https://hub.docker.com/repository/docker/armck/dotnet)**  
   **Description**: Enhanced Ubuntu image with the .NET SDK installed 
-  **From**: [ubuntu-base](https://hub.docker.com/repository/docker/armck/ubuntu-base)  
+  **From**: [ubuntu](https://hub.docker.com/repository/docker/armck/ubuntu)  
   **Features**: .NET SDK  
-  **Template Repositories**: [template-dotnet](https://github.com/ARMcK-hub/template-dotnet)
+  **Template Repositories**: [template-dotnet](https://github.com/armckinney/template-dotnet)
