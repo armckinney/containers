@@ -40,8 +40,12 @@ jobs:
           fi
         done
 
+        # Join the elements with commas and wrap in square brackets
+        build_matrix=$(printf ",%s" "${build_matrix[@]}")
+        build_matrix="[${build_matrix:1}]"
+
         echo $build_matrix
-        echo "build_matrix=$(echo "${build_matrix[*]}" | jq -c .)" >> "$GITHUB_OUTPUT";
+        echo "build_matrix=$(echo "$build_matrix" | jq -c .)"
 
   test-build-container:
     needs: get-builds
