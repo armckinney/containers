@@ -6,17 +6,55 @@ on:
   pull_request:
     paths: '**/Dockerfile**'
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
-  identify-build:
-    runs-on: ubuntu-latest
+  get-builds:
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
+    outputs:
+      build_matrix: ${{ steps.set-build-matrix.outputs.build_matrix }}
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
+
+    - name: Get Change Files
+      id: change-files
+      uses: jitterbit/get-changed-files@v1
+
+    - name: Set Build Matrix
+      id: set-build-matrix
+      run: |
+        change_files=${{ steps.change-files.outputs.added_modified }}
+        build_matrix=()
+
+        for file in "${change_files[@]}";
+        do
+          if [[ "$file" =~ /Dockerfile\. ]]; 
+          then
+            image_name="${file#*.}"
+            build_matrix+=("{\"dockerfile\":\"$file\",\"image_name\":\"$image_name\"}")
+          fi
+        done
+
+        echo "build_matrix=$(echo "[${build_matrix[*]}]" | jq -c .)" >> "$GITHUB_OUTPUT";
+
+  test-build:
+    needs: get-builds
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix) }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
     - name: Login to DockerHub
-      uses: docker/login-action@v1
+      uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_HUB_ID }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
@@ -25,34 +63,6 @@ jobs:
       id: buildx
       uses: docker/setup-buildx-action@v1
 
-    - name: Get Change Files
-      id: change_files
-      uses: jitterbit/get-changed-files@v1
-
-    - name: Test Build
-      id: identify_build
-      run: |
-        change_files=${{ steps.change_files.outputs.added_modified }}
-        
-        for index in "${!change_files[@]}";
-        do
-          if [[ "${change_files[$index]}" != *"/Dockerfile."* ]]; 
-          then
-            unset -v 'array[$index]'
-          fi
-        done
-
-        change_files = TODO set output to be acquired
-        
-
-  test-build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    strategy:
-      matrix: 
-        dockerfile: ${{ todo.steps.identify_build.output.dockerfiles }} TODO get output from identify_build
-
-    steps:
     - name: Build and push
       id: docker_build
       uses: docker/build-push-action@v2
@@ -61,4 +71,4 @@ jobs:
         file: ${{ matrix.dockerfile }}
         builder: ${{ steps.buildx.outputs.name }}
         push: true
-        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ todo.get.image.name.from.output }}:dev
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:dev
