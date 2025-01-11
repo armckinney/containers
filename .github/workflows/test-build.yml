@@ -28,7 +28,7 @@ jobs:
     - name: Set Build Matrix
       id: set-build-matrix
       run: |
-        change_files=${{ steps.change-files.outputs.added_modified }}
+        change_files=(${{ steps.change-files.outputs.added_modified }})
         build_matrix=()
 
         for file in "${change_files[@]}";
