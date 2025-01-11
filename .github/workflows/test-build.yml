@@ -40,7 +40,8 @@ jobs:
           fi
         done
 
-        echo "build_matrix=$(echo "[${build_matrix[*]}]" | jq -c .)" >> "$GITHUB_OUTPUT";
+        echo $build_matrix
+        echo "build_matrix=$(echo "${build_matrix[*]}" | jq -c .)" >> "$GITHUB_OUTPUT";
 
   test-build-container:
     needs: get-builds
