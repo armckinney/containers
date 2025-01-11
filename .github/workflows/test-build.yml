@@ -44,8 +44,10 @@ jobs:
         build_matrix=$(printf ",%s" "${build_matrix[@]}")
         build_matrix="[${build_matrix:1}]"
 
-        echo $build_matrix
         echo "build_matrix=$(echo "$build_matrix" | jq -c .)"
+    
+    - name: Debug Build Matrix
+      run: echo "${{ steps.set-build-matrix.outputs.build_matrix }}"
 
   test-build-container:
     needs: get-builds
