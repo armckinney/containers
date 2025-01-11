@@ -42,7 +42,7 @@ jobs:
 
         echo "build_matrix=$(echo "[${build_matrix[*]}]" | jq -c .)" >> "$GITHUB_OUTPUT";
 
-  test-build:
+  test-build-container:
     needs: get-builds
     runs-on: ubuntu-latest
     timeout-minutes: 20
