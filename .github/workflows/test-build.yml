@@ -42,7 +42,7 @@ jobs:
 
         # Join the elements with commas and wrap in square brackets
         build_matrix=$(printf ",%s" "${build_matrix[@]}")
-        build_matrix="[${build_matrix:1}]"
+        build_matrix="{\"include\": [${build_matrix:1}]}"
 
         echo "build_matrix=$(echo "$build_matrix" | jq -c .)" >> "$GITHUB_OUTPUT"
 
@@ -51,8 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
-      matrix: ${{ fromJson('{"test":"value", "test2": "value"}') }} #todo: test a manual version of this
-
+      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix) }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
