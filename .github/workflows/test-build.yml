@@ -1,4 +1,4 @@
-# Scope: Build and Push Docker Image
+# scope: Build and Push Docker Image
 
 name: Test
 
@@ -27,20 +27,40 @@ jobs:
 
     - name: Set Build Matrix
       id: set-build-matrix
-      run: |
+      run: |      
         change_files=(${{ steps.change-files.outputs.added_modified }})
         build_matrix=()
+        image_dependencies=(
+            "ubuntu"
+            "python"
+            "terraform"
+            "java"
+            "dotnet"
+            "terraform-azure"
+            "pyspark"
+        )
+        
+        # sorting changes by dependency
+        for image in "${image_dependencies[@]}"; do
+          for file in "${change_files[@]}"; do
+            if [[ "$file" == *$image* ]]; then
+              sorted_files+=("$file")
+            fi
+          done
+        done
 
+        # capture dev Dockerfiles
         for file in "${change_files[@]}";
         do
-          if [[ "$file" =~ /Dockerfile\. ]]; 
+          if [[ "$file" =~ /Dockerfile\.dev$ ]]; 
           then
-            image_name="${file#*.}"
-            build_matrix+=("{\"dockerfile\":\"$file\",\"image_name\":\"$image_name\"}")
+            image_tag="$(basename "$(dirname "$file")")";          
+            image_name="$(basename "$(dirname "$(dirname "$file")")")";  
+            build_matrix+=("{\"dockerfile\":\"$file\",\"image_name\":\"$image_name\",\"image_tag\":\"$image_tag\"}");   
           fi
         done
 
-        # Join the elements with commas and wrap in square brackets
+        # join the elements with commas and wrap in square brackets
         build_matrix=$(printf ",%s" "${build_matrix[@]}")
         build_matrix="{\"include\": [${build_matrix:1}]}"
 
@@ -74,4 +94,4 @@ jobs:
         file: ${{ matrix.dockerfile }}
         builder: ${{ steps.buildx.outputs.name }}
         push: true
-        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:dev
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev

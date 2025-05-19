@@ -1,4 +1,4 @@
-# Scope: Build and Push Docker Image
+# scope: Build and Push Docker Image
 
 name: DockerPush
 
@@ -11,19 +11,22 @@ on:
         type: choice
         options:
         - dotnet
+        - java
         - pyspark
         - python
         - terraform
+        - terraform-azure
         - ubuntu
-      version:
-        description: 'Version of Image to push'
-        required: false
-        type: string
       tag:
         description: 'Image Tag (Version) to push'
         required: true
         type: string
         default: 'dev'
+      version:
+        description: 'Version of Image to push'
+        required: false
+        type: string
+
 
 env:
   DEPLOY_IMAGE: ${{ github.event.inputs.image }}
@@ -62,7 +65,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: ./
-        file: ./containers/${{ github.event.inputs.image }}/Dockerfile.${{ steps.set_image_version.outputs.IMAGE_VERSION }}
+        file: ./containers/${{ github.event.inputs.image }}//Dockerfile.${{ steps.set_image_version.outputs.IMAGE_VERSION }}
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         provenance: false
