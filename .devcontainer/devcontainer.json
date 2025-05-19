@@ -1,17 +1,26 @@
 {
-    "name": "containers",
-    "context": "..",
-    "dockerFile": "Dockerfile",
-    "runArgs": ["-v", "azure-config:/root/.Azure"],
-    "appPort": [7071],
-    "postCreateCommand": "cd $WORKSPACE/",
-    "customizations": {
-      "vscode": {
-        "extensions": [
-          "ms-azuretools.vscode-docker",
-          "github.vscode-github-actions"
-        ]
-      }
+  "name": "containers",
+  "dockerComposeFile": [
+    "../docker-compose.yaml"
+  ],
+  "service": "dev-container",
+  "workspaceFolder": "/workspaces/containers",
+  "postCreateCommand": "cd $WORKSPACE/",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+          }
+        }
+      },
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "github.vscode-github-actions",
+        "yzhang.markdown-all-in-one"
+      ]
     }
   }
-  
+}
