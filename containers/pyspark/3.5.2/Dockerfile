@@ -13,17 +13,17 @@ RUN mkdir /tmp/container \
     && if [ "$(uname -m)" = "x86_64" ]; then ARCH="amd64"; elif [ "$(uname -m)" = "aarch64" ]; then ARCH="arm64"; else ARCH="$(uname -m)"; fi \
     # install java major version to match databricks 16.4 runtime
     && curl -O https://cdn.azul.com/zulu/bin/zulu${ZULU_VERSION}-ca-jdk${JDK_VERSION}-linux_${ARCH}.deb \
-    && apt-get update && apt-get -y install \
+    && apt update && apt -y install \
         ./zulu${ZULU_VERSION}-ca-jdk${JDK_VERSION}-linux_${ARCH}.deb \
     # install pyspark
     && pipx install pyspark==${SPARK_VERSION} \
     # cleanup
-    && apt-get autoremove -y \
-    && apt-get clean -y \
+    && apt autoremove -y \
+    && apt clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
 
-# switch back to dialog for any ad-hoc use of apt-get
+# switch back to dialog for any ad-hoc use of apt
 ENV DEBIAN_FRONTEND=dialog
 
 ENV PYSPARK_PIN_THREAD=true

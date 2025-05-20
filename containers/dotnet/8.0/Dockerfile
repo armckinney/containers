@@ -7,9 +7,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN mkdir /tmp/container \
     && cd /tmp/container \
-    && apt-get update \
+    && apt update \
     # supporting installs
-    && apt-get install -y \
+    && apt install -y \
         apt-transport-https \
         wget \
     # add microsoft package signing key
@@ -17,14 +17,14 @@ RUN mkdir /tmp/container \
     && dpkg -i packages-microsoft-prod.deb \
     && rm packages-microsoft-prod.deb \
     # install .net
-    && apt-get update \
-    && ACCEPT_EULA=Y apt-get -y install --no-install-recommends \
+    && apt update \
+    && ACCEPT_EULA=Y apt -y install --no-install-recommends \
         dotnet-sdk-${DOTNET_VERSION}  \
     # cleanup
-    && apt-get autoremove -y \
-    && apt-get clean -y \
+    && apt autoremove -y \
+    && apt clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
 
-# switch back to dialog for any ad-hoc use of apt-get
+# switch back to dialog for any ad-hoc use of apt
 ENV DEBIAN_FRONTEND=dialog

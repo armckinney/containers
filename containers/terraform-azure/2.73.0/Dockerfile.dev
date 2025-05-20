@@ -7,21 +7,21 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN mkdir /tmp/container && cd /tmp/container \
     # supporting installs
-    && apt-get update && apt-get install -y \
+    && apt update && apt install -y \
         apt-transport-https \
         libicu-dev \
     # microsoft signing keys & registry for azure-cli
     && curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null \
     && echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list \
     # primary installs
-    && apt-get update && ACCEPT_EULA=Y apt-get install -y  \
+    && apt update && ACCEPT_EULA=Y apt install -y  \
         azure-cli=${AZURE_CLI_VERSION} \
         jq \
     # cleanup
-    && apt-get autoremove -y \
-    && apt-get clean -y \
+    && apt autoremove -y \
+    && apt clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
 
-# switch back to dialog for any ad-hoc use of apt-get
+# switch back to dialog for any ad-hoc use of apt
 ENV DEBIAN_FRONTEND=dialog

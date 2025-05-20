@@ -7,20 +7,20 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN mkdir /tmp/container && cd /tmp/container \
     # supporting installs
-    && apt-get update && apt-get install -y \
+    && apt update && apt install -y \
         software-properties-common \
         wget \
     # terraform keys & registry
     && wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null \
     && echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list \
     # primary installs
-    && apt-get update && ACCEPT_EULA=Y apt-get install -y  \
+    && apt update && ACCEPT_EULA=Y apt install -y  \
         terraform=${TERRAFORM_VERSION}-1 \
     # cleanup
-    && apt-get autoremove -y \
-    && apt-get clean -y \
+    && apt autoremove -y \
+    && apt clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
 
-# switch back to dialog for any ad-hoc use of apt-get
+# switch back to dialog for any ad-hoc use of apt
 ENV DEBIAN_FRONTEND=dialog

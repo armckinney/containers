@@ -9,7 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN mkdir /tmp/container \
     && cd /tmp/container \
     # supporting installs
-    && apt-get update && apt-get -y install \
+    && apt update && apt -y install \
         build-essential \
         gettext-base \
         git \
@@ -30,19 +30,19 @@ RUN mkdir /tmp/container \
     && cd Python-$PYTHON_VERSION && ./configure --enable-optimizations \
     && make install \
     # install pipx
-    && apt-get update && apt-get -y install \
+    && apt update && apt -y install \
         pipx \
         python3-venv \
     && pipx ensurepath \
     # install uv
     && pipx install uv==${UV_VERSION} \
     # cleanup
-    && apt-get autoremove -y \
-    && apt-get clean -y \
+    && apt autoremove -y \
+    && apt clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
 
 ENV PATH=$PATH:/root/.local/bin/
 
-# switch back to dialog for any ad-hoc use of apt-get
+# switch back to dialog for any ad-hoc use of apt
 ENV DEBIAN_FRONTEND=dialog
