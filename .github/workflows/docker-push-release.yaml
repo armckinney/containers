@@ -1,5 +1,5 @@
 # scope: Build and Push Release Docker Images
-name: DockerPush
+name: wf-docker-push-release
 
 on:
   push:
@@ -80,7 +80,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
-      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_ubuntu) }}
+      matrix:
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include != '' && fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include || '[{"dockerfile":"none","image_name":"none","image_tag":"none"}]' }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -94,7 +95,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
-      if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include, '') != '' }}
+      if: ${{ matrix.dockerfile != 'none' }}
       uses: docker/build-push-action@v2
       with:
         context: ./
@@ -109,7 +110,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 240
     strategy:
-      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_python) }}
+      matrix:
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_python).include != '' && fromJson(needs.get-builds.outputs.build_matrix_python).include || '[{"dockerfile":"none","image_name":"none","image_tag":"none"}]' }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -123,7 +125,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
-      if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_python).include, '') != '' }}
+      if: ${{ matrix.dockerfile != 'none' }}
       uses: docker/build-push-action@v2
       with:
         context: ./
@@ -138,7 +140,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
-      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_terraform) }}
+      matrix:
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_terraform).include != '' && fromJson(needs.get-builds.outputs.build_matrix_terraform).include || '[{"dockerfile":"none","image_name":"none","image_tag":"none"}]' }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -152,7 +155,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
-      if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_terraform).include, '') != '' }}
+      if: ${{ matrix.dockerfile != 'none' }}
       uses: docker/build-push-action@v2
       with:
         context: ./
@@ -167,7 +170,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
-      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_java) }}
+      matrix:
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_java).include != '' && fromJson(needs.get-builds.outputs.build_matrix_java).include || '[{"dockerfile":"none","image_name":"none","image_tag":"none"}]' }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -181,7 +185,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
-      if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_java).include, '') != '' }}
+      if: ${{ matrix.dockerfile != 'none' }}
       uses: docker/build-push-action@v2
       with:
         context: ./
@@ -196,7 +200,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
-      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_dotnet) }}
+      matrix:
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_dotnet).include != '' && fromJson(needs.get-builds.outputs.build_matrix_dotnet).include || '[{"dockerfile":"none","image_name":"none","image_tag":"none"}]' }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -210,7 +215,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
-      if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_dotnet).include, '') != '' }}
+      if: ${{ matrix.dockerfile != 'none' }}
       uses: docker/build-push-action@v2
       with:
         context: ./
@@ -225,7 +230,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
-      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_terraform_azure) }}
+      matrix:
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include != '' && fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include || '[{"dockerfile":"none","image_name":"none","image_tag":"none"}]' }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -239,7 +245,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
-      if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include, '') != '' }}
+      if: ${{ matrix.dockerfile != 'none' }}
       uses: docker/build-push-action@v2
       with:
         context: ./
@@ -254,7 +260,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
-      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_pyspark) }}
+      matrix:
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_pyspark).include != '' && fromJson(needs.get-builds.outputs.build_matrix_pyspark).include || '[{"dockerfile":"none","image_name":"none","image_tag":"none"}]' }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -268,7 +275,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
-      if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_pyspark).include, '') != '' }}
+      if: ${{ matrix.dockerfile != 'none' }}
       uses: docker/build-push-action@v2
       with:
         context: ./
