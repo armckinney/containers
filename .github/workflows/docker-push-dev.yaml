@@ -75,7 +75,6 @@ jobs:
 
   build-ubuntu:
     needs: [get-builds]
-    if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
@@ -93,6 +92,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
+      if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include, '') != '' }}
       uses: docker/build-push-action@v2
       with:
         context: ./
@@ -104,7 +104,6 @@ jobs:
 
   build-python:
     needs: [get-builds, build-ubuntu]
-    if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_python).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 240
     strategy:
@@ -122,6 +121,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
+      if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_python).include, '') != '' }}
       uses: docker/build-push-action@v2
       with:
         context: ./
@@ -133,7 +133,6 @@ jobs:
 
   build-terraform:
     needs: [get-builds, build-ubuntu]
-    if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_terraform).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
@@ -151,6 +150,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
+      if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_terraform).include, '') != '' }}
       uses: docker/build-push-action@v2
       with:
         context: ./
@@ -162,7 +162,6 @@ jobs:
 
   build-java:
     needs: [get-builds, build-ubuntu]
-    if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_java).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
@@ -180,6 +179,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
+      if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_java).include, '') != '' }}
       uses: docker/build-push-action@v2
       with:
         context: ./
@@ -191,7 +191,6 @@ jobs:
 
   build-dotnet:
     needs: [get-builds, build-ubuntu]
-    if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_dotnet).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
@@ -209,6 +208,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
+      if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_dotnet).include, '') != '' }}
       uses: docker/build-push-action@v2
       with:
         context: ./
@@ -220,7 +220,6 @@ jobs:
 
   build-terraform-azure:
     needs: [get-builds, build-terraform]
-    if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
@@ -238,6 +237,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
+      if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include, '') != '' }}
       uses: docker/build-push-action@v2
       with:
         context: ./
@@ -249,7 +249,6 @@ jobs:
 
   build-pyspark:
     needs: [get-builds, build-python]
-    if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_pyspark).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
@@ -267,6 +266,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
+      if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_pyspark).include, '') != '' }}
       uses: docker/build-push-action@v2
       with:
         context: ./
