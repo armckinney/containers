@@ -1,6 +1,6 @@
 # scope: Build and Push Dev Suffixed Docker Images
 
-name: Test
+name: DockerPushDev
 
 on:
   pull_request:
