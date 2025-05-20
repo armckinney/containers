@@ -27,3 +27,5 @@ RUN mkdir /tmp/container \
 ENV DEBIAN_FRONTEND=dialog
 
 ENV PYSPARK_PIN_THREAD=true
+
+# supports multi-arch
