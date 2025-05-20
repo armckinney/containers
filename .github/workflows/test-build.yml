@@ -72,7 +72,7 @@ jobs:
         done
 
   build-ubuntu:
-    needs: get-builds
+    needs: [get-builds]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -100,7 +100,7 @@ jobs:
         tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
 
   build-python:
-    needs: get-builds
+    needs: [get-builds, build-ubuntu]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_python).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -128,7 +128,7 @@ jobs:
         tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
 
   build-terraform:
-    needs: get-builds
+    needs: [get-builds, build-ubuntu]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_terraform).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -156,7 +156,7 @@ jobs:
         tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
 
   build-java:
-    needs: get-builds
+    needs: [get-builds, build-ubuntu]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_java).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -184,7 +184,7 @@ jobs:
         tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
 
   build-dotnet:
-    needs: get-builds
+    needs: [get-builds, build-ubuntu]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_dotnet).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -212,7 +212,7 @@ jobs:
         tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
 
   build-terraform-azure:
-    needs: get-builds
+    needs: [get-builds, build-terraform]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -240,7 +240,7 @@ jobs:
         tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
 
   build-pyspark:
-    needs: get-builds
+    needs: [get-builds, build-python]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_pyspark).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
