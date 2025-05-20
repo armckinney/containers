@@ -12,6 +12,10 @@ defaults:
   run:
     shell: bash
 
+env:
+  PLATFORMS: linux/amd64,linux/arm64
+
+
 jobs:
   get-builds:
     runs-on: ubuntu-24.04
@@ -100,6 +104,7 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
+        platforms: ${{ env.PLATFORMS }}
 
   build-python:
     needs: [get-builds, build-ubuntu]
@@ -128,6 +133,7 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
+        platforms: ${{ env.PLATFORMS }}
 
   build-terraform:
     needs: [get-builds, build-ubuntu]
@@ -156,6 +162,7 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
+        platforms: ${{ env.PLATFORMS }}
 
   build-java:
     needs: [get-builds, build-ubuntu]
@@ -184,6 +191,7 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
+        platforms: ${{ env.PLATFORMS }}
 
   build-dotnet:
     needs: [get-builds, build-ubuntu]
@@ -212,6 +220,7 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
+        platforms: ${{ env.PLATFORMS }}
 
   build-terraform-azure:
     needs: [get-builds, build-terraform]
@@ -240,6 +249,7 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
+        platforms: ${{ env.PLATFORMS }}
 
   build-pyspark:
     needs: [get-builds, build-python]
@@ -268,3 +278,4 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
+        platforms: ${{ env.PLATFORMS }}
