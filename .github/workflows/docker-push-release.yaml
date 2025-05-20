@@ -81,7 +81,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include != '' && fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include || '[{"dockerfile":"none","image_name":"none","image_tag":"none"}]' }}
+        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -111,7 +111,7 @@ jobs:
     timeout-minutes: 240
     strategy:
       matrix:
-        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_python).include != '' && fromJson(needs.get-builds.outputs.build_matrix_python).include || '[{"dockerfile":"none","image_name":"none","image_tag":"none"}]' }}
+        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_python).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_python).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -141,7 +141,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_terraform).include != '' && fromJson(needs.get-builds.outputs.build_matrix_terraform).include || '[{"dockerfile":"none","image_name":"none","image_tag":"none"}]' }}
+        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_terraform).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_terraform).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -171,7 +171,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_java).include != '' && fromJson(needs.get-builds.outputs.build_matrix_java).include || '[{"dockerfile":"none","image_name":"none","image_tag":"none"}]' }}
+        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_java).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_java).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -201,7 +201,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_dotnet).include != '' && fromJson(needs.get-builds.outputs.build_matrix_dotnet).include || '[{"dockerfile":"none","image_name":"none","image_tag":"none"}]' }}
+        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_dotnet).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_dotnet).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -231,7 +231,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include != '' && fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include || '[{"dockerfile":"none","image_name":"none","image_tag":"none"}]' }}
+        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -261,7 +261,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_pyspark).include != '' && fromJson(needs.get-builds.outputs.build_matrix_pyspark).include || '[{"dockerfile":"none","image_name":"none","image_tag":"none"}]' }}
+        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_pyspark).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_pyspark).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
