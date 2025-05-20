@@ -1,4 +1,4 @@
-FROM armck/terraform:1.10.5-dev
+FROM armck/terraform:1.10.5
 
 ARG AZURE_CLI_VERSION=2.73.0
 

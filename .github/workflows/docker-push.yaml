@@ -108,7 +108,7 @@ jobs:
     needs: [get-builds, build-ubuntu]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_python).include, '') != '' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 240
     strategy:
       matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_python) }}
     steps:
