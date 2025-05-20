@@ -1,5 +1,4 @@
 # scope: Build and Push Release Docker Images
-
 name: DockerPush
 
 on:
@@ -14,7 +13,6 @@ defaults:
 
 env:
   PLATFORMS: linux/amd64,linux/arm64
-
 
 jobs:
   get-builds:
@@ -54,9 +52,9 @@ jobs:
         for image in "${images[@]}"; do
           build_matrices[$image]=''
         done
-        # capture dev Dockerfiles and assign to image-specific matrices
+        # capture Dockerfiles and assign to image-specific matrices
         for file in "${change_files[@]}"; do
-          if [[ "$file" =~ /Dockerfile\.dev$ ]]; then
+          if [[ "$file" =~ /Dockerfile$ ]]; then
             image_tag="$(basename "$(dirname "$file")")"
             image_name="$(basename "$(dirname "$(dirname "$file")")")"
             entry="{\"dockerfile\":\"$file\",\"image_name\":\"$image_name\",\"image_tag\":\"$image_tag\"}"
