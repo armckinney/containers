@@ -1,9 +1,11 @@
-# scope: Build and Push Docker Image
+# scope: Build and Push Release Docker Images
 
-name: Test
+name: DockerPush
 
 on:
-  pull_request:
+  push:
+    branches:
+      - main
     paths: '**/Dockerfile**'
 
 defaults:
@@ -15,13 +17,13 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     outputs:
-      build_matrix_ubuntu: ${{ steps.set-build-matrix.outputs.build_matrix_ubuntu }}
-      build_matrix_python: ${{ steps.set-build-matrix.outputs.build_matrix_python }}
-      build_matrix_terraform: ${{ steps.set-build-matrix.outputs.build_matrix_terraform }}
-      build_matrix_java: ${{ steps.set-build-matrix.outputs.build_matrix_java }}
-      build_matrix_dotnet: ${{ steps.set-build-matrix.outputs.build_matrix_dotnet }}
-      build_matrix_terraform_azure: ${{ steps.set-build-matrix.outputs.build_matrix_terraform_azure }}
-      build_matrix_pyspark: ${{ steps.set-build-matrix.outputs.build_matrix_pyspark }}
+      build_matrix_ubuntu: ${{ steps.set-build-matrices.outputs.build_matrix_ubuntu }}
+      build_matrix_python: ${{ steps.set-build-matrices.outputs.build_matrix_python }}
+      build_matrix_terraform: ${{ steps.set-build-matrices.outputs.build_matrix_terraform }}
+      build_matrix_java: ${{ steps.set-build-matrices.outputs.build_matrix_java }}
+      build_matrix_dotnet: ${{ steps.set-build-matrices.outputs.build_matrix_dotnet }}
+      build_matrix_terraform_azure: ${{ steps.set-build-matrices.outputs.build_matrix_terraform_azure }}
+      build_matrix_pyspark: ${{ steps.set-build-matrices.outputs.build_matrix_pyspark }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -30,11 +32,11 @@ jobs:
       id: change-files
       uses: jitterbit/get-changed-files@v1
 
-    - name: Set Build Matrix
-      id: set-build-matrix
+    - name: Set Build Matrices
+      id: set-build-matrices
       run: |
         change_files=(${{ steps.change-files.outputs.added_modified }})
-        image_dependencies=(
+        images=(
             "ubuntu"
             "python"
             "terraform"
@@ -45,7 +47,7 @@ jobs:
         )
         # Initialize associative arrays for build matrices
         declare -A build_matrices
-        for image in "${image_dependencies[@]}"; do
+        for image in "${images[@]}"; do
           build_matrices[$image]=''
         done
         # capture dev Dockerfiles and assign to image-specific matrices
@@ -62,7 +64,7 @@ jobs:
           fi
         done
         # Output each build matrix as a JSON array (or empty array if none)
-        for image in "${image_dependencies[@]}"; do
+        for image in "${images[@]}"; do
           matrix_value="${build_matrices[$image]}"
           if [[ -n "$matrix_value" ]]; then
             echo "build_matrix_${image//-/_}={\"include\":[${matrix_value}]}" >> "$GITHUB_OUTPUT"
@@ -97,7 +99,7 @@ jobs:
         file: ${{ matrix.dockerfile }}
         builder: ${{ steps.buildx.outputs.name }}
         push: true
-        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
 
   build-python:
     needs: [get-builds, build-ubuntu]
@@ -125,7 +127,7 @@ jobs:
         file: ${{ matrix.dockerfile }}
         builder: ${{ steps.buildx.outputs.name }}
         push: true
-        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
 
   build-terraform:
     needs: [get-builds, build-ubuntu]
@@ -153,7 +155,7 @@ jobs:
         file: ${{ matrix.dockerfile }}
         builder: ${{ steps.buildx.outputs.name }}
         push: true
-        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
 
   build-java:
     needs: [get-builds, build-ubuntu]
@@ -181,7 +183,7 @@ jobs:
         file: ${{ matrix.dockerfile }}
         builder: ${{ steps.buildx.outputs.name }}
         push: true
-        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
 
   build-dotnet:
     needs: [get-builds, build-ubuntu]
@@ -209,7 +211,7 @@ jobs:
         file: ${{ matrix.dockerfile }}
         builder: ${{ steps.buildx.outputs.name }}
         push: true
-        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
 
   build-terraform-azure:
     needs: [get-builds, build-terraform]
@@ -237,7 +239,7 @@ jobs:
         file: ${{ matrix.dockerfile }}
         builder: ${{ steps.buildx.outputs.name }}
         push: true
-        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
 
   build-pyspark:
     needs: [get-builds, build-python]
@@ -265,4 +267,4 @@ jobs:
         file: ${{ matrix.dockerfile }}
         builder: ${{ steps.buildx.outputs.name }}
         push: true
-        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
