@@ -1,14 +1,12 @@
 FROM ubuntu:20.04
 
-# Avoid warnings by switching to noninteractive
+# avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
 
-# ----- Primary Installs -----
-
-RUN mkdir /tmp/dockerinstall \
-    && cd /tmp/dockerinstall \
+RUN mkdir /tmp/container \
+    && cd /tmp/container \
     && apt-get update \
-    # Install supporting packages
+    # primary installs
     && apt-get -y install --no-install-recommends \
         apt-utils \
         ca-certificates \
@@ -18,12 +16,11 @@ RUN mkdir /tmp/dockerinstall \
         gnupg \
         lsb-release \
         2>&1 \
-    # Clean up
+    # cleanup
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /tmp/dockerinstall
+    && rm -rf /tmp/container
 
-
-# Switch back to dialog for any ad-hoc use of apt-get
+# switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog
