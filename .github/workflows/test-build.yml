@@ -15,8 +15,13 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     outputs:
-      build_matrix: ${{ steps.set-build-matrix.outputs.build_matrix }}
-
+      build_matrix_ubuntu: ${{ steps.set-build-matrix.outputs.build_matrix_ubuntu }}
+      build_matrix_python: ${{ steps.set-build-matrix.outputs.build_matrix_python }}
+      build_matrix_terraform: ${{ steps.set-build-matrix.outputs.build_matrix_terraform }}
+      build_matrix_java: ${{ steps.set-build-matrix.outputs.build_matrix_java }}
+      build_matrix_dotnet: ${{ steps.set-build-matrix.outputs.build_matrix_dotnet }}
+      build_matrix_terraform_azure: ${{ steps.set-build-matrix.outputs.build_matrix_terraform_azure }}
+      build_matrix_pyspark: ${{ steps.set-build-matrix.outputs.build_matrix_pyspark }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -27,9 +32,8 @@ jobs:
 
     - name: Set Build Matrix
       id: set-build-matrix
-      run: |      
+      run: |
         change_files=(${{ steps.change-files.outputs.added_modified }})
-        build_matrix=()
         image_dependencies=(
             "ubuntu"
             "python"
@@ -39,53 +43,220 @@ jobs:
             "terraform-azure"
             "pyspark"
         )
-        
-        # sorting changes by dependency
+        # Initialize associative arrays for build matrices
+        declare -A build_matrices
         for image in "${image_dependencies[@]}"; do
-          for file in "${change_files[@]}"; do
-            if [[ "$file" == *$image* ]]; then
-              sorted_files+=("$file")
-            fi
-          done
+          build_matrices[$image]=''
         done
-
-        # capture dev Dockerfiles
-        for file in "${change_files[@]}";
-        do
-          if [[ "$file" =~ /Dockerfile\.dev$ ]]; 
-          then
-            image_tag="$(basename "$(dirname "$file")")";          
-            image_name="$(basename "$(dirname "$(dirname "$file")")")";  
-            build_matrix+=("{\"dockerfile\":\"$file\",\"image_name\":\"$image_name\",\"image_tag\":\"$image_tag\"}");   
+        # capture dev Dockerfiles and assign to image-specific matrices
+        for file in "${change_files[@]}"; do
+          if [[ "$file" =~ /Dockerfile\.dev$ ]]; then
+            image_tag="$(basename "$(dirname "$file")")"
+            image_name="$(basename "$(dirname "$(dirname "$file")")")"
+            entry="{\"dockerfile\":\"$file\",\"image_name\":\"$image_name\",\"image_tag\":\"$image_tag\"}"
+            if [[ -n "${build_matrices[$image_name]}" ]]; then
+              build_matrices[$image_name]+=",$entry"
+            else
+              build_matrices[$image_name]="$entry"
+            fi
+          fi
+        done
+        # Output each build matrix as a JSON array (or empty array if none)
+        for image in "${image_dependencies[@]}"; do
+          matrix_value="${build_matrices[$image]}"
+          if [[ -n "$matrix_value" ]]; then
+            echo "build_matrix_${image//-/_}={\"include\":[${matrix_value}]}" >> "$GITHUB_OUTPUT"
+          else
+            echo "build_matrix_${image//-/_}={\"include\":[]}" >> "$GITHUB_OUTPUT"
           fi
         done
 
-        # join the elements with commas and wrap in square brackets
-        build_matrix=$(printf ",%s" "${build_matrix[@]}")
-        build_matrix="{\"include\": [${build_matrix:1}]}"
-
-        echo "build_matrix=$(echo "$build_matrix" | jq -c .)" >> "$GITHUB_OUTPUT"
-
-  test-build-container:
+  build-ubuntu:
     needs: get-builds
+    if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include, '') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
-      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix) }}
+      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_ubuntu) }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-
     - name: Login to DockerHub
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_HUB_ID }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v1
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./
+        file: ${{ matrix.dockerfile }}
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
 
+  build-python:
+    needs: get-builds
+    if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_python).include, '') != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_python) }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Login to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_HUB_ID }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./
+        file: ${{ matrix.dockerfile }}
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
+
+  build-terraform:
+    needs: get-builds
+    if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_terraform).include, '') != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_terraform) }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Login to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_HUB_ID }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./
+        file: ${{ matrix.dockerfile }}
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
+
+  build-java:
+    needs: get-builds
+    if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_java).include, '') != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_java) }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Login to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_HUB_ID }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./
+        file: ${{ matrix.dockerfile }}
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
+
+  build-dotnet:
+    needs: get-builds
+    if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_dotnet).include, '') != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_dotnet) }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Login to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_HUB_ID }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./
+        file: ${{ matrix.dockerfile }}
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
+
+  build-terraform-azure:
+    needs: get-builds
+    if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include, '') != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_terraform_azure) }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Login to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_HUB_ID }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./
+        file: ${{ matrix.dockerfile }}
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_ID }}/${{ matrix.image_name }}:${{ matrix.image_tag }}-dev
+
+  build-pyspark:
+    needs: get-builds
+    if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_pyspark).include, '') != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_pyspark) }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Login to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_HUB_ID }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
     - name: Build and push
       id: docker_build
       uses: docker/build-push-action@v2
