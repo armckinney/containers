@@ -3,15 +3,13 @@ FROM armck/ubuntu:20.04
 ARG PYTHON_VERSION=3.9.5
 ARG POETRY_VERSION=1.4.2
 
-# Avoid warnings by switching to noninteractive
+# avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive 
 
-# ----- Primary Installs -----
-
-RUN mkdir /tmp/dockerinstall \
-    && cd /tmp/dockerinstall \
-    # Install setup packages
-    && apt-get update && apt-get -y install \
+RUN mkdir /tmp/container \
+    && cd /tmp/container \
+    # supporting installs
+    && apt update && apt -y install \
         build-essential \
         gettext-base \
         git \
@@ -26,20 +24,20 @@ RUN mkdir /tmp/dockerinstall \
         unzip \
         zip \
         zlib1g-dev \
-    # Install python
+    # install python
     && curl -O https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tar.xz \
     && tar -xf Python-$PYTHON_VERSION.tar.xz \
     && cd Python-$PYTHON_VERSION && ./configure --enable-optimizations \
     && make install \
-    # Install poetry
+    # install poetry
     && curl -sSL https://install.python-poetry.org | POETRY_VERSION=${POETRY_VERSION} python3 - \
-    # Clean up
-    && apt-get autoremove -y \
-    && apt-get clean -y \
+    # cleanup
+    && apt autoremove -y \
+    && apt clean -y \
     && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /tmp/dockerinstall
+    && rm -rf /tmp/container
 
 ENV PATH=$PATH:/root/.local/bin/
 
-# Switch back to dialog for any ad-hoc use of apt-get
+# switch back to dialog for any ad-hoc use of apt
 ENV DEBIAN_FRONTEND=dialog

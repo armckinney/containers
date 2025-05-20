@@ -49,7 +49,7 @@ Use these hosted images in your Dockerfile by identifying the desired base image
 
 ###### Dockerfile:
 ```dockerfile
-FROM armck/ubuntu-base:dev
+FROM armck/ubuntu:24.04
 
 RUN other_cool_things.exe
 ...

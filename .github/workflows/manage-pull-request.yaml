@@ -1,4 +1,4 @@
-# Scope: Auto create PR/Branch when an issue's assignie is set & delete Pr/Branch on issue closed
+# scope: Auto create PR/Branch when an issue's assignie is set & delete Pr/Branch on issue closed
 
 name: ManagePullRequest
 
