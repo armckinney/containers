@@ -10,12 +10,12 @@ defaults:
     shell: bash
 
 env:
-  PLATFORMS: linux/amd64
+  PLATFORMS: linux/amd64,linux/arm64
 
 jobs:
   get-builds:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 5
     outputs:
       build_matrix_ubuntu: ${{ steps.set-build-matrices.outputs.build_matrix_ubuntu }}
       build_matrix_python: ${{ steps.set-build-matrices.outputs.build_matrix_python }}
@@ -77,7 +77,7 @@ jobs:
     needs: [get-builds]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include, '') != '' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 60
     strategy:
       matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_ubuntu) }}
     steps:
@@ -106,7 +106,7 @@ jobs:
     needs: [get-builds, build-ubuntu]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_python).include, '') != '' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 120
     strategy:
       matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_python) }}
     steps:
@@ -135,7 +135,7 @@ jobs:
     needs: [get-builds, build-ubuntu]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_terraform).include, '') != '' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 60
     strategy:
       matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_terraform) }}
     steps:
@@ -164,7 +164,7 @@ jobs:
     needs: [get-builds, build-ubuntu]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_java).include, '') != '' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 60
     strategy:
       matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_java) }}
     steps:
@@ -193,7 +193,7 @@ jobs:
     needs: [get-builds, build-ubuntu]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_dotnet).include, '') != '' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 60
     strategy:
       matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_dotnet) }}
     steps:
@@ -222,7 +222,7 @@ jobs:
     needs: [get-builds, build-terraform]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include, '') != '' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 60
     strategy:
       matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_terraform_azure) }}
     steps:
@@ -251,7 +251,7 @@ jobs:
     needs: [get-builds, build-python]
     if: ${{ join(fromJson(needs.get-builds.outputs.build_matrix_pyspark).include, '') != '' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 60
     strategy:
       matrix: ${{ fromJson(needs.get-builds.outputs.build_matrix_pyspark) }}
     steps:

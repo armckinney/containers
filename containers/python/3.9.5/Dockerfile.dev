@@ -41,5 +41,3 @@ ENV PATH=$PATH:/root/.local/bin/
 
 # switch back to dialog for any ad-hoc use of apt
 ENV DEBIAN_FRONTEND=dialog
-
-# supports multi-arch

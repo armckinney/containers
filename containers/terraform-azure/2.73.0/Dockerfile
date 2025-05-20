@@ -1,6 +1,6 @@
-FROM armck/terraform:1.10.5
+FROM armck/terraform:1.10.5-dev
 
-ARG AZURE_CLI_VERSION=2.73.0-1~noble
+ARG AZURE_CLI_VERSION=2.73.0
 
 # avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
@@ -15,7 +15,7 @@ RUN mkdir /tmp/container && cd /tmp/container \
     && echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list \
     # primary installs
     && apt update && ACCEPT_EULA=Y apt install -y  \
-        azure-cli=${AZURE_CLI_VERSION} \
+        azure-cli=${AZURE_CLI_VERSION}-1~$(lsb_release -cs) \
         jq \
     # cleanup
     && apt autoremove -y \
@@ -25,5 +25,3 @@ RUN mkdir /tmp/container && cd /tmp/container \
 
 # switch back to dialog for any ad-hoc use of apt
 ENV DEBIAN_FRONTEND=dialog
-
-# supports multi-arch

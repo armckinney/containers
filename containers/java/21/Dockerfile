@@ -18,5 +18,3 @@ RUN mkdir /tmp/container \
 
 # switch back to dialog for any ad-hoc use of apt
 ENV DEBIAN_FRONTEND=dialog
-
-# supports multi-arch

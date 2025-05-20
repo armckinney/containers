@@ -9,12 +9,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN mkdir /tmp/container \
     && cd /tmp/container \
-    # detect architecture
-    && if [ "$(uname -m)" = "x86_64" ]; then ARCH="amd64"; elif [ "$(uname -m)" = "aarch64" ]; then ARCH="arm64"; else ARCH="$(uname -m)"; fi \
     # install java major version to match databricks 16.4 runtime
-    && curl -O https://cdn.azul.com/zulu/bin/zulu${ZULU_VERSION}-ca-jdk${JDK_VERSION}-linux_${ARCH}.deb \
+    && curl -O https://cdn.azul.com/zulu/bin/zulu${ZULU_VERSION}-ca-jdk${JDK_VERSION}-linux_$(dpkg --print-architecture).deb \
     && apt update && apt -y install \
-        ./zulu${ZULU_VERSION}-ca-jdk${JDK_VERSION}-linux_${ARCH}.deb \
+        ./zulu${ZULU_VERSION}-ca-jdk${JDK_VERSION}-linux_$(dpkg --print-architecture).deb \
     # install pyspark
     && pipx install pyspark==${SPARK_VERSION} \
     # cleanup
@@ -27,5 +25,3 @@ RUN mkdir /tmp/container \
 ENV DEBIAN_FRONTEND=dialog
 
 ENV PYSPARK_PIN_THREAD=true
-
-# supports multi-arch
