@@ -8,11 +8,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN mkdir /tmp/container && cd /tmp/container \
     # supporting installs
     && apt update && apt install -y \
-        ca-certificates \
         apt-transport-https \
         libicu-dev \
     # microsoft signing keys & registry for azure-cli
-    && curl --retry 5 --retry-delay 5 -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/microsoft.gpg \
+    && curl -sLS --proxy-ssl-auto-client-cert https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/microsoft.gpg \
     && echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list \
     # primary installs
     && apt update && ACCEPT_EULA=Y apt install -y  \
