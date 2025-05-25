@@ -7,16 +7,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN mkdir /tmp/container \
     && cd /tmp/container \
-    && apt update \
-    # supporting installs
-    && apt install -y \
-        apt-transport-https \
-    # add microsoft package signing key
-    && curl -fsSL https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb \
-    && dpkg -i packages-microsoft-prod.deb \
-    # install .net
-    && apt update \
-    && ACCEPT_EULA=Y apt -y install --no-install-recommends \
+    # primary installs
+    && apt update && ACCEPT_EULA=Y apt -y install \
         dotnet-sdk-${DOTNET_VERSION}  \
     # cleanup
     && apt autoremove -y \
