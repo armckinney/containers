@@ -8,6 +8,7 @@ RUN mkdir /tmp/container \
     && apt update \
     # primary installs
     && apt -y install --no-install-recommends \
+        apt-transport-https \
         apt-utils \
         ca-certificates \
         curl \

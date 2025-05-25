@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN mkdir /tmp/container \
     && cd /tmp/container \
     # primary installs
-    && apt update && ACCEPT_EULA=Y apt -y install \
+    && apt update && apt -y install \
         dotnet-sdk-${DOTNET_VERSION}  \
     # cleanup
     && apt autoremove -y \
