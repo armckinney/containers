@@ -11,11 +11,9 @@ RUN mkdir /tmp/container \
     # supporting installs
     && apt install -y \
         apt-transport-https \
-        wget \
     # add microsoft package signing key
-    && wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
+    && curl -fsSL https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb \
-    && rm packages-microsoft-prod.deb \
     # install .net
     && apt update \
     && ACCEPT_EULA=Y apt -y install --no-install-recommends \

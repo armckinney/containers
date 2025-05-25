@@ -11,8 +11,8 @@ RUN mkdir /tmp/container && cd /tmp/container \
         apt-transport-https \
         libicu-dev \
     # microsoft signing keys & registry for azure-cli
-    && wget -O- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null \
-    && echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list \
+    && curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list \
     # primary installs
     && apt update && ACCEPT_EULA=Y apt install -y  \
         azure-cli=${AZURE_CLI_VERSION}-1~$(lsb_release -cs) \
