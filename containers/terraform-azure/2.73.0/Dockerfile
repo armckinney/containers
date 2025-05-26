@@ -12,9 +12,11 @@ RUN mkdir /tmp/container \
     # supporting installs
     && apt update && apt install -y \
         libicu-dev \
+        wget \
     # microsoft signing keys & registry for azure-cli
-    && curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/keyrings/microsoft-archive-keyring.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list \
+    # NOTE: must use wget because of curl bug
+    && wget -O- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/keyrings/microsoft.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list \
     # primary installs
     && apt update && ACCEPT_EULA=Y apt install -y  \
         azure-cli=${AZURE_CLI_VERSION}-1~$(lsb_release -cs) \
@@ -25,5 +27,5 @@ RUN mkdir /tmp/container \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
 
-# switch back to dialog for any ad-hoc use of apt 
+# switch back to dialog for any ad-hoc use of apt
 ENV DEBIAN_FRONTEND=dialog
