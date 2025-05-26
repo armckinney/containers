@@ -19,13 +19,14 @@ RUN mkdir /tmp/container \
     # terraform keys & registry
     && curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /etc/apt/keyrings/hashicorp-archive-keyring.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list \
-    # trivy gpg key and source
-    && curl -fsSL https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor -o /etc/apt/keyrings/trivy.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | tee -a /etc/apt/sources.list.d/trivy.list \
     # primary installs
     && apt update && ACCEPT_EULA=Y apt install -y  \
         terraform=${TERRAFORM_VERSION}-1 \
-        trivy=${TRIVY_VERSION} \
+    # install trivy
+    && curl -fsSLo trivy.tar.gz "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_$(uname)-$(dpkg --print-architecture).tar.gz" \
+    && tar -xzf trivy.tar.gz \
+    && chmod +x trivy \
+    && mv trivy /usr/local/bin/trivy \
     # install terraform-docs
     && curl -fsSLo terraform-docs.tar.gz "https://github.com/terraform-docs/terraform-docs/releases/download/v${TERRAFORM_DOCS_VERSION}/terraform-docs-v${TERRAFORM_DOCS_VERSION}-$(uname)-$(dpkg --print-architecture).tar.gz" \
     && tar -xzf terraform-docs.tar.gz \
