@@ -23,7 +23,7 @@ RUN mkdir /tmp/container \
     && apt update && ACCEPT_EULA=Y apt install -y  \
         terraform=${TERRAFORM_VERSION}-1 \
     # install trivy
-    && curl -fsSLo trivy.tar.gz "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_$(uname)-$(dpkg --print-architecture).tar.gz" \
+    && curl -fsSLo trivy.tar.gz "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_$(uname)-$(case $(dpkg --print-architecture) in amd64) echo "64bit" ;; arm64) echo "ARM64" ;; esac).tar.gz" \
     && tar -xzf trivy.tar.gz \
     && chmod +x trivy \
     && mv trivy /usr/local/bin/trivy \
