@@ -1,6 +1,9 @@
 FROM armck/ubuntu:24.04
 
 ARG TERRAFORM_VERSION=1.10.5
+ARG TERRAFORM_DOCS_VERSION=0.18.0
+ARG TFLINT_VERSION=0.53.0
+ARG TRIVY_VERSION=0.58.1
 
 # avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
@@ -12,12 +15,26 @@ RUN mkdir /tmp/container \
     # supporting installs
     && apt update && apt install -y \
         software-properties-common \
+        unzip \
     # terraform keys & registry
     && curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /etc/apt/keyrings/hashicorp-archive-keyring.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list \
+    # trivy gpg key and source
+    && curl -fsSL https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor -o /etc/apt/keyrings/trivy.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | tee -a /etc/apt/sources.list.d/trivy.list \
     # primary installs
     && apt update && ACCEPT_EULA=Y apt install -y  \
         terraform=${TERRAFORM_VERSION}-1 \
+        trivy=${TRIVY_VERSION} \
+    # install terraform-docs
+    && curl -fsSLo terraform-docs.tar.gz "https://github.com/terraform-docs/terraform-docs/releases/download/v${TERRAFORM_DOCS_VERSION}/terraform-docs-v${TERRAFORM_DOCS_VERSION}-$(uname)-$(dpkg --print-architecture).tar.gz" \
+    && tar -xzf terraform-docs.tar.gz \
+    && chmod +x terraform-docs \
+    && mv terraform-docs /usr/local/bin/terraform-docs \
+    # install tflint
+    && curl -fsSLo tflint.zip  "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_$(uname)_$(dpkg --print-architecture).zip" \ 
+    && unzip -o tflint.zip \
+    && mv tflint /usr/local/bin/tflint \
     # cleanup
     && apt autoremove -y \
     && apt clean -y \

@@ -12,7 +12,7 @@
 > **[terraform](https://hub.docker.com/repository/docker/armck/terraform)**  
   **Description**: Enhanced Ubuntu image with tools for Terraform Infrastructure Management  
   **From**: [ubuntu](https://hub.docker.com/repository/docker/armck/ubuntu)  
-  **Features**: terraform  
+  **Features**: terraform, tflint, terraform-docs, trivy  
   **Tags**: `1.10.5`  
 
 > **[terraform-azure](https://hub.docker.com/repository/docker/armck/terraform-azure)**  
