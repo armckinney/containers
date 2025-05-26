@@ -54,6 +54,8 @@ fi
 
 project_root=/workspaces/containers
 
-docker buildx build $platforms -t "armck/$image:$tag-$suffix" \
-    -f "containers/$image/$tag/Dockerfile.$suffix" \
-    $project_root
+docker buildx build $platforms \
+   --no-cache \
+   -t "armck/$image:$tag-$suffix" \
+   -f "containers/$image/$tag/Dockerfile.$suffix" \
+   $project_root
