@@ -16,7 +16,6 @@ RUN mkdir /tmp/container \
         git \
         gnupg \
         lsb-release \
-        2>&1 \
     # cleanup
     && apt autoremove -y \
     && apt clean -y \
