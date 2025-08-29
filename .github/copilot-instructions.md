@@ -9,7 +9,7 @@ This repository contains standardized Dockerfiles that are built into layered co
 ### Prerequisites and Setup
 - **CRITICAL**: Docker and Docker Buildx must be available in your environment.
 - Verify Docker setup: `docker --version && docker buildx version`
-- Repository works from any directory - the build script path hardcoding to `/workspaces/containers` must be adjusted.
+- Repository works from any directory - the build script path hardcoded to `/workspaces/containers` must be adjusted.
 
 ### Building Images Locally
 - **NEVER CANCEL builds** - Even simple builds may take 1-5 minutes. Complex builds may take 10-30 minutes. Set timeouts to 60+ minutes.
