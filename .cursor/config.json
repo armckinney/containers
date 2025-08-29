@@ -1,0 +1,4 @@
+{
+  "include": [".github/instructions/*.md"],
+  "systemMessage": "You are working with a containerized development environment repository. Always reference the instruction files in `.github/instructions/` before making changes. Follow the established patterns for Dockerfiles, build scripts, and CI/CD workflows."
+}
