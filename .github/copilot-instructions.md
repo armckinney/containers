@@ -155,8 +155,8 @@ docker buildx build --platform linux/amd64,linux/arm64 --no-cache -t "armck/ubun
 - **Multi-platform considerations** for production releases (linux/amd64, linux/arm64)
 
 ## Timing Reference (Actual Measured Times)
-- Ubuntu 24.04 dev build: 19.7 seconds (add 50% buffer = 30 second timeout minimum)
 - .NET 8.0 dev build: 16.7 seconds (add 50% buffer = 25 second timeout minimum)
+  - **Note:** Despite these minimums, always use the recommended timeout of 180+ seconds for Ubuntu and .NET builds (see above), to account for variability and ensure reliability.
 - Python builds: May fail due to network constraints downloading source from python.org
 - Complex builds with compilation: Allow 10-30 minutes minimum
 - **CRITICAL**: Always set Docker build timeouts to 60+ minutes for safety
