@@ -1,9 +1,9 @@
 {
   "name": "containers",
   "dockerComposeFile": [
-    "../docker-compose.yaml"
+    "docker-compose.yaml"
   ],
-  "service": "dev-container",
+  "service": "devcontainer",
   "workspaceFolder": "/workspaces/containers",
   "postCreateCommand": "cd $WORKSPACE/",
   "customizations": {
@@ -13,7 +13,17 @@
           "bash": {
             "path": "bash",
             "icon": "terminal-bash"
-          }
+          },
+          "files.exclude": {
+            "**/.git": true,
+            "**/.svn": true,
+            "**/.hg": true,
+            "**/CVS": true,
+            "**/.DS_Store": true,
+            "**/bin": true,
+            "**/obj": true,
+            "**/.vs": true
+        }
         }
       },
       "extensions": [

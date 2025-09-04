@@ -1,10 +1,13 @@
 version: "3.9"
 services:
-  dev-container:
+  devcontainer:
     build:
       dockerfile: ./.devcontainer/Dockerfile
-      context: ./
+      context: ..
     volumes:
-      - .:/workspaces/containers:cached
+      - ..:/workspaces/containers:cached
+      # docker-in-docker support
       - /var/run/docker.sock:/var/run/docker.sock
+      # git configuration mounting
+      - ~/.gitconfig:~/.gitconfig:ro
     command: /bin/sh -c "while sleep 1000; do :; done"
