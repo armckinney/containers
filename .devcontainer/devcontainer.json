@@ -13,17 +13,17 @@
           "bash": {
             "path": "bash",
             "icon": "terminal-bash"
-          },
-          "files.exclude": {
-            "**/.git": true,
-            "**/.svn": true,
-            "**/.hg": true,
-            "**/CVS": true,
-            "**/.DS_Store": true,
-            "**/bin": true,
-            "**/obj": true,
-            "**/.vs": true
-        }
+          }
+        },
+        "files.exclude": {
+          "**/.git": true,
+          "**/.svn": true,
+          "**/.hg": true,
+          "**/CVS": true,
+          "**/.DS_Store": true,
+          "**/bin": true,
+          "**/obj": true,
+          "**/.vs": true
         }
       },
       "extensions": [

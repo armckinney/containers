@@ -16,6 +16,7 @@ RUN mkdir /tmp/container \
         apt-transport-https \
         ca-certificates \
         curl \
+        wget \
         gnupg-agent \
         lsb-release \
         software-properties-common \
@@ -31,6 +32,14 @@ RUN mkdir /tmp/container \
     && apt clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
+
+# Install Antigravity server
+ARG ANTIGRAVITY_COMMIT=afdb915a7890576374cec17dccf6d91249170a86
+ARG ANTIGRAVITY_VERSION=1.11.5
+RUN mkdir -p /root/.antigravity-server/bin/${ANTIGRAVITY_COMMIT} \
+    && wget -q https://edgedl.me.gvt1.com/edgedl/release2/j0qc3/antigravity/stable/${ANTIGRAVITY_VERSION}-${ANTIGRAVITY_COMMIT}/linux-arm/Antigravity-reh.tar.gz -O /tmp/vscode-server.tar.gz \
+    && tar -xf /tmp/vscode-server.tar.gz -C /root/.antigravity-server/bin/${ANTIGRAVITY_COMMIT} --strip-components 1 \
+    && rm /tmp/vscode-server.tar.gz
 
 WORKDIR ${WORKSPACE}
 
