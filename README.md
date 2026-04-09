@@ -38,24 +38,24 @@
 <br>
 
 <!-- Description -->
-Containers is a repository of standardized `Dockerfiles` that are built into images and hosted on [DockerHub](https://hub.docker.com/).
+Containers is a repository of standardized `Dockerfiles` that are built into images and hosted on the [GitHub Container Registry (GHCR)](https://ghcr.io/armckinney).
 Many of these images are built on top of each other (i.e. `Ubuntu` > `Python` > `Pyspark`).
 
 I utilize these images as well as various GitHub `template-repositories` in order to spin up standardized projects quick and seemless!
 
 ### Quick Start
 
-Use these hosted images in your Dockerfile by identifying the desired base image; follows standard image syntax `<dockerhub-account>/<image>:<tag>`.
+Use these hosted images in your Dockerfile by identifying the desired base image; follows standard image syntax `ghcr.io/<owner>/<image>:<tag>`.
 
 ###### Dockerfile:
 ```dockerfile
-FROM armck/ubuntu:24.04
+FROM ghcr.io/armckinney/ubuntu:24.04
 
 RUN other_cool_things.exe
 ...
 ```
 
-View all of these images hosted at my dockerhub account, [armck](https://hub.docker.com/u/armck).
+View all of these images hosted at the GitHub Container Registry, [ghcr.io/armckinney](https://github.com/armckinney?tab=packages).
 
 ### Usage
 

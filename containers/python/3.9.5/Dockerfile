@@ -1,4 +1,4 @@
-FROM armck/ubuntu:20.04
+FROM ghcr.io/armckinney/ubuntu:20.04
 
 ARG PYTHON_VERSION=3.9.5
 ARG POETRY_VERSION=2.1.3

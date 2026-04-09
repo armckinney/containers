@@ -1,4 +1,4 @@
-FROM armck/python:3.12.3
+FROM ghcr.io/armckinney/python:3.12.3
 
 ARG SPARK_VERSION=3.5.2
 ARG ZULU_VERSION=17.54.21

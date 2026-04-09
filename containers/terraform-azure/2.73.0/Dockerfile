@@ -1,4 +1,4 @@
-FROM armck/terraform:1.10.5
+FROM ghcr.io/armckinney/terraform:1.10.5
 
 ARG AZURE_CLI_VERSION=2.73.0
 

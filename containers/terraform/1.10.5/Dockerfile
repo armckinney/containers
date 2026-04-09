@@ -1,4 +1,4 @@
-FROM armck/ubuntu:24.04
+FROM ghcr.io/armckinney/ubuntu:24.04
 
 ARG TERRAFORM_VERSION=1.10.5
 ARG TERRAFORM_DOCS_VERSION=0.18.0
