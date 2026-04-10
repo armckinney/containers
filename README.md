@@ -41,7 +41,7 @@
 Containers is a repository of standardized `Dockerfiles` that are built into images and hosted on the [GitHub Container Registry (GHCR)](https://ghcr.io/armckinney).
 Many of these images are built on top of each other (i.e. `Ubuntu` > `Python` > `Pyspark`).
 
-I utilize these images as well as various GitHub `template-repositories` in order to spin up standardized projects quick and seemless!
+I utilize these images as well as various GitHub `template-repositories` in order to spin up standardized projects quick and seamless!
 
 ### Quick Start
 
