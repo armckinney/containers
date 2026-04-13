@@ -23,9 +23,6 @@
         <a href="https://github.com/armckinney/containers/pulls">
             <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/armckinney/containers" />
         </a>
-        <a href="https://stackshare.io/armck/containers">
-            <img alt="StackShare.io" src="http://img.shields.io/badge/tech-stack-0690fa.svg?label=StackShare.io">
-        </a>
     </p>
     <p>
     <!-- Links -->
@@ -38,24 +35,40 @@
 <br>
 
 <!-- Description -->
-Containers is a repository of standardized `Dockerfiles` that are built into images and hosted on [DockerHub](https://hub.docker.com/).
+Containers is a repository of standardized `Dockerfiles` that are built into images and hosted on the [GitHub Container Registry (GHCR)](https://github.com/armckinney?tab=packages).
 Many of these images are built on top of each other (i.e. `Ubuntu` > `Python` > `Pyspark`).
 
-I utilize these images as well as various GitHub `template-repositories` in order to spin up standardized projects quick and seemless!
+I utilize these images as well as various GitHub `template-repositories` in order to spin up standardized projects quick and seamless!
 
 ### Quick Start
 
-Use these hosted images in your Dockerfile by identifying the desired base image; follows standard image syntax `<dockerhub-account>/<image>:<tag>`.
+Use these hosted images in your Dockerfile by identifying the desired base image; follows standard image syntax `ghcr.io/<owner>/<image>:<tag>`.
 
 ###### Dockerfile:
 ```dockerfile
-FROM armck/ubuntu:24.04
+FROM ghcr.io/armckinney/ubuntu:24.04
 
 RUN other_cool_things.exe
 ...
 ```
 
-View all of these images hosted at my dockerhub account, [armck](https://hub.docker.com/u/armck).
+View all of these images hosted at the GitHub Container Registry, [ghcr.io/armckinney](https://github.com/armckinney?tab=packages).
+
+### Images
+
+All published images in this repository use the format `ghcr.io/armckinney/<image>:<tag>`.
+For per-image descriptions, base-image lineage, and feature details, see [containers/README.md](containers/README.md).
+
+| Image | Available Tags | Source Directory |
+| --- | --- | --- |
+| ubuntu | `20.04`, `22.04`, `24.04`, `25.04` | [containers/ubuntu](containers/ubuntu) |
+| terraform | `1.10.5` | [containers/terraform](containers/terraform) |
+| terraform-azure | `2.73.0` | [containers/terraform-azure](containers/terraform-azure) |
+| go | `1.25.0` | [containers/go](containers/go) |
+| python | `3.9.5`, `3.12.3` | [containers/python](containers/python) |
+| pyspark | `3.5.2` | [containers/pyspark](containers/pyspark) |
+| java | `21` | [containers/java](containers/java) |
+| dotnet | `8.0` | [containers/dotnet](containers/dotnet) |
 
 ### Usage
 

@@ -1,4 +1,4 @@
-FROM armck/ubuntu:24.04
+FROM ghcr.io/armckinney/ubuntu:24.04
 
 ARG JDK_VERSION=21
 
