@@ -23,9 +23,6 @@
         <a href="https://github.com/armckinney/containers/pulls">
             <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/armckinney/containers" />
         </a>
-        <a href="https://stackshare.io/armck/containers">
-            <img alt="StackShare.io" src="http://img.shields.io/badge/tech-stack-0690fa.svg?label=StackShare.io">
-        </a>
     </p>
     <p>
     <!-- Links -->
@@ -56,6 +53,22 @@ RUN other_cool_things.exe
 ```
 
 View all of these images hosted at the GitHub Container Registry, [ghcr.io/armckinney](https://github.com/armckinney?tab=packages).
+
+### Images
+
+All published images in this repository use the format `ghcr.io/armckinney/<image>:<tag>`.
+For per-image descriptions, base-image lineage, and feature details, see [containers/README.md](containers/README.md).
+
+| Image | Available Tags | Source Directory |
+| --- | --- | --- |
+| ubuntu | `20.04`, `22.04`, `24.04`, `25.04` | [containers/ubuntu](containers/ubuntu) |
+| terraform | `1.10.5` | [containers/terraform](containers/terraform) |
+| terraform-azure | `2.73.0` | [containers/terraform-azure](containers/terraform-azure) |
+| go | `1.25.0` | [containers/go](containers/go) |
+| python | `3.9.5`, `3.12.3` | [containers/python](containers/python) |
+| pyspark | `3.5.2` | [containers/pyspark](containers/pyspark) |
+| java | `21` | [containers/java](containers/java) |
+| dotnet | `8.0` | [containers/dotnet](containers/dotnet) |
 
 ### Usage
 

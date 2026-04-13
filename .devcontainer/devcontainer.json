@@ -28,8 +28,10 @@
       },
       "extensions": [
         "ms-azuretools.vscode-docker",
-        "github.vscode-github-actions",
-        "yzhang.markdown-all-in-one"
+        "yzhang.markdown-all-in-one",
+        "bierner.markdown-mermaid",
+        "google.geminicodeassist",
+        "github.vscode-github-actions"
       ]
     }
   }

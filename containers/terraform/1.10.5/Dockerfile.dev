@@ -3,7 +3,7 @@ FROM ghcr.io/armckinney/ubuntu:24.04-dev
 ARG TERRAFORM_VERSION=1.10.5
 ARG TERRAFORM_DOCS_VERSION=0.18.0
 ARG TFLINT_VERSION=0.53.0
-ARG TRIVY_VERSION=0.58.1
+ARG TRIVY_VERSION=0.69.3
 
 # avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
