@@ -5,14 +5,18 @@ on:
   push:
     branches:
       - main
-    paths: '**/Dockerfile**'
+    paths:
+      - '**/Dockerfile**'
+      - '.github/workflows/docker-push-release.yaml'
+      - '.github/workflows/scripts/**'
 
 defaults:
   run:
     shell: bash
 
-env:
-  PLATFORMS: linux/amd64,linux/arm64
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   get-builds:
@@ -28,299 +32,128 @@ jobs:
       build_matrix_terraform_azure: ${{ steps.set-build-matrices.outputs.build_matrix_terraform_azure }}
       build_matrix_pyspark: ${{ steps.set-build-matrices.outputs.build_matrix_pyspark }}
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Get Change Files
-      id: change-files
-      uses: jitterbit/get-changed-files@v1
+      - name: Get Change Files
+        id: change-files
+        uses: jitterbit/get-changed-files@v1
 
-    - name: Set Build Matrices
-      id: set-build-matrices
-      run: |
-        change_files=(${{ steps.change-files.outputs.added_modified }})
-        images=(
-            "ubuntu"
-            "go"
-            "python"
-            "terraform"
-            "java"
-            "dotnet"
-            "terraform-azure"
-            "pyspark"
-        )
-        # Initialize associative arrays for build matrices
-        declare -A build_matrices
-        for image in "${images[@]}"; do
-          build_matrices[$image]=''
-        done
-        # capture Dockerfiles and assign to image-specific matrices
-        for file in "${change_files[@]}"; do
-          if [[ "$file" =~ /Dockerfile$ ]]; then
-            image_tag="$(basename "$(dirname "$file")")"
-            image_name="$(basename "$(dirname "$(dirname "$file")")")"
-            entry="{\"dockerfile\":\"$file\",\"image_name\":\"$image_name\",\"image_tag\":\"$image_tag\"}"
-            if [[ -n "${build_matrices[$image_name]}" ]]; then
-              build_matrices[$image_name]+=",$entry"
-            else
-              build_matrices[$image_name]="$entry"
-            fi
-          fi
-        done
-        # Output each build matrix as a JSON array (or empty array if none)
-        for image in "${images[@]}"; do
-          matrix_value="${build_matrices[$image]}"
-          if [[ -n "$matrix_value" ]]; then
-            echo "build_matrix_${image//-/_}={\"include\":[${matrix_value}]}" >> "$GITHUB_OUTPUT"
-          else
-            echo "build_matrix_${image//-/_}={\"include\":[]}" >> "$GITHUB_OUTPUT"
-          fi
-        done
+      - name: Set Build Matrices
+        id: set-build-matrices
+        env:
+          CHANGED_FILES: ${{ steps.change-files.outputs.added_modified }}
+        run: bash .github/workflows/scripts/set-build-matrices.sh
 
   build-ubuntu:
     needs: [get-builds]
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+    if: ${{ needs.get-builds.outputs.build_matrix_ubuntu != '{"include":[]}' }}
     strategy:
       matrix:
-        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Build and push
-      id: docker_build
-      if: ${{ matrix.dockerfile != 'none' }}
-      uses: docker/build-push-action@v2
-      with:
-        context: ./
-        file: ${{ matrix.dockerfile }}
-        builder: ${{ steps.buildx.outputs.name }}
-        push: true
-        tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
-        platforms: ${{ env.PLATFORMS }}
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include }}
+    uses: armckinney/cicd/.github/workflows/rwf-container-build-and-push.yaml@main
+    secrets: inherit
+    with:
+      dockerfile: ${{ matrix.dockerfile }}
+      image_name: ${{ matrix.image_name }}
+      image_tag: ${{ matrix.image_tag }}
+      platforms: linux/amd64,linux/arm64
 
   build-go:
     needs: [get-builds, build-ubuntu]
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+    if: ${{ needs.get-builds.outputs.build_matrix_go != '{"include":[]}' }}
     strategy:
       matrix:
-        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_go).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_go).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Build and push
-      id: docker_build
-      if: ${{ matrix.dockerfile != 'none' }}
-      uses: docker/build-push-action@v2
-      with:
-        context: ./
-        file: ${{ matrix.dockerfile }}
-        builder: ${{ steps.buildx.outputs.name }}
-        push: true
-        tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
-        platforms: ${{ env.PLATFORMS }}
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_go).include }}
+    uses: armckinney/cicd/.github/workflows/rwf-container-build-and-push.yaml@main
+    secrets: inherit
+    with:
+      dockerfile: ${{ matrix.dockerfile }}
+      image_name: ${{ matrix.image_name }}
+      image_tag: ${{ matrix.image_tag }}
+      platforms: linux/amd64,linux/arm64
 
   build-python:
     needs: [get-builds, build-ubuntu]
-    runs-on: ubuntu-latest
-    timeout-minutes: 240
+    if: ${{ needs.get-builds.outputs.build_matrix_python != '{"include":[]}' }}
     strategy:
       matrix:
-        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_python).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_python).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Build and push
-      id: docker_build
-      if: ${{ matrix.dockerfile != 'none' }}
-      uses: docker/build-push-action@v2
-      with:
-        context: ./
-        file: ${{ matrix.dockerfile }}
-        builder: ${{ steps.buildx.outputs.name }}
-        push: true
-        tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
-        platforms: ${{ env.PLATFORMS }}
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_python).include }}
+    uses: armckinney/cicd/.github/workflows/rwf-container-build-and-push.yaml@main
+    secrets: inherit
+    with:
+      dockerfile: ${{ matrix.dockerfile }}
+      image_name: ${{ matrix.image_name }}
+      image_tag: ${{ matrix.image_tag }}
+      platforms: linux/amd64,linux/arm64
 
   build-terraform:
     needs: [get-builds, build-ubuntu]
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+    if: ${{ needs.get-builds.outputs.build_matrix_terraform != '{"include":[]}' }}
     strategy:
       matrix:
-        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_terraform).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_terraform).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Build and push
-      id: docker_build
-      if: ${{ matrix.dockerfile != 'none' }}
-      uses: docker/build-push-action@v2
-      with:
-        context: ./
-        file: ${{ matrix.dockerfile }}
-        builder: ${{ steps.buildx.outputs.name }}
-        push: true
-        tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
-        platforms: ${{ env.PLATFORMS }}
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_terraform).include }}
+    uses: armckinney/cicd/.github/workflows/rwf-container-build-and-push.yaml@main
+    secrets: inherit
+    with:
+      dockerfile: ${{ matrix.dockerfile }}
+      image_name: ${{ matrix.image_name }}
+      image_tag: ${{ matrix.image_tag }}
+      platforms: linux/amd64,linux/arm64
+
 
   build-java:
     needs: [get-builds, build-ubuntu]
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+    if: ${{ needs.get-builds.outputs.build_matrix_java != '{"include":[]}' }}
     strategy:
       matrix:
-        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_java).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_java).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Build and push
-      id: docker_build
-      if: ${{ matrix.dockerfile != 'none' }}
-      uses: docker/build-push-action@v2
-      with:
-        context: ./
-        file: ${{ matrix.dockerfile }}
-        builder: ${{ steps.buildx.outputs.name }}
-        push: true
-        tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
-        platforms: ${{ env.PLATFORMS }}
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_java).include }}
+    uses: armckinney/cicd/.github/workflows/rwf-container-build-and-push.yaml@main
+    secrets: inherit
+    with:
+      dockerfile: ${{ matrix.dockerfile }}
+      image_name: ${{ matrix.image_name }}
+      image_tag: ${{ matrix.image_tag }}
+      platforms: linux/amd64,linux/arm64
 
   build-dotnet:
     needs: [get-builds, build-ubuntu]
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+    if: ${{ needs.get-builds.outputs.build_matrix_dotnet != '{"include":[]}' }}
     strategy:
       matrix:
-        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_dotnet).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_dotnet).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Build and push
-      id: docker_build
-      if: ${{ matrix.dockerfile != 'none' }}
-      uses: docker/build-push-action@v2
-      with:
-        context: ./
-        file: ${{ matrix.dockerfile }}
-        builder: ${{ steps.buildx.outputs.name }}
-        push: true
-        tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
-        platforms: ${{ env.PLATFORMS }}
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_dotnet).include }}
+    uses: armckinney/cicd/.github/workflows/rwf-container-build-and-push.yaml@main
+    secrets: inherit
+    with:
+      dockerfile: ${{ matrix.dockerfile }}
+      image_name: ${{ matrix.image_name }}
+      image_tag: ${{ matrix.image_tag }}
+      platforms: linux/amd64,linux/arm64
 
   build-terraform-azure:
     needs: [get-builds, build-terraform]
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+    if: ${{ needs.get-builds.outputs.build_matrix_terraform_azure != '{"include":[]}' }}
     strategy:
       matrix:
-        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Build and push
-      id: docker_build
-      if: ${{ matrix.dockerfile != 'none' }}
-      uses: docker/build-push-action@v2
-      with:
-        context: ./
-        file: ${{ matrix.dockerfile }}
-        builder: ${{ steps.buildx.outputs.name }}
-        push: true
-        tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
-        platforms: ${{ env.PLATFORMS }}
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include }}
+    uses: armckinney/cicd/.github/workflows/rwf-container-build-and-push.yaml@main
+    secrets: inherit
+    with:
+      dockerfile: ${{ matrix.dockerfile }}
+      image_name: ${{ matrix.image_name }}
+      image_tag: ${{ matrix.image_tag }}
+      platforms: linux/amd64,linux/arm64
 
   build-pyspark:
     needs: [get-builds, build-python]
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+    if: ${{ needs.get-builds.outputs.build_matrix_pyspark != '{"include":[]}' }}
     strategy:
       matrix:
-        include: ${{ (join(fromJson(needs.get-builds.outputs.build_matrix_pyspark).include, '') != '') && fromJson(needs.get-builds.outputs.build_matrix_pyspark).include || fromJson('[{"dockerfile":"none","image_name":"none","image_tag":"none"}]') }}
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Build and push
-      id: docker_build
-      if: ${{ matrix.dockerfile != 'none' }}
-      uses: docker/build-push-action@v2
-      with:
-        context: ./
-        file: ${{ matrix.dockerfile }}
-        builder: ${{ steps.buildx.outputs.name }}
-        push: true
-        tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.image_name }}:${{ matrix.image_tag }}
-        platforms: ${{ env.PLATFORMS }}
+        include: ${{ fromJson(needs.get-builds.outputs.build_matrix_pyspark).include }}
+    uses: armckinney/cicd/.github/workflows/rwf-container-build-and-push.yaml@main
+    secrets: inherit
+    with:
+      dockerfile: ${{ matrix.dockerfile }}
+      image_name: ${{ matrix.image_name }}
+      image_tag: ${{ matrix.image_tag }}
+      platforms: linux/amd64,linux/arm64

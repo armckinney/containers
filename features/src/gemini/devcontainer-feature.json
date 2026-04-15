@@ -1,0 +1,34 @@
+{
+  "id": "gemini",
+  "version": "1.0.0",
+  "name": "Gemini CLI",
+  "description": "Install Google's Gemini CLI via npm and mount local config files from the host. Includes VS Code code-assist extension for enhanced development experience.",
+  "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/gemini",
+  "options": {
+    "version": {
+      "description": "Version of Gemini CLI to install (or 'latest' for the newest version)",
+      "type": "string",
+      "default": "latest"
+    },
+    "nodeChannel": {
+      "description": "NodeSource channel to install for Node.js ('current' for latest stable, 'lts' for latest LTS)",
+      "type": "string",
+      "default": "current"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "google.gemini-cli-vscode-ide-companion",
+        "google.geminicodeassist"
+      ]
+    }
+  },
+  "mounts": [
+    {
+        "source": "${localEnv:HOME}/.gemini",
+        "target": "/root/.gemini",
+        "type": "bind"
+    }
+  ]
+}

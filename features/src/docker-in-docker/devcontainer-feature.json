@@ -1,0 +1,17 @@
+{
+  "id": "docker-in-docker",
+  "version": "1.0.0",
+  "name": "Docker-in-Docker",
+  "description": "Installs Docker inside the container using privileged mode. Allows running Docker commands from within the container.",
+  "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/docker-in-docker",
+  "options": {},
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+  "entrypoint": "/usr/local/share/docker-in-docker/start-dockerd.sh",
+  "privileged": true
+}

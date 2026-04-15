@@ -11,13 +11,13 @@ RUN mkdir /tmp/container \
     && cd /tmp/container \
     # install java major version to match databricks 16.4 runtime
     && curl -O https://cdn.azul.com/zulu/bin/zulu${ZULU_VERSION}-ca-jdk${JDK_VERSION}-linux_$(dpkg --print-architecture).deb \
-    && apt update && apt -y install \
+    && apt-get update && apt-get -y install \
         ./zulu${ZULU_VERSION}-ca-jdk${JDK_VERSION}-linux_$(dpkg --print-architecture).deb \
     # install pyspark
     && pipx install pyspark==${SPARK_VERSION} \
     # cleanup
-    && apt autoremove -y \
-    && apt clean -y \
+    && apt-get autoremove -y \
+    && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
 

@@ -1,0 +1,52 @@
+name: wf-features-release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'features/src/**/devcontainer-feature.json'
+      - 'features/src/**/*.sh'
+      - 'features/src/RELEASE.md'
+      - '.github/workflows/features-release.yaml'
+      - '.github/workflows/scripts/**'
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  publish-features:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get git tag or create version
+        id: version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            TAG=${GITHUB_REF#refs/tags/}
+          else
+            TAG="v1.0.0"
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Package feature tarballs
+        env:
+          FEATURES_DIR: features/src
+          RELEASE_DIR: feature-release
+        run: bash .github/workflows/scripts/package-features.sh
+
+      - name: Create or update GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.version.outputs.tag }}
+          name: "Features Release ${{ steps.version.outputs.tag }}"
+          bodyFile: features/src/RELEASE.md
+          artifacts: "feature-release/*.tgz"
+          replacesArtifacts: true
+          makeLatest: true

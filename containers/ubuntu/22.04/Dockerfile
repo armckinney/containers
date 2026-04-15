@@ -5,9 +5,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN mkdir /tmp/container \
     && cd /tmp/container \
-    && apt update \
+    && apt-get update \
     # primary installs
-    && apt -y install --no-install-recommends \
+    && apt-get -y install --no-install-recommends \
         apt-transport-https \
         apt-utils \
         ca-certificates \
@@ -17,11 +17,10 @@ RUN mkdir /tmp/container \
         gnupg \
         lsb-release \
     # cleanup
-    && apt autoremove -y \
-    && apt clean -y \
+    && apt-get autoremove -y \
+    && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
 
 # switch back to dialog for any ad-hoc use of apt
 ENV DEBIAN_FRONTEND=dialog
-

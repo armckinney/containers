@@ -5,7 +5,12 @@
   ],
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/containers",
+  "initializeCommand": "ln -snf ../features/src .devcontainer/features",
   "postCreateCommand": "cd $WORKSPACE/",
+  "features": {
+    "./features/docker-in-docker": {},
+    "./features/gemini": {}
+  },
   "customizations": {
     "vscode": {
       "settings": {

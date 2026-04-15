@@ -5,8 +5,7 @@ services:
       context: ..
     volumes:
       - ..:/workspaces/containers:cached
-      # docker-in-docker support
-      - /var/run/docker.sock:/var/run/docker.sock
       # git configuration mounting
       - ~/.gitconfig:/root/.gitconfig:ro
     command: /bin/sh -c "while sleep 1000; do :; done"
+    privileged: true
