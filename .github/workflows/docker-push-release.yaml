@@ -47,6 +47,7 @@ jobs:
 
   build-ubuntu:
     needs: [get-builds]
+    if: ${{ needs.get-builds.outputs.build_matrix_ubuntu != '{"include":[]}' }}
     strategy:
       matrix:
         include: ${{ fromJson(needs.get-builds.outputs.build_matrix_ubuntu).include }}
@@ -60,6 +61,7 @@ jobs:
 
   build-go:
     needs: [get-builds, build-ubuntu]
+    if: ${{ needs.get-builds.outputs.build_matrix_go != '{"include":[]}' }}
     strategy:
       matrix:
         include: ${{ fromJson(needs.get-builds.outputs.build_matrix_go).include }}
@@ -73,6 +75,7 @@ jobs:
 
   build-python:
     needs: [get-builds, build-ubuntu]
+    if: ${{ needs.get-builds.outputs.build_matrix_python != '{"include":[]}' }}
     strategy:
       matrix:
         include: ${{ fromJson(needs.get-builds.outputs.build_matrix_python).include }}
@@ -86,6 +89,7 @@ jobs:
 
   build-terraform:
     needs: [get-builds, build-ubuntu]
+    if: ${{ needs.get-builds.outputs.build_matrix_terraform != '{"include":[]}' }}
     strategy:
       matrix:
         include: ${{ fromJson(needs.get-builds.outputs.build_matrix_terraform).include }}
@@ -100,6 +104,7 @@ jobs:
 
   build-java:
     needs: [get-builds, build-ubuntu]
+    if: ${{ needs.get-builds.outputs.build_matrix_java != '{"include":[]}' }}
     strategy:
       matrix:
         include: ${{ fromJson(needs.get-builds.outputs.build_matrix_java).include }}
@@ -113,6 +118,7 @@ jobs:
 
   build-dotnet:
     needs: [get-builds, build-ubuntu]
+    if: ${{ needs.get-builds.outputs.build_matrix_dotnet != '{"include":[]}' }}
     strategy:
       matrix:
         include: ${{ fromJson(needs.get-builds.outputs.build_matrix_dotnet).include }}
@@ -126,6 +132,7 @@ jobs:
 
   build-terraform-azure:
     needs: [get-builds, build-terraform]
+    if: ${{ needs.get-builds.outputs.build_matrix_terraform_azure != '{"include":[]}' }}
     strategy:
       matrix:
         include: ${{ fromJson(needs.get-builds.outputs.build_matrix_terraform_azure).include }}
@@ -139,6 +146,7 @@ jobs:
 
   build-pyspark:
     needs: [get-builds, build-python]
+    if: ${{ needs.get-builds.outputs.build_matrix_pyspark != '{"include":[]}' }}
     strategy:
       matrix:
         include: ${{ fromJson(needs.get-builds.outputs.build_matrix_pyspark).include }}
