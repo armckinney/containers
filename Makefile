@@ -1,23 +1,4 @@
-.PHONY: test-features test-feature test-image set-version
-
-set-version:
-	@if [ -z "$(VERSION)" ]; then \
-		echo "Error: VERSION variable not set"; \
-		echo "Usage: make set-version VERSION=<semver>"; \
-		echo "Example: make set-version VERSION=v1.2.3"; \
-		exit 1; \
-	fi
-	@new_version="$(VERSION)"; \
-	case "$$new_version" in \
-		v*) ;; \
-		*) new_version="v$$new_version" ;; \
-	esac; \
-	if git tag --list "$$new_version" | grep -q .; then \
-		echo "Error: tag $$new_version already exists"; \
-		exit 1; \
-	fi; \
-	git tag "$$new_version"; \
-	echo "Created git tag: $$new_version"
+.PHONY: test-features test-feature test-image
 
 # Run all feature tests
 test-features:

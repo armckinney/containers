@@ -6,15 +6,17 @@ This release contains devcontainer features that can be consumed from other repo
 
 Add features to your `.devcontainer/devcontainer.json`:
 
+Replace `<VERSION>` with your release tag (for example `v1.2.3`).
+
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/v1.0.0/devcontainer-feature-docker-in-docker.tgz": {},
-    "https://github.com/armckinney/containers/releases/download/v1.0.0/devcontainer-feature-gemini.tgz": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-docker-in-docker.tgz": {},
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-gemini.tgz": {
       "version": "latest",
       "nodeChannel": "current"
     },
-    "https://github.com/armckinney/containers/releases/download/v1.0.0/devcontainer-feature-copilot.tgz": {}
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {}
   }
 }
 ```
@@ -30,7 +32,7 @@ Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI 
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/v1.0.0/devcontainer-feature-copilot.tgz": {}
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {}
   }
 }
 ```
@@ -46,7 +48,7 @@ Installs Docker inside the container using privileged mode. Allows running Docke
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/v1.0.0/devcontainer-feature-docker-in-docker.tgz": {}
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-docker-in-docker.tgz": {}
   }
 }
 ```
@@ -81,7 +83,7 @@ Installs Google's Gemini CLI via npm and mounts local config files from the host
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/v1.0.0/devcontainer-feature-gemini.tgz": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-gemini.tgz": {
       "version": "latest",
       "nodeChannel": "current"
     }
