@@ -87,15 +87,18 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v1
+
     - name: Build and push
       id: docker_build
       if: ${{ matrix.dockerfile != 'none' }}
@@ -118,15 +121,18 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v1
+
     - name: Build and push
       id: docker_build
       if: ${{ matrix.dockerfile != 'none' }}
@@ -149,15 +155,18 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v1
+
     - name: Build and push
       id: docker_build
       if: ${{ matrix.dockerfile != 'none' }}
@@ -180,15 +189,18 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v1
+
     - name: Build and push
       id: docker_build
       if: ${{ matrix.dockerfile != 'none' }}
@@ -211,15 +223,18 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v1
+
     - name: Build and push
       id: docker_build
       if: ${{ matrix.dockerfile != 'none' }}
@@ -242,15 +257,18 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v1
+
     - name: Build and push
       id: docker_build
       if: ${{ matrix.dockerfile != 'none' }}
@@ -273,15 +291,18 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v1
+
     - name: Build and push
       id: docker_build
       if: ${{ matrix.dockerfile != 'none' }}
@@ -304,15 +325,18 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v1
+      
     - name: Build and push
       id: docker_build
       if: ${{ matrix.dockerfile != 'none' }}

@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ghcr.io/armckinney/ubuntu:24.04
 
 # set workspace directory
 ARG WORKSPACE=/workspaces/containers
@@ -16,17 +16,15 @@ RUN mkdir /tmp/container \
         apt-transport-https \
         ca-certificates \
         curl \
-        wget \
         gnupg-agent \
         lsb-release \
         software-properties-common \
-    # docker signing keys
-    && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker-archive-keyring.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list \
+        wget \
     # primary installs
     && apt update && apt install -y \
-        docker-ce-cli \
         git \
+    # install devcontainer cli
+    && npm install -g @devcontainers/cli \
     # cleanup
     && apt autoremove -y \
     && apt clean -y \
