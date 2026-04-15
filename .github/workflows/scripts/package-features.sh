@@ -21,8 +21,8 @@ for feature_path in "$features_dir"/*/; do
   feature_id="$(basename "$feature_path")"
 
   echo "Packaging feature: $feature_id"
-  tar -czf "$release_dir/$feature_id.tgz" -C "$feature_path" .
-  echo "Packaged $feature_id to $release_dir/$feature_id.tgz"
+  tar -czf "$release_dir/devcontainer-feature-$feature_id.tgz" -C "$feature_path" .
+  echo "Packaged $feature_id to $release_dir/devcontainer-feature-$feature_id.tgz"
 done
 
 echo
