@@ -11,15 +11,15 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN mkdir /tmp/container \
     && cd /tmp/container \
     # supporting installs
-    && apt update && apt install -y --no-install-recommends \
+    && apt-get update && apt-get install -y --no-install-recommends \
         wget \
         build-essential \
     # primary installs
     # install go
     && curl -L "https://go.dev/dl/go${GO_VERSION}.linux-$(dpkg --print-architecture).tar.gz" | tar -C /usr/local -xz \
     # cleanup
-    && apt autoremove -y \
-    && apt clean -y \
+    && apt-get autoremove -y \
+    && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
 

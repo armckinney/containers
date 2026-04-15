@@ -10,7 +10,7 @@ RUN mkdir /tmp/container \
     # signing key locations
     && mkdir -p /etc/apt/keyrings \
     # supporting installs
-    && apt update && apt install -y \
+    && apt-get update && apt-get install -y \
         libicu-dev \
         wget \
     # microsoft signing keys & registry for azure-cli
@@ -18,12 +18,12 @@ RUN mkdir /tmp/container \
     && wget -O- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/keyrings/microsoft.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list \
     # primary installs
-    && apt update && ACCEPT_EULA=Y apt install -y  \
+    && apt-get update && ACCEPT_EULA=Y apt-get install -y  \
         azure-cli=${AZURE_CLI_VERSION}-1~$(lsb_release -cs) \
         jq \
     # cleanup
-    && apt autoremove -y \
-    && apt clean -y \
+    && apt-get autoremove -y \
+    && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
 

@@ -8,11 +8,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN mkdir /tmp/container \
     && cd /tmp/container \
     # primary installs
-    && apt update && apt -y install \
+    && apt-get update && apt-get -y install \
         dotnet-sdk-${DOTNET_VERSION}  \
     # cleanup
-    && apt autoremove -y \
-    && apt clean -y \
+    && apt-get autoremove -y \
+    && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
 

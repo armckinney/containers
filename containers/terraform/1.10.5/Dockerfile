@@ -13,14 +13,14 @@ RUN mkdir /tmp/container \
     # signing key locations
     && mkdir -p /etc/apt/keyrings \
     # supporting installs
-    && apt update && apt install -y \
+    && apt-get update && apt-get install -y \
         software-properties-common \
         unzip \
     # terraform keys & registry
     && curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /etc/apt/keyrings/hashicorp-archive-keyring.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list \
     # primary installs
-    && apt update && ACCEPT_EULA=Y apt install -y  \
+    && apt-get update && ACCEPT_EULA=Y apt-get install -y  \
         terraform=${TERRAFORM_VERSION}-1 \
     # install trivy
     && curl -fsSLo trivy.tar.gz "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_$(uname)-$(case $(dpkg --print-architecture) in amd64) echo "64bit" ;; arm64) echo "ARM64" ;; esac).tar.gz" \
@@ -37,8 +37,8 @@ RUN mkdir /tmp/container \
     && unzip -o tflint.zip \
     && mv tflint /usr/local/bin/tflint \
     # cleanup
-    && apt autoremove -y \
-    && apt clean -y \
+    && apt-get autoremove -y \
+    && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
 
