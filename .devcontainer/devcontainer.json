@@ -35,7 +35,6 @@
         "ms-azuretools.vscode-docker",
         "yzhang.markdown-all-in-one",
         "bierner.markdown-mermaid",
-        "google.geminicodeassist",
         "github.vscode-github-actions"
       ]
     }

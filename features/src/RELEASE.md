@@ -9,11 +9,28 @@ Add features to your `.devcontainer/devcontainer.json`:
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/v1.0.0/docker-in-docker.tgz": {},
-    "https://github.com/armckinney/containers/releases/download/v1.0.0/gemini.tgz": {
+    "https://github.com/armckinney/containers/releases/download/v1.0.0/devcontainer-feature-docker-in-docker.tgz": {},
+    "https://github.com/armckinney/containers/releases/download/v1.0.0/devcontainer-feature-gemini.tgz": {
       "version": "latest",
       "nodeChannel": "current"
-    }
+    },
+    "https://github.com/armckinney/containers/releases/download/v1.0.0/devcontainer-feature-copilot.tgz": {}
+  }
+}
+```
+
+---
+
+## GitHub Copilot
+
+Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI extension is installed automatically when GitHub authentication is available. Host config is mounted read-only from `${localEnv:HOME}/.config` to `/root/.config` so GitHub CLI can automatically read `/root/.config/gh` when present.
+
+### Usage
+
+```jsonc
+{
+  "features": {
+    "https://github.com/armckinney/containers/releases/download/v1.0.0/devcontainer-feature-copilot.tgz": {}
   }
 }
 ```
@@ -29,7 +46,7 @@ Installs Docker inside the container using privileged mode. Allows running Docke
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/v1.0.0/docker-in-docker.tgz": {}
+    "https://github.com/armckinney/containers/releases/download/v1.0.0/devcontainer-feature-docker-in-docker.tgz": {}
   }
 }
 ```
@@ -64,7 +81,7 @@ Installs Google's Gemini CLI via npm and mounts local config files from the host
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/v1.0.0/gemini.tgz": {
+    "https://github.com/armckinney/containers/releases/download/v1.0.0/devcontainer-feature-gemini.tgz": {
       "version": "latest",
       "nodeChannel": "current"
     }

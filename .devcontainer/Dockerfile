@@ -18,6 +18,8 @@ RUN mkdir /tmp/container \
         curl \
         gnupg-agent \
         lsb-release \
+        nodejs \
+        npm \
         software-properties-common \
         wget \
     # primary installs
@@ -30,6 +32,9 @@ RUN mkdir /tmp/container \
     && apt clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
+
+# standard config path used by copilot feature, required for testing
+RUN mkdir -p /root/.config/gh
 
 WORKDIR ${WORKSPACE}
 
