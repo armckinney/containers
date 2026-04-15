@@ -31,7 +31,14 @@ jobs:
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             TAG=${GITHUB_REF#refs/tags/}
           else
-            TAG="v1.0.0"
+            git fetch --tags --quiet
+            LATEST=$(git tag --list 'v*' --sort=-version:refname | head -n1)
+            if [[ -z "$LATEST" ]]; then
+              TAG="v1.0.0"
+            else
+              IFS='.' read -r MAJOR MINOR PATCH <<< "${LATEST#v}"
+              TAG="v${MAJOR}.${MINOR}.$((PATCH + 1))"
+            fi
           fi
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
 
