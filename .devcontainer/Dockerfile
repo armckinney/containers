@@ -33,8 +33,8 @@ RUN mkdir /tmp/container \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
 
-# standard config path used by copilot feature, required for testing
-RUN mkdir -p /root/.config/gh
+# standard config paths used by feature tests
+RUN mkdir -p /root/.copilot /root/.gemini
 
 WORKDIR ${WORKSPACE}
 

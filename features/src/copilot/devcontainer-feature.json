@@ -2,13 +2,13 @@
   "id": "copilot",
   "version": "1.0.0",
   "name": "GitHub Copilot",
-  "description": "Installs GitHub CLI and configures GitHub Copilot VS Code extensions. Attempts to install gh-copilot when authentication is available.",
+  "description": "Installs the GitHub Copilot CLI and configures GitHub Copilot VS Code extensions.",
   "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/copilot",
   "options": {},
   "mounts": [
     {
-      "source": "${localEnv:HOME}/.config",
-      "target": "/root/.config",
+      "source": "${localEnv:HOME}/.copilot",
+      "target": "/root/.copilot",
       "type": "bind"
     }
   ],

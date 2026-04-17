@@ -9,7 +9,7 @@
   "postCreateCommand": "cd $WORKSPACE/",
   "features": {
     "./features/docker-in-docker": {},
-    "./features/gemini": {}
+    "./features/copilot": {}
   },
   "customizations": {
     "vscode": {
