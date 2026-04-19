@@ -1,0 +1,39 @@
+{
+  "id": "vscode-customizations",
+  "version": "1.0.0",
+  "name": "VS Code Customizations",
+  "description": "Applies standardized VS Code customizations for a consistent development environment.",
+  "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/vscode-customizations",
+  "options": {},
+  "mounts": [],
+  "customizations": {
+    "vscode": {
+      "terminal.integrated.profiles.linux": {
+        "bash": {
+          "path": "bash",
+          "icon": "terminal-bash"
+        }
+      },
+      "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/bin": true,
+        "**/obj": true,
+        "**/.vs": true
+      },
+      "editor.formatOnSave": true,
+      "[dockerfile]": {
+        "editor.formatOnSave": false
+      },
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "yzhang.markdown-all-in-one",
+        "bierner.markdown-mermaid",
+        "github.vscode-github-actions"
+      ]
+    }
+  }
+}

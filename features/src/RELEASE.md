@@ -16,7 +16,8 @@ Replace `<VERSION>` with your release tag (for example `v1.2.3`).
       "version": "latest",
       "nodeChannel": "current"
     },
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {}
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {},
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-vscode-customizations.tgz": {}
   }
 }
 ```
@@ -126,6 +127,33 @@ node --version
 npm --version
 gemini --version
 ```
+
+---
+
+## VS Code Customizations
+
+Applies standardized VS Code settings and extension recommendations for a consistent development environment.
+
+### Usage
+
+```jsonc
+{
+  "features": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-vscode-customizations.tgz": {}
+  }
+}
+```
+
+### Features
+
+- Standardized terminal profile for Linux bash
+- Common file exclusions for generated and metadata directories
+- Editor save-formatting defaults, including Dockerfile override
+- VS Code extensions:
+  - `ms-azuretools.vscode-docker`
+  - `yzhang.markdown-all-in-one`
+  - `bierner.markdown-mermaid`
+  - `github.vscode-github-actions`
 
 ---
 
