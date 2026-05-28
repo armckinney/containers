@@ -1,6 +1,6 @@
 {
   "id": "copilot",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "name": "GitHub Copilot",
   "description": "Installs the GitHub Copilot CLI and configures GitHub Copilot VS Code extensions.",
   "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/copilot",

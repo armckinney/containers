@@ -12,10 +12,7 @@ Replace `<VERSION>` with your release tag (for example `v1.2.3`).
 {
   "features": {
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-docker-in-docker.tgz": {},
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-gemini.tgz": {
-      "version": "latest",
-      "nodeChannel": "current"
-    },
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-vscode-customizations.tgz": {}
   }
@@ -75,57 +72,33 @@ tail -n 100 /var/log/dockerd.log
 
 ---
 
-## Gemini CLI
+## Antigravity CLI
 
-Installs Google's Gemini CLI via npm and mounts local config files from the host. Includes VS Code code-assist extensions for enhanced development experience.
+Installs Google's Antigravity CLI (`agy`) and mounts local config files from the host.
 
 ### Usage
 
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-gemini.tgz": {
-      "version": "latest",
-      "nodeChannel": "current"
-    }
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {}
   }
 }
 ```
 
 ### Options
 
-#### `version`
-- **Type**: string
-- **Default**: `latest`
-- **Description**: Version of Gemini CLI to install (or 'latest' for the newest version)
-
-#### `nodeChannel`
-- **Type**: string  
-- **Default**: `current`
-- **Description**: NodeSource channel to install for Node.js
-  - `current`: Latest stable Node.js version
-  - `lts`: Latest LTS Node.js version
+There are no standard options for this feature.
 
 ### Features
 
-- Automatic Node.js installation via NodeSource
-- Google Gemini CLI installation
-- VS Code extensions:
-  - `google.gemini-cli-vscode-ide-companion`
-  - `google.geminicodeassist`
-- Host config file mounting at `~/.gemini`
-
-### Prerequisites
-
-- Requires Node.js 20+ (Gemini CLI requirement)
-- The feature automatically installs compatible Node.js versions via NodeSource
+- Google Antigravity CLI (`agy`) installation
+- Host config directory mounting at `~/.gemini/antigravity-cli`
 
 ### Verify Installation
 
 ```bash
-node --version
-npm --version
-gemini --version
+agy --version
 ```
 
 ---
@@ -159,6 +132,5 @@ Applies standardized VS Code settings and extension recommendations for a consis
 
 ## Resources
 
-- [Google Gemini Documentation](https://ai.google.dev/)
-- [NodeSource Repository](https://nodesource.com/blog/nodejs-and-npm/)
+- [Google Antigravity Documentation](https://antigravity.google)
 - [VS Code Docker Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)

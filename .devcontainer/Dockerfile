@@ -34,7 +34,8 @@ RUN mkdir /tmp/container \
     && rm -rf /tmp/container
 
 # standard config paths used by feature tests
-RUN mkdir -p /root/.copilot /root/.gemini
+# FIXME: this should be injected before test-time and not in the container - causes build mount mismatch issues
+RUN mkdir -p /root/.copilot /root/.gemini/
 
 WORKDIR ${WORKSPACE}
 

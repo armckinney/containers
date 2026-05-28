@@ -1,6 +1,6 @@
 {
   "id": "docker-in-docker",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "name": "Docker-in-Docker",
   "description": "Installs Docker inside the container using privileged mode. Allows running Docker commands from within the container.",
   "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/docker-in-docker",
