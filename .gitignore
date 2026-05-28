@@ -5,3 +5,6 @@
 # devcontainer features
 .devcontainer/features
 .devcontainer/features/**
+
+# workspace agents
+.antigravitycli

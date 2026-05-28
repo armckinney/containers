@@ -10,6 +10,7 @@
   "features": {
     "./features/docker-in-docker": {},
     "./features/copilot": {},
+    "./features/antigravity": {},
     "./features/vscode-customizations": {}
   }
 }

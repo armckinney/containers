@@ -1,6 +1,6 @@
 {
   "id": "vscode-customizations",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "name": "VS Code Customizations",
   "description": "Applies standardized VS Code customizations for a consistent development environment.",
   "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/vscode-customizations",
