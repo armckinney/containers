@@ -23,8 +23,9 @@ echo -e "---\nname: Docker Build\n---\n# Docker Build\nRules..." > docs/agents/s
 # Test 3: Verify Copilot central instructions symlink exists
 check "Copilot central rules symlink exists" [ -L ".github/copilot-instructions.md" ]
 
-# Test 4: Verify Copilot path-scoped context instructions symlink exists
-check "Copilot path-scoped instructions symlink exists" [ -L ".github/instructions/docker-build.instructions.md" ]
+# Test 4: Verify Copilot path-scoped context instructions directory symlink exists
+check "Copilot instructions directory symlink exists" [ -L ".github/instructions" ]
+check "Copilot path-scoped instruction file exists" [ -f ".github/instructions/docker-build.instructions.md" ]
 
 # Test 5: Verify Copilot prompts symlink exists
 check "Copilot prompts symlink exists" [ -L ".github/prompts/docker-build.prompt.md" ]

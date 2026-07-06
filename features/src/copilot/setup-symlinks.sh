@@ -33,18 +33,13 @@ fi
 if [ -n "${CONTEXT_PATH}" ] && [ "${CONTEXT_PATH}" != "none" ] && [ "${CONTEXT_PATH}" != "false" ]; then
     if [ -d "${WORKSPACE_ROOT}/${CONTEXT_PATH}" ]; then
         echo "Mapping path-scoped Copilot instructions..."
-        mkdir -p "${WORKSPACE_ROOT}/${TARGET_SUBDIR}/instructions"
+        mkdir -p "${WORKSPACE_ROOT}/${TARGET_SUBDIR}"
 
-        # Remove any stale/dangling instructions symlinks
-        rm -f "${WORKSPACE_ROOT}/${TARGET_SUBDIR}/instructions"/*.instructions.md
+        # Remove any stale instructions directory or symlink
+        rm -rf "${WORKSPACE_ROOT}/${TARGET_SUBDIR}/instructions"
 
-        # Symlink each context instruction file
-        for inst_file in "${WORKSPACE_ROOT}/${CONTEXT_PATH}"/*.instructions.md; do
-            if [ -f "${inst_file}" ]; then
-                file_name=$(basename "${inst_file}")
-                ln -sf "../../${CONTEXT_PATH}/${file_name}" "${WORKSPACE_ROOT}/${TARGET_SUBDIR}/instructions/${file_name}"
-            fi
-        done
+        # Symlink the context directory directly
+        ln -sf "../${CONTEXT_PATH}" "${WORKSPACE_ROOT}/${TARGET_SUBDIR}/instructions"
     fi
 fi
 
