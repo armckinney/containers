@@ -4,6 +4,12 @@ This release contains devcontainer features that can be consumed from other repo
 
 ## Quick Start
 
+### Table of Contents
+- [Antigravity CLI](#antigravity-cli)
+- [Docker-in-Docker](#docker-in-docker)
+- [GitHub Copilot](#github-copilot)
+- [VS Code Customizations](#vs-code-customizations)
+
 Add features to your `.devcontainer/devcontainer.json`:
 
 Replace `<VERSION>` with your release tag (for example `v1.2.3`).
@@ -11,8 +17,8 @@ Replace `<VERSION>` with your release tag (for example `v1.2.3`).
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-docker-in-docker.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {},
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-docker-in-docker.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-vscode-customizations.tgz": {}
   }
@@ -21,34 +27,49 @@ Replace `<VERSION>` with your release tag (for example `v1.2.3`).
 
 ---
 
-## GitHub Copilot
+## Antigravity CLI
 
-Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI extension is installed automatically when GitHub authentication is available. Host config is mounted read-only from `${localEnv:HOME}/.config` to `/root/.config` so GitHub CLI can automatically read `/root/.config/gh` when present.
+Installs Google's Antigravity CLI (`agy`) and mounts local config files from the host.
 
 ### Usage
 
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {}
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {}
   }
 }
 ```
 
 ### Options
 
-- `rulefilePath`: Path to the central rules file, relative to the workspace root. Default is `AGENTS.md`. Set to `"none"`, `"false"`, or `""` (empty string) to disable rules symlinking.
+- `rulefilePath`: Path to the central rules file, relative to the workspace root. Default is `docs/agents/AGENTS.md`. Set to `"none"`, `"false"`, or `""` (empty string) to disable rules symlinking.
+- `contextPath`: Path to the path-scoped instructions directory, relative to the workspace root. Default is `docs/agents/context`. Set to `"none"`, `"false"`, or `""` (empty string) to disable context mapping.
+- `skillsPath`: Path to the modular skills directory, relative to the workspace root. Default is `docs/agents/skills`. Set to `"none"`, `"false"`, or `""` (empty string) to disable skills mapping.
 
 #### Example
 
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {
-      "rulefilePath": "AGENTS.md"
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {
+      "rulefilePath": "docs/agents/AGENTS.md",
+      "contextPath": "docs/agents/context",
+      "skillsPath": "docs/agents/skills"
     }
   }
 }
+```
+
+### Features
+
+- Google Antigravity CLI (`agy`) installation
+- Host config directory mounting at `~/.gemini/antigravity-cli`
+
+### Verify Installation
+
+```bash
+agy --version
 ```
 
 ---
@@ -88,45 +109,38 @@ tail -n 100 /var/log/dockerd.log
 
 ---
 
-## Antigravity CLI
+## GitHub Copilot
 
-Installs Google's Antigravity CLI (`agy`) and mounts local config files from the host.
+Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI extension is installed automatically when GitHub authentication is available. Host config is mounted read-only from `${localEnv:HOME}/.config` to `/root/.config` so GitHub CLI can automatically read `/root/.config/gh` when present.
 
 ### Usage
 
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {}
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {}
   }
 }
 ```
 
 ### Options
 
-- `rulefilePath`: Path to the central rules file, relative to the workspace root. Default is `AGENTS.md`. Set to `"none"`, `"false"`, or `""` (empty string) to disable rules symlinking.
+- `rulefilePath`: Path to the central rules file, relative to the workspace root. Default is `docs/agents/AGENTS.md`. Set to `"none"`, `"false"`, or `""` (empty string) to disable rules symlinking.
+- `contextPath`: Path to the path-scoped instructions directory, relative to the workspace root. Default is `docs/agents/context`. Set to `"none"`, `"false"`, or `""` (empty string) to disable context mapping.
+- `skillsPath`: Path to the modular skills directory, relative to the workspace root. Default is `docs/agents/skills`. Set to `"none"`, `"false"`, or `""` (empty string) to disable skills mapping.
 
 #### Example
 
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {
-      "rulefilePath": "AGENTS.md"
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {
+      "rulefilePath": "docs/agents/AGENTS.md",
+      "contextPath": "docs/agents/context",
+      "skillsPath": "docs/agents/skills"
     }
   }
 }
-```
-
-### Features
-
-- Google Antigravity CLI (`agy`) installation
-- Host config directory mounting at `~/.gemini/antigravity-cli`
-
-### Verify Installation
-
-```bash
-agy --version
 ```
 
 ---

@@ -1,8 +1,11 @@
 ---
-applyTo: "containers/**"
+name: Development Tasks
+description: Step-by-step instructions for adding new container images or modifying existing ones.
+applyTo:
+  - containers/**
 ---
 
-# Development Tasks Instructions
+# Development Tasks
 
 ## Adding New Images
 
@@ -14,7 +17,7 @@ applyTo: "containers/**"
 
 ## Modifying Existing Images
 
-1. **ALWAYS** build and test the image locally first
-2. Understand dependency chain - changes to base images affect dependent images
-3. Test functionality with real scenarios, not just build success
-4. Update version numbers if making significant changes
+1. **ALWAYS** build and test the image locally first.
+2. Understand dependency chain - changes to base images affect dependent images.
+3. Test functionality with real scenarios, not just build success.
+4. Update version numbers if making significant changes.

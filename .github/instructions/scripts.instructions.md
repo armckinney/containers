@@ -1,0 +1,1 @@
+../../docs/agents/context/scripts.instructions.md
