@@ -35,6 +35,22 @@ Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI 
 }
 ```
 
+### Options
+
+- `rulefilePath`: Path to the central rules file, relative to the workspace root. Default is `AGENTS.md`. Set to `"none"`, `"false"`, or `""` (empty string) to disable rules symlinking.
+
+#### Example
+
+```jsonc
+{
+  "features": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {
+      "rulefilePath": "AGENTS.md"
+    }
+  }
+}
+```
+
 ---
 
 ## Docker-in-Docker
@@ -88,7 +104,19 @@ Installs Google's Antigravity CLI (`agy`) and mounts local config files from the
 
 ### Options
 
-There are no standard options for this feature.
+- `rulefilePath`: Path to the central rules file, relative to the workspace root. Default is `AGENTS.md`. Set to `"none"`, `"false"`, or `""` (empty string) to disable rules symlinking.
+
+#### Example
+
+```jsonc
+{
+  "features": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {
+      "rulefilePath": "AGENTS.md"
+    }
+  }
+}
+```
 
 ### Features
 

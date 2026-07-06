@@ -10,9 +10,8 @@ check "GitHub Copilot CLI is installed" command -v copilot
 # Test 2: Verify GitHub Copilot CLI help works
 check "GitHub Copilot CLI help works" copilot help
 
-# Test 3: Verify default rules symlink exists and points to central rules file
-check "Default rules symlink exists" [ -L ".github/copilot-instructions.md" ]
-check "Default rule file exists" [ -f "AGENTS.md" ]
+# Test 3: Verify symlink does not exist
+check "Rules symlink is disabled" [ ! -f ".github/copilot-instructions.md" ]
 
 # Report results
 reportResults

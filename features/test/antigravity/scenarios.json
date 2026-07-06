@@ -1,0 +1,10 @@
+{
+  "symlink_disabled": {
+    "image": "ubuntu:focal",
+    "features": {
+      "antigravity": {
+        "rulefilePath": "none"
+      }
+    }
+  }
+}
