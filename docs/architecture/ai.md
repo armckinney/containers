@@ -45,12 +45,12 @@ AI mapping is automated at container startup using feature configurations. In yo
 {
   "name": "My Workspace",
   "features": {
-    "ghcr.io/armckinney/containers/copilot:1": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {
       "rulefilePath": "docs/agents/AGENTS.md",
       "contextPath": "docs/agents/context",
       "skillsPath": "docs/agents/skills"
     },
-    "ghcr.io/armckinney/containers/antigravity:1": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {
       "rulefilePath": "docs/agents/AGENTS.md",
       "contextPath": "docs/agents/context",
       "skillsPath": "docs/agents/skills"
