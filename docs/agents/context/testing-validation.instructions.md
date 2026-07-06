@@ -1,8 +1,11 @@
 ---
-applyTo: "containers/**"
+name: Testing & Validation
+description: Detailed manual validation commands and end-to-end testing scenarios.
+applyTo:
+  - containers/**
 ---
 
-# Testing and Validation Instructions
+# Testing and Validation
 
 ## Manual Validation Steps
 
@@ -37,8 +40,8 @@ applyTo: "containers/**"
 
 ## Validation Requirements
 
-- **No traditional tests**: Validation is through successful Docker builds and basic functionality tests
-- **ALWAYS validate functionality** after building, not just build success
+- **No traditional tests**: Validation is through successful Docker builds and basic functionality tests.
+- **ALWAYS validate functionality** after building, not just build success.
 
 ## Timing Reference
 

@@ -1,10 +1,26 @@
 {
   "id": "copilot",
-  "version": "1.1.0",
+  "version": "1.5.0",
   "name": "GitHub Copilot",
   "description": "Installs the GitHub Copilot CLI and configures GitHub Copilot VS Code extensions.",
   "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/copilot",
-  "options": {},
+  "options": {
+    "rulefilePath": {
+      "type": "string",
+      "default": "docs/agents/AGENTS.md",
+      "description": "Path to the central rules file, relative to the workspace root. Set to 'none' or leave empty to disable symlinking."
+    },
+    "contextPath": {
+      "type": "string",
+      "default": "docs/agents/context",
+      "description": "Path to the path-scoped instructions directory, relative to the workspace root. Set to 'none' or leave empty to disable context mapping."
+    },
+    "skillsPath": {
+      "type": "string",
+      "default": "docs/agents/skills",
+      "description": "Path to the modular skills directory, relative to the workspace root. Set to 'none' or leave empty to disable skills mapping."
+    }
+  },
   "mounts": [
     {
       "source": "${localEnv:HOME}/.copilot",
@@ -19,5 +35,6 @@
         "GitHub.copilot-chat"
       ]
     }
-  }
+  },
+  "postCreateCommand": "/usr/local/share/copilot/setup-symlinks.sh"
 }

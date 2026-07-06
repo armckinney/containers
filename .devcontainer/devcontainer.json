@@ -9,8 +9,16 @@
   "postCreateCommand": "cd $WORKSPACE/",
   "features": {
     "./features/docker-in-docker": {},
-    "./features/copilot": {},
-    "./features/antigravity": {},
+    "./features/copilot": {
+      "rulefilePath": "docs/agents/AGENTS.md",
+      "contextPath": "docs/agents/context",
+      "skillsPath": "docs/agents/skills"
+    },
+    "./features/antigravity": {
+      "rulefilePath": "docs/agents/AGENTS.md",
+      "contextPath": "docs/agents/context",
+      "skillsPath": "docs/agents/skills"
+    },
     "./features/vscode-customizations": {}
   }
 }

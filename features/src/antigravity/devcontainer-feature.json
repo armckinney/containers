@@ -1,15 +1,32 @@
 {
   "id": "antigravity",
-  "version": "1.1.0",
+  "version": "1.5.0",
   "name": "Antigravity CLI",
   "description": "Installs Google's Antigravity CLI (agy) and mounts local config files from the host.",
   "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/antigravity",
-  "options": {},
+  "options": {
+    "rulefilePath": {
+      "type": "string",
+      "default": "docs/agents/AGENTS.md",
+      "description": "Path to the central rules file, relative to the workspace root. Set to 'none' or leave empty to disable symlinking."
+    },
+    "contextPath": {
+      "type": "string",
+      "default": "docs/agents/context",
+      "description": "Path to the path-scoped instructions directory, relative to the workspace root. Set to 'none' or leave empty to disable context mapping."
+    },
+    "skillsPath": {
+      "type": "string",
+      "default": "docs/agents/skills",
+      "description": "Path to the modular skills directory, relative to the workspace root. Set to 'none' or leave empty to disable skills mapping."
+    }
+  },
   "mounts": [
     {
       "source": "${localEnv:HOME}/.gemini",
       "target": "/root/.gemini",
       "type": "bind"
     }
-  ]
+  ],
+  "postCreateCommand": "/usr/local/share/antigravity/setup-symlinks.sh"
 }

@@ -1,5 +1,8 @@
 ---
-applyTo: "**"
+name: Repository Overview
+description: High-level overview of the layered image hierarchy and repository directory layout.
+applyTo:
+  - "**"
 ---
 
 # Repository Overview
