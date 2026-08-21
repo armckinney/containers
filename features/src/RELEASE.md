@@ -29,7 +29,7 @@ Replace `<VERSION>` with your release tag (for example `v1.2.3`).
 
 ## Antigravity CLI
 
-Installs Google's Antigravity CLI (`agy`) and mounts local config files from the host.
+Installs Google's Antigravity CLI (`agy`), mounts local config files from the host, and configures the Google Antigravity VS Code extension.
 
 ### Usage
 
@@ -65,6 +65,8 @@ Installs Google's Antigravity CLI (`agy`) and mounts local config files from the
 
 - Google Antigravity CLI (`agy`) installation
 - Host config directory mounting at `~/.gemini/antigravity-cli`
+- VS Code extension:
+  - `google.google-antigravity`
 
 ### Verify Installation
 
