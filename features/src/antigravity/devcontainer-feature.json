@@ -28,5 +28,12 @@
       "type": "bind"
     }
   ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "google.google-antigravity"
+      ]
+    }
+  },
   "postCreateCommand": "/usr/local/share/antigravity/setup-symlinks.sh"
 }
