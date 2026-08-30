@@ -6,6 +6,7 @@ This release contains devcontainer features that can be consumed from other repo
 
 ### Table of Contents
 - [Antigravity CLI](#antigravity-cli)
+- [Antigravity Remote Control](#antigravity-remote-control)
 - [Docker-in-Docker](#docker-in-docker)
 - [GitHub Copilot](#github-copilot)
 - [VS Code Customizations](#vs-code-customizations)
@@ -18,6 +19,7 @@ Replace `<VERSION>` with your release tag (for example `v1.2.3`).
 {
   "features": {
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {},
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity-remote.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-docker-in-docker.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-vscode-customizations.tgz": {}
@@ -73,6 +75,65 @@ Installs Google's Antigravity CLI (`agy`), mounts local config files from the ho
 ```bash
 agy --version
 ```
+
+---
+
+## Antigravity Remote Control
+
+Installs the Antigravity CLI and configures the headless Remote Control daemon. The daemon automatically launches on container startup.
+
+### Usage
+
+```jsonc
+{
+  "features": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity-remote.tgz": {}
+  }
+}
+```
+
+### Options
+
+- `registrationName`: Custom registration/session name for this Antigravity Remote daemon (e.g. `"my-box"`). Will be prefixed with `devcontainer-`. If omitted or empty, a persistent unique GUID is automatically generated and saved with `devcontainer-` prefix.
+
+#### Example
+
+```jsonc
+{
+  "features": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity-remote.tgz": {
+      "registrationName": "my-box"
+    }
+  }
+}
+```
+
+### Features
+
+- Antigravity CLI (`agy`) installation and PATH configuration
+- Headless Remote Control daemon auto-startup via container entrypoint
+- Host config and state directory bind mounts (`${localEnv:HOME}/.gemini` and `${localEnv:HOME}/.antigravity`) ensuring seamless authentication and session persistence across rebuilds
+- Idempotent daemon start script (`/usr/local/share/antigravity-remote/start-daemon.sh`)
+- Daemon execution log written to `/root/.antigravity/agy_daemon.log`
+
+### Running Headless on a Desktop Machine for Remote Access
+
+To keep the devcontainer and its Antigravity Remote Control daemon running on your desktop or laptop even when you are away from your desk:
+
+1. **Start the container headlessly** via `@devcontainers/cli` (no need to keep VS Code open):
+   ```bash
+   devcontainer up --workspace-folder .
+   ```
+
+2. **Prevent system sleep while plugged in**:
+   - **macOS**: In *System Settings > Energy Saver* (or *Displays / Lock Screen*), enable **"Prevent automatic sleeping on power adapter when the display is off"** (or run `caffeinate -d` in a terminal).
+   - **Windows / Linux**: Set power sleep timeout to **"Never"** when plugged into power.
+
+3. **Lock the screen instead of logging out**:
+   - Lock your screen (<kbd>Cmd</kbd> + <kbd>Ctrl</kbd> + <kbd>Q</kbd> on macOS, <kbd>Win</kbd> + <kbd>L</kbd> on Windows).
+   - Docker Desktop and the container daemon will continue running in the background.
+
+You can now connect to and control your desktop container from anywhere via [https://antigravity.google.com/](https://antigravity.google.com/).
 
 ---
 
