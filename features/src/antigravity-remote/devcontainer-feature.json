@@ -1,0 +1,27 @@
+{
+  "id": "antigravity-remote",
+  "version": "1.5.0",
+  "name": "Antigravity Remote Control",
+  "description": "Installs the Antigravity CLI and configures the headless Remote Control daemon.",
+  "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/antigravity-remote",
+  "options": {
+    "registrationName": {
+      "type": "string",
+      "default": "",
+      "description": "Custom registration/session name for this Antigravity Remote daemon (e.g., 'my-box'). Will be prefixed with 'devcontainer-'. If omitted or empty, a persistent unique GUID is automatically generated with 'devcontainer-' prefix."
+    }
+  },
+  "mounts": [
+    {
+      "source": "${localEnv:HOME}/.gemini",
+      "target": "/root/.gemini",
+      "type": "bind"
+    },
+    {
+      "source": "${localEnv:HOME}/.antigravity",
+      "target": "/root/.antigravity",
+      "type": "bind"
+    }
+  ],
+  "entrypoint": "/usr/local/share/antigravity-remote/entrypoint.sh"
+}

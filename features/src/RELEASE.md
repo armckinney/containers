@@ -6,6 +6,7 @@ This release contains devcontainer features that can be consumed from other repo
 
 ### Table of Contents
 - [Antigravity CLI](#antigravity-cli)
+- [Antigravity Remote Control](#antigravity-remote-control)
 - [Docker-in-Docker](#docker-in-docker)
 - [GitHub Copilot](#github-copilot)
 - [VS Code Customizations](#vs-code-customizations)
@@ -18,6 +19,7 @@ Replace `<VERSION>` with your release tag (for example `v1.2.3`).
 {
   "features": {
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {},
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity-remote.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-docker-in-docker.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-vscode-customizations.tgz": {}
@@ -73,6 +75,46 @@ Installs Google's Antigravity CLI (`agy`), mounts local config files from the ho
 ```bash
 agy --version
 ```
+
+---
+
+## Antigravity Remote Control
+
+Installs the Antigravity CLI and configures the headless Remote Control daemon. The daemon automatically launches on container startup.
+
+### Usage
+
+```jsonc
+{
+  "features": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity-remote.tgz": {}
+  }
+}
+```
+
+### Options
+
+- `registrationName`: Custom registration/session name for this Antigravity Remote daemon (e.g. `"my-box"`). Will be prefixed with `devcontainer-`. If omitted or empty, a persistent unique GUID is automatically generated and saved with `devcontainer-` prefix.
+
+#### Example
+
+```jsonc
+{
+  "features": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity-remote.tgz": {
+      "registrationName": "my-box"
+    }
+  }
+}
+```
+
+### Features
+
+- Antigravity CLI (`agy`) installation and PATH configuration
+- Headless Remote Control daemon auto-startup via container entrypoint
+- Host config and state directory bind mounts (`${localEnv:HOME}/.gemini` and `${localEnv:HOME}/.antigravity`) ensuring seamless authentication and session persistence across rebuilds
+- Idempotent daemon start script (`/usr/local/share/antigravity-remote/start-daemon.sh`)
+- Daemon execution log written to `/root/.antigravity/agy_daemon.log`
 
 ---
 

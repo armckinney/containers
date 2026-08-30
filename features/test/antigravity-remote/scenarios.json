@@ -1,0 +1,10 @@
+{
+  "custom_name": {
+    "image": "ubuntu:focal",
+    "features": {
+      "antigravity-remote": {
+        "registrationName": "test-feature-antigravity-remote"
+      }
+    }
+  }
+}
