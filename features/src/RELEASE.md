@@ -116,6 +116,25 @@ Installs the Antigravity CLI and configures the headless Remote Control daemon. 
 - Idempotent daemon start script (`/usr/local/share/antigravity-remote/start-daemon.sh`)
 - Daemon execution log written to `/root/.antigravity/agy_daemon.log`
 
+### Running Headless on a Desktop Machine for Remote Access
+
+To keep the devcontainer and its Antigravity Remote Control daemon running on your desktop or laptop even when you are away from your desk:
+
+1. **Start the container headlessly** via `@devcontainers/cli` (no need to keep VS Code open):
+   ```bash
+   devcontainer up --workspace-folder .
+   ```
+
+2. **Prevent system sleep while plugged in**:
+   - **macOS**: In *System Settings > Energy Saver* (or *Displays / Lock Screen*), enable **"Prevent automatic sleeping on power adapter when the display is off"** (or run `caffeinate -d` in a terminal).
+   - **Windows / Linux**: Set power sleep timeout to **"Never"** when plugged into power.
+
+3. **Lock the screen instead of logging out**:
+   - Lock your screen (<kbd>Cmd</kbd> + <kbd>Ctrl</kbd> + <kbd>Q</kbd> on macOS, <kbd>Win</kbd> + <kbd>L</kbd> on Windows).
+   - Docker Desktop and the container daemon will continue running in the background.
+
+You can now connect to and control your desktop container from anywhere via [https://antigravity.google.com/](https://antigravity.google.com/).
+
 ---
 
 ## Docker-in-Docker
