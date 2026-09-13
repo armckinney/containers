@@ -1,0 +1,55 @@
+{
+  "id": "databricks",
+  "version": "1.0.0",
+  "name": "Databricks",
+  "description": "Installs the Databricks CLI, Databricks VS Code extension, and configures port forwarding for OAuth authentication.",
+  "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/databricks",
+  "options": {
+    "version": {
+      "type": "string",
+      "proposals": [
+        "latest"
+      ],
+      "default": "latest",
+      "description": "Select or enter a version of the Databricks CLI to install."
+    }
+  },
+  "mounts": [
+    {
+      "source": "${localEnv:HOME}/.databrickscfg",
+      "target": "/root/.databrickscfg",
+      "type": "bind"
+    },
+    {
+      "source": "${localEnv:HOME}/.databricks",
+      "target": "/root/.databricks",
+      "type": "bind"
+    }
+  ],
+  "forwardPorts": [
+    8020
+  ],
+  "portsAttributes": {
+    "8020": {
+      "label": "Databricks OAuth",
+      "onAutoForward": "silent",
+      "requireLocalPort": true
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "databricks.databricks"
+      ],
+      "settings": {
+        "remote.portsAttributes": {
+          "8020": {
+            "label": "Databricks OAuth",
+            "onAutoForward": "silent",
+            "requireLocalPort": true
+          }
+        }
+      }
+    }
+  }
+}

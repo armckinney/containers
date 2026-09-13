@@ -7,6 +7,7 @@ This release contains devcontainer features that can be consumed from other repo
 ### Table of Contents
 - [Antigravity CLI](#antigravity-cli)
 - [Antigravity Remote Control](#antigravity-remote-control)
+- [Databricks](#databricks)
 - [Docker-in-Docker](#docker-in-docker)
 - [GitHub Copilot](#github-copilot)
 - [VS Code Customizations](#vs-code-customizations)
@@ -20,6 +21,7 @@ Replace `<VERSION>` with your release tag (for example `v1.2.3`).
   "features": {
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity-remote.tgz": {},
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-databricks.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-docker-in-docker.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-vscode-customizations.tgz": {}
@@ -137,6 +139,54 @@ You can now connect to and control your desktop container from anywhere via [htt
 
 ---
 
+## Databricks
+
+Installs the Databricks CLI, mounts host Databricks credentials and configuration (`~/.databrickscfg` and `~/.databricks`), configures the Databricks VS Code extension, and enables port forwarding on port 8020 for CLI OAuth authentication flows.
+
+### Usage
+
+```jsonc
+{
+  "features": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-databricks.tgz": {}
+  }
+}
+```
+
+### Options
+
+- `version`: Version of the Databricks CLI to install (e.g., `"latest"`, `"1.16.1"`). Default is `"latest"`.
+
+#### Example
+
+```jsonc
+{
+  "features": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-databricks.tgz": {
+      "version": "latest"
+    }
+  }
+}
+```
+
+### Features
+
+- Databricks CLI installation (available as `databricks` globally in `/usr/local/bin`)
+- Host credentials & token cache bind mounts:
+  - `${localEnv:HOME}/.databrickscfg` -> `/root/.databrickscfg`
+  - `${localEnv:HOME}/.databricks` -> `/root/.databricks`
+- VS Code extension:
+  - `databricks.databricks`
+- Port 8020 port forwarding and attributes for OAuth authentication callback (`http://localhost:8020/callback`)
+
+### Verify Installation
+
+```bash
+databricks --version
+```
+
+---
+
 ## Docker-in-Docker
 
 Installs Docker inside the container using privileged mode. Allows running Docker commands from within the container.
@@ -239,3 +289,5 @@ Applies standardized VS Code settings and extension recommendations for a consis
 
 - [Google Antigravity Documentation](https://antigravity.google)
 - [VS Code Docker Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+- [Databricks CLI Documentation](https://docs.databricks.com/en/dev-tools/cli/index.html)
+- [Databricks VS Code Extension](https://marketplace.visualstudio.com/items?itemName=databricks.databricks)

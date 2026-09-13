@@ -1,0 +1,10 @@
+{
+  "specific_version": {
+    "image": "ubuntu:24.04",
+    "features": {
+      "databricks": {
+        "version": "1.16.1"
+      }
+    }
+  }
+}
