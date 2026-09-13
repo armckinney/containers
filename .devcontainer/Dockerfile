@@ -35,7 +35,7 @@ RUN mkdir /tmp/container \
 
 # standard config paths used by feature tests
 # FIXME: this should be injected before test-time and not in the container - causes build mount mismatch issues
-RUN mkdir -p /root/.copilot /root/.gemini/
+RUN mkdir -p /root/.copilot /root/.gemini/ /root/.databricks && touch /root/.databrickscfg
 
 WORKDIR ${WORKSPACE}
 
