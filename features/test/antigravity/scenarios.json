@@ -3,7 +3,17 @@
     "image": "ubuntu:focal",
     "features": {
       "antigravity": {
-        "rulefilePath": "none"
+        "rulefilePath": ""
+      }
+    }
+  },
+  "rules_enabled": {
+    "image": "ubuntu:focal",
+    "features": {
+      "antigravity": {
+        "rulefilePath": "docs/agents/AGENTS.md",
+        "contextPath": "docs/agents/context",
+        "skillsPath": "docs/agents/skills"
       }
     }
   }

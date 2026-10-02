@@ -7,18 +7,18 @@
   "options": {
     "rulefilePath": {
       "type": "string",
-      "default": "docs/agents/AGENTS.md",
-      "description": "Path to the central rules file, relative to the workspace root. Set to 'none' or leave empty to disable symlinking."
+      "default": "",
+      "description": "Path to the central rules file, relative to the workspace root. Default is empty (disabled). Set to a path (e.g. 'docs/agents/AGENTS.md') to enable rules symlinking."
     },
     "contextPath": {
       "type": "string",
-      "default": "docs/agents/context",
-      "description": "Path to the path-scoped instructions directory, relative to the workspace root. Set to 'none' or leave empty to disable context mapping."
+      "default": "",
+      "description": "Path to the path-scoped instructions directory, relative to the workspace root. Default is empty (disabled). Set to a path (e.g. 'docs/agents/context') to enable context mapping."
     },
     "skillsPath": {
       "type": "string",
-      "default": "docs/agents/skills",
-      "description": "Path to the modular skills directory, relative to the workspace root. Set to 'none' or leave empty to disable skills mapping."
+      "default": "",
+      "description": "Path to the modular skills directory, relative to the workspace root. Default is empty (disabled). Set to a path (e.g. 'docs/agents/skills') to enable skills mapping."
     }
   },
   "mounts": [

@@ -22,15 +22,14 @@ mkdir -p docs/agents/skills
 # Re-execute setup-symlinks.sh to ensure symlinks are created based on these files
 /usr/local/share/antigravity/setup-symlinks.sh
 
-# Test 4: Verify default rules symlink exists and points to central rules file
-check "Default rules symlink exists" [ -L ".agents/AGENTS.md" ]
-check "Default rule file exists" [ -f "docs/agents/AGENTS.md" ]
+# Test 4: Verify default rules symlink is disabled
+check "Default rules symlink is disabled" [ ! -e ".agents/AGENTS.md" ]
 
-# Test 5: Verify default context folder symlink exists
-check "Default context symlink exists" [ -L ".agents/context" ]
+# Test 5: Verify default context folder symlink is disabled
+check "Default context symlink is disabled" [ ! -e ".agents/context" ]
 
-# Test 6: Verify default skills folder symlink exists
-check "Default skills symlink exists" [ -L ".agents/skills" ]
+# Test 6: Verify default skills folder symlink is disabled
+check "Default skills symlink is disabled" [ ! -e ".agents/skills" ]
 
 # Report results
 reportResults
