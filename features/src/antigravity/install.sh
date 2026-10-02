@@ -29,9 +29,9 @@ else
 fi
 
 # AI Agent Rules Symlinker Setup
-RULEFILEPATH="${RULEFILEPATH-docs/agents/AGENTS.md}"
-CONTEXTPATH="${CONTEXTPATH-docs/agents/context}"
-SKILLSPATH="${SKILLSPATH-docs/agents/skills}"
+RULEFILEPATH="${RULEFILEPATH:-}"
+CONTEXTPATH="${CONTEXTPATH:-}"
+SKILLSPATH="${SKILLSPATH:-}"
 FEATURE_ID="antigravity"
 TARGET_SUBDIR=".agents"
 TARGET_FILENAME="AGENTS.md"

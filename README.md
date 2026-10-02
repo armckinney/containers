@@ -35,7 +35,7 @@
 <br>
 
 <!-- Description -->
-Containers is a repository of standardized `Dockerfiles` that are built into images and hosted on the [GitHub Container Registry (GHCR)](https://github.com/armckinney?tab=packages).
+Containers is a repository of standardized `Dockerfiles` that are built into images and hosted on the [GitHub Container Registry (GHCR)](https://github.com/armckinney?tab=packages), as well as reusable [Dev Container Features](features/src/RELEASE.md).
 Many of these images are built on top of each other (i.e. `Ubuntu` > `Python` > `Pyspark`).
 
 I utilize these images as well as various GitHub `template-repositories` in order to spin up standardized projects quick and seamless!
@@ -72,9 +72,44 @@ For per-image descriptions, base-image lineage, and feature details, see [contai
 
 ### Usage
 
-These images can be manually copied or downloaded from GitHub for individual use, or you can just build on top of them with the publicly hosted iamges.
+These images can be manually copied or downloaded from GitHub for individual use, or you can just build on top of them with the publicly hosted images.
+
+### Dev Container Features
+
+This repository also publishes reusable [Dev Container Features](https://containers.dev/implementors/features/) to extend development environments with preconfigured tooling, CLI utilities, and IDE integrations.
+
+For detailed documentation, configuration options, and release assets, see [features/src/RELEASE.md](features/src/RELEASE.md).
+
+| Feature | ID | Description | Source Directory |
+| --- | --- | --- | --- |
+| Antigravity CLI | `antigravity` | Installs Google's Antigravity CLI (`agy`), mounts host config, and sets up VS Code integration with optional agent rules mapping | [features/src/antigravity](features/src/antigravity) |
+| Antigravity Remote | `antigravity-remote` | Runs the Antigravity daemon to connect to the devcontainer remotely | [features/src/antigravity-remote](features/src/antigravity-remote) |
+| GitHub Copilot | `copilot` | Installs GitHub Copilot CLI, mounts host config, and sets up VS Code extensions with optional agent rules mapping | [features/src/copilot](features/src/copilot) |
+| Databricks | `databricks` | Installs the Databricks CLI, mounts host credentials (`~/.databrickscfg`), and configures VS Code extensions | [features/src/databricks](features/src/databricks) |
+| Docker-in-Docker | `docker-in-docker` | Enables running Docker inside the container using privileged mode | [features/src/docker-in-docker](features/src/docker-in-docker) |
+| VS Code Customizations | `vscode-customizations` | Applies standardized VS Code settings and extension recommendations | [features/src/vscode-customizations](features/src/vscode-customizations) |
+
+#### Using Features in `devcontainer.json`
+
+Reference packaged feature tarballs from GitHub Releases:
+
+```jsonc
+{
+  "features": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {},
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {},
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-databricks.tgz": {}
+  }
+}
+```
+
+To test features locally using the Dev Container CLI:
+```bash
+make test-features                     # Test all features
+make test-feature FEATURE=antigravity  # Test a specific feature
+```
 
 ### Contributing
-When adding new images to the repository, ensure the `image` and `version` are both defined in the [DockerPush](.github\workflows\docker-push.yml) workflow.
+When adding new images or features to the repository, ensure workflows and documentation are updated accordingly.
 
-A brief documentation summary should also be included in [docs](containers\README.md).
+A brief documentation summary should also be included in [containers/README.md](containers/README.md) for images or [features/src/RELEASE.md](features/src/RELEASE.md) for features.

@@ -47,9 +47,12 @@ Installs Google's Antigravity CLI (`agy`), mounts local config files from the ho
 
 ### Options
 
-- `rulefilePath`: Path to the central rules file, relative to the workspace root. Default is `docs/agents/AGENTS.md`. Set to `"none"`, `"false"`, or `""` (empty string) to disable rules symlinking.
-- `contextPath`: Path to the path-scoped instructions directory, relative to the workspace root. Default is `docs/agents/context`. Set to `"none"`, `"false"`, or `""` (empty string) to disable context mapping.
-- `skillsPath`: Path to the modular skills directory, relative to the workspace root. Default is `docs/agents/skills`. Set to `"none"`, `"false"`, or `""` (empty string) to disable skills mapping.
+- `rulefilePath`: Path to the central rules file, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/AGENTS.md`) to enable rules symlinking.
+- `contextPath`: Path to the path-scoped instructions directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/context`) to enable context mapping.
+- `skillsPath`: Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/skills`) to enable skills mapping.
+
+> [!NOTE]
+> All path options are strictly **opt-in** and default to empty (`""`). When omitted or left empty, no symlinks or files are created. When configured, symlinks are only created if the target file or directory already exists in the workspace—baseline files are never auto-generated.
 
 #### Example
 
@@ -141,7 +144,10 @@ You can now connect to and control your desktop container from anywhere via [htt
 
 ## Databricks
 
-Installs the Databricks CLI, mounts host Databricks credentials and configuration (`~/.databrickscfg` and `~/.databricks`), configures the Databricks VS Code extension, and enables port forwarding on port 8020 for CLI OAuth authentication flows.
+Installs the Databricks CLI, mounts host Databricks credentials and configuration (`~/.databrickscfg` and `~/.databricks`), and configures the Databricks VS Code extension.
+
+> [!IMPORTANT]
+> **Port Forwarding Required in `devcontainer.json`**: Dev Container Features cannot declare port forwarding (`forwardPorts` is not supported in `devcontainer-feature.json`). Consuming `devcontainer.json` configurations must explicitly declare `forwardPorts` and `portsAttributes` for port `8020` to enable the Databricks CLI OAuth authentication flow (`http://localhost:8020/callback`).
 
 ### Usage
 
@@ -149,6 +155,14 @@ Installs the Databricks CLI, mounts host Databricks credentials and configuratio
 {
   "features": {
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-databricks.tgz": {}
+  },
+  "forwardPorts": [8020],
+  "portsAttributes": {
+    "8020": {
+      "label": "Databricks OAuth",
+      "onAutoForward": "silent",
+      "requireLocalPort": true
+    }
   }
 }
 ```
@@ -165,6 +179,14 @@ Installs the Databricks CLI, mounts host Databricks credentials and configuratio
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-databricks.tgz": {
       "version": "latest"
     }
+  },
+  "forwardPorts": [8020],
+  "portsAttributes": {
+    "8020": {
+      "label": "Databricks OAuth",
+      "onAutoForward": "silent",
+      "requireLocalPort": true
+    }
   }
 }
 ```
@@ -177,7 +199,7 @@ Installs the Databricks CLI, mounts host Databricks credentials and configuratio
   - `${localEnv:HOME}/.databricks` -> `/root/.databricks`
 - VS Code extension:
   - `databricks.databricks`
-- Port 8020 port forwarding and attributes for OAuth authentication callback (`http://localhost:8020/callback`)
+- VS Code port attributes configuration for port 8020 OAuth authentication callback (`http://localhost:8020/callback`) when forwarded by `devcontainer.json`
 
 ### Verify Installation
 
@@ -238,9 +260,12 @@ Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI 
 
 ### Options
 
-- `rulefilePath`: Path to the central rules file, relative to the workspace root. Default is `docs/agents/AGENTS.md`. Set to `"none"`, `"false"`, or `""` (empty string) to disable rules symlinking.
-- `contextPath`: Path to the path-scoped instructions directory, relative to the workspace root. Default is `docs/agents/context`. Set to `"none"`, `"false"`, or `""` (empty string) to disable context mapping.
-- `skillsPath`: Path to the modular skills directory, relative to the workspace root. Default is `docs/agents/skills`. Set to `"none"`, `"false"`, or `""` (empty string) to disable skills mapping.
+- `rulefilePath`: Path to the central rules file, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/AGENTS.md`) to enable rules symlinking.
+- `contextPath`: Path to the path-scoped instructions directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/context`) to enable context mapping.
+- `skillsPath`: Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/skills`) to enable skills mapping.
+
+> [!NOTE]
+> All path options are strictly **opt-in** and default to empty (`""`). When omitted or left empty, no symlinks or files are created. When configured, symlinks are only created if the target file or directory already exists in the workspace—baseline files are never auto-generated.
 
 #### Example
 

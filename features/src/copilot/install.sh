@@ -18,9 +18,9 @@ else
 fi
 
 # AI Agent Rules Symlinker Setup
-RULEFILEPATH="${RULEFILEPATH-docs/agents/AGENTS.md}"
-CONTEXTPATH="${CONTEXTPATH-docs/agents/context}"
-SKILLSPATH="${SKILLSPATH-docs/agents/skills}"
+RULEFILEPATH="${RULEFILEPATH:-}"
+CONTEXTPATH="${CONTEXTPATH:-}"
+SKILLSPATH="${SKILLSPATH:-}"
 FEATURE_ID="copilot"
 TARGET_SUBDIR=".github"
 TARGET_FILENAME="copilot-instructions.md"

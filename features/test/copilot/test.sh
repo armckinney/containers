@@ -20,15 +20,14 @@ echo -e "---\nname: Docker Build\n---\n# Docker Build\nRules..." > docs/agents/s
 # Re-execute setup-symlinks.sh to create symlinks
 /usr/local/share/copilot/setup-symlinks.sh
 
-# Test 3: Verify Copilot central instructions symlink exists
-check "Copilot central rules symlink exists" [ -L ".github/copilot-instructions.md" ]
+# Test 3: Verify Copilot central instructions symlink is disabled by default
+check "Copilot central rules symlink is disabled" [ ! -e ".github/copilot-instructions.md" ]
 
-# Test 4: Verify Copilot path-scoped context instructions directory symlink exists
-check "Copilot instructions directory symlink exists" [ -L ".github/instructions" ]
-check "Copilot path-scoped instruction file exists" [ -f ".github/instructions/docker-build.instructions.md" ]
+# Test 4: Verify Copilot path-scoped context instructions directory symlink is disabled
+check "Copilot instructions directory symlink is disabled" [ ! -e ".github/instructions" ]
 
-# Test 5: Verify Copilot prompts symlink exists
-check "Copilot prompts symlink exists" [ -L ".github/prompts/docker-build.prompt.md" ]
+# Test 5: Verify Copilot prompts symlink is disabled
+check "Copilot prompts symlink is disabled" [ ! -e ".github/prompts" ]
 
 # Report results
 reportResults

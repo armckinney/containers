@@ -10,27 +10,18 @@ fi
 WORKSPACE_ROOT=$(pwd)
 
 # 1. Setup Copilot central instructions (rules) if configured
-if [ -n "${RULEFILE_PATH}" ] && [ "${RULEFILE_PATH}" != "none" ] && [ "${RULEFILE_PATH}" != "false" ]; then
-    echo "Setting up GitHub Copilot central instructions..."
-    mkdir -p "${WORKSPACE_ROOT}/${TARGET_SUBDIR}"
-
-    # If the target central rule file does not exist, initialize a baseline
-    if [ ! -f "${WORKSPACE_ROOT}/${RULEFILE_PATH}" ]; then
-        echo "Rule file ${RULEFILE_PATH} not found. Creating a baseline..."
-        mkdir -p "$(dirname "${WORKSPACE_ROOT}/${RULEFILE_PATH}")"
-        cat << 'INNER_EOF' > "${WORKSPACE_ROOT}/${RULEFILE_PATH}"
-# Project Rules
-
-## AI Agent Guidelines
-- All configuration changes must adhere to the conventions defined in this file.
-INNER_EOF
+if [ -n "${RULEFILE_PATH}" ]; then
+    if [ -f "${WORKSPACE_ROOT}/${RULEFILE_PATH}" ]; then
+        echo "Setting up GitHub Copilot central instructions..."
+        mkdir -p "${WORKSPACE_ROOT}/${TARGET_SUBDIR}"
+        ln -sf "../${RULEFILE_PATH}" "${WORKSPACE_ROOT}/${TARGET_SUBDIR}/${TARGET_FILENAME}"
+    else
+        echo "Rule file ${RULEFILE_PATH} not found. Skipping Copilot central instructions."
     fi
-
-    ln -sf "../${RULEFILE_PATH}" "${WORKSPACE_ROOT}/${TARGET_SUBDIR}/${TARGET_FILENAME}"
 fi
 
 # 2. Setup path-scoped instructions (context) if configured
-if [ -n "${CONTEXT_PATH}" ] && [ "${CONTEXT_PATH}" != "none" ] && [ "${CONTEXT_PATH}" != "false" ]; then
+if [ -n "${CONTEXT_PATH}" ]; then
     if [ -d "${WORKSPACE_ROOT}/${CONTEXT_PATH}" ]; then
         echo "Mapping path-scoped Copilot instructions..."
         mkdir -p "${WORKSPACE_ROOT}/${TARGET_SUBDIR}"
@@ -44,7 +35,7 @@ if [ -n "${CONTEXT_PATH}" ] && [ "${CONTEXT_PATH}" != "none" ] && [ "${CONTEXT_P
 fi
 
 # 3. Setup prompts (skills) if configured
-if [ -n "${SKILLS_PATH}" ] && [ "${SKILLS_PATH}" != "none" ] && [ "${SKILLS_PATH}" != "false" ]; then
+if [ -n "${SKILLS_PATH}" ]; then
     if [ -d "${WORKSPACE_ROOT}/${SKILLS_PATH}" ]; then
         echo "Mapping modular skills to Copilot prompts..."
         mkdir -p "${WORKSPACE_ROOT}/${TARGET_SUBDIR}/prompts"

@@ -60,10 +60,10 @@ AI mapping is automated at container startup using feature configurations. In yo
 ```
 
 ### Option Reference:
-* `rulefilePath`: Path to the central global rules file. Default is `docs/agents/AGENTS.md`.
-* `contextPath`: Path to the path-scoped instructions directory. Default is `docs/agents/context`.
-* `skillsPath`: Path to the modular skills directory. Default is `docs/agents/skills`.
-* *Note: Any of these settings can be set to `"none"`, `"false"`, or `""` (empty string) to disable that specific mapping.*
+* `rulefilePath`: Path to the central global rules file. Default is `""` (disabled). Set to a path (e.g., `docs/agents/AGENTS.md`) to enable rules symlinking.
+* `contextPath`: Path to the path-scoped instructions directory. Default is `""` (disabled). Set to a path (e.g., `docs/agents/context`) to enable context mapping.
+* `skillsPath`: Path to the modular skills directory. Default is `""` (disabled). Set to a path (e.g., `docs/agents/skills`) to enable skills mapping.
+* *Note: All options are strictly **opt-in** and default to empty (`""`). When omitted or left empty, no symlinks or files are created. When configured, symlinks are only created if the target files or directories already exist in the workspace—baseline files are never auto-generated.*
 
 ---
 
