@@ -8,3 +8,6 @@
 
 # workspace agents
 .antigravitycli
+
+# gyrus
+.gyrus/cache

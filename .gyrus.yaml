@@ -1,0 +1,18 @@
+default_owner_group: root
+workspace: containers
+
+storage:
+  provider: localfs
+  root: .gyrus
+
+index:
+  provider: sqlite
+
+graph:
+  provider: sqlite
+
+search:
+  provider: sqlite
+
+ui:
+  client: antigravity

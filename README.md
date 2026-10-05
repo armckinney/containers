@@ -87,6 +87,7 @@ For detailed documentation, configuration options, and release assets, see [feat
 | GitHub Copilot | `copilot` | Installs GitHub Copilot CLI, mounts host config, and sets up VS Code extensions with optional agent rules mapping | [features/src/copilot](features/src/copilot) |
 | Databricks | `databricks` | Installs the Databricks CLI, mounts host credentials (`~/.databrickscfg`), and configures VS Code extensions | [features/src/databricks](features/src/databricks) |
 | Docker-in-Docker | `docker-in-docker` | Enables running Docker inside the container using privileged mode | [features/src/docker-in-docker](features/src/docker-in-docker) |
+| Gyrus | `gyrus` | Installs the Gyrus CLI, a local-first memory and context engine for developers and AI agents | [features/src/gyrus](features/src/gyrus) |
 | VS Code Customizations | `vscode-customizations` | Applies standardized VS Code settings and extension recommendations | [features/src/vscode-customizations](features/src/vscode-customizations) |
 
 #### Using Features in `devcontainer.json`
@@ -98,7 +99,8 @@ Reference packaged feature tarballs from GitHub Releases:
   "features": {
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {},
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-databricks.tgz": {}
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-databricks.tgz": {},
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-gyrus.tgz": {}
   }
 }
 ```

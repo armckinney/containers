@@ -1,0 +1,10 @@
+{
+  "specific_version": {
+    "image": "ubuntu:24.04",
+    "features": {
+      "gyrus": {
+        "version": "0.1.11"
+      }
+    }
+  }
+}
