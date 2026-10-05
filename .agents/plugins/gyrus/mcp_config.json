@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "gyrus": {
+      "args": [
+        "mcp",
+        "serve"
+      ],
+      "command": "gyrus",
+      "env": {
+        "GYRUS_WORKSPACE": "${workspaceFolder}"
+      }
+    }
+  }
+}

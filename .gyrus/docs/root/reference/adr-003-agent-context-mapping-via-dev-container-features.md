@@ -1,12 +1,36 @@
-# ADR 003: Agent Context Mapping via Dev Container Features
+---
+id: adr-003-agent-context-mapping-via-dev-container-features
+title: Agent Context Mapping via Dev Container Features
+category: architecture
+type: adr
+format: markdown
+owner_group: root
+version: 1
+status: accepted
+immutable: true
+last_modified_by: Antigravity
+last_updated: 2026-07-06
+tags:
+  - architecture
+  - adr
+  - ai
+  - context
+  - devcontainer
+dependencies:
+  - adr-002-dev-container-features-for-ai-tooling
+---
 
-* **Status**: Accepted
-* **Date**: 2026-07-06
-* **Author**: Antigravity
+# Architecture Decision Record: Agent Context Mapping via Dev Container Features
 
 ## Context
 
+* **Status:** Accepted
+* **Date:** 2026-07-06
+* **Author:** Antigravity
+
 AI coding assistants (like Google Antigravity and GitHub Copilot) rely on specific workspace context files (e.g., `.agents/AGENTS.md` and `.github/copilot-instructions.md`) to follow repository-specific rules. Maintaining separate, duplicate instruction files across different tool paths leads to synchronization issues and outdated documentation. We need a way to maintain a single central source of truth for guidelines (rules and modular skills) and dynamically link or compile them for each active tool.
+
+---
 
 ## Decision
 
@@ -19,12 +43,14 @@ We will implement dynamic context mapping directly inside our custom Dev Contain
   * For **Copilot**: It symlinks the central rules file to `.github/copilot-instructions.md`, and symlinks individual skills into `.github/prompts/<name>.prompt.md` to leverage Copilot's native support for reusable custom prompts and slash commands.
 * Setting `rulefilePath` or `skillsPath` to `"none"`, `"false"`, or leaving them blank disables this integration.
 
+---
+
 ## Consequences
 
-* **Positive**:
+* **Positive / Gains:**
   * Single Source of Truth: Developers maintain a single ruleset (`AGENTS.md`) and a single skills directory, which are automatically translated to tool-specific paths.
   * Modular Rules: Custom instructions can be divided into clean, focused folders.
   * Flexibility: Standardized default paths can be overridden or disabled using devcontainer feature options.
-* **Neutral/Negative**:
+* **Negative / Trade-offs:**
   * Relies on post-create container lifecycle execution.
   * Sourced variables need to be kept generic and identical in implementation scripts to ensure long-term maintainability.

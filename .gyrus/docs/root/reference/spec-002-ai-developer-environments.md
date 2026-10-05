@@ -1,12 +1,43 @@
-# Architecture Blueprint: Replicating AI Developer Environments
+---
+id: spec-002-ai-developer-environments
+title: AI Developer Environments & Context Mapping Specification
+category: architecture
+type: specification
+format: markdown
+owner_group: root
+version: 1
+status: active
+last_modified_by: Antigravity
+last_updated: 2026-10-05
+tags:
+  - architecture
+  - ai
+  - context
+  - devcontainer
+  - antigravity
+  - copilot
+dependencies:
+  - adr-002-dev-container-features-for-ai-tooling
+  - adr-003-agent-context-mapping-via-dev-container-features
+  - adr-004-three-tiered-ai-context-classification
+---
 
-This document details the architecture, design choices, and directory-mapping specifications for standardizing local AI developer environments using **Dev Container Features**. It is a self-contained replication guide that can be copied directly into other repositories to instruct agents on setting up this unified agent rules and skills architecture.
+# Specification: AI Developer Environments & Context Mapping
+
+## 1. Executive Summary
+
+* **Owner / Sponsor:** Antigravity AI Tooling Team
+* **Target Environment:** Dev Container Workspaces, GitHub Copilot, Google Antigravity
+* **Last Audited:** 2026-10-05
+
+### Overview
+This specification defines the architecture, design choices, and directory-mapping standards for establishing unified AI developer environments across repositories using **Dev Container Features**. It standardizes how global instructions, path-scoped context, and executable skills are mapped from a single source of truth into native tool paths.
 
 ---
 
-## 1. Directory Layout
+## 2. Directory Layout & Architecture
 
-To align with our agent context model, a consuming repository must maintain the following file and folder layout:
+To align with the three-tiered AI context model, consuming repositories maintain the following structure:
 
 ```text
 / (Workspace Root)
@@ -15,7 +46,7 @@ To align with our agent context model, a consuming repository must maintain the 
 │
 ├── docs/
 │   ├── architecture/
-│   │   └── ai.md               # This blueprint
+│   │   └── ai.md               # AI architecture blueprint
 │   │
 │   ├── architecture-design-records/  # ADR index and documents
 │   │   ├── adr-001-use-architecture-design-records.md
@@ -37,9 +68,9 @@ To align with our agent context model, a consuming repository must maintain the 
 
 ---
 
-## 2. Dev Container Feature Integration
+## 3. Dev Container Feature Integration
 
-AI mapping is automated at container startup using feature configurations. In your new repository's `.devcontainer/devcontainer.json`, declare:
+AI context mapping is automated at container startup using feature configurations. In a repository's `.devcontainer/devcontainer.json`, declare:
 
 ```json
 {
@@ -59,19 +90,23 @@ AI mapping is automated at container startup using feature configurations. In yo
 }
 ```
 
-### Option Reference:
+### Option Reference
+
 * `rulefilePath`: Path to the central global rules file. Default is `""` (disabled). Set to a path (e.g., `docs/agents/AGENTS.md`) to enable rules symlinking.
 * `contextPath`: Path to the path-scoped instructions directory. Default is `""` (disabled). Set to a path (e.g., `docs/agents/context`) to enable context mapping.
 * `skillsPath`: Path to the modular skills directory. Default is `""` (disabled). Set to a path (e.g., `docs/agents/skills`) to enable skills mapping.
-* *Note: All options are strictly **opt-in** and default to empty (`""`). When omitted or left empty, no symlinks or files are created. When configured, symlinks are only created if the target files or directories already exist in the workspace—baseline files are never auto-generated.*
+
+> [!NOTE]
+> All options are strictly **opt-in** and default to empty (`""`). When omitted or left empty, no symlinks or files are created. When configured, symlinks are only created if target files or directories already exist in the workspace—baseline files are never auto-generated.
 
 ---
 
-## 3. Copy-Paste Baseline Templates
+## 4. Copy-Paste Baseline Templates
 
-To scaffold a new repository, copy and paste the following files directly into your workspace.
+To scaffold a new repository, the following templates serve as the baseline setup.
 
 ### Template A: Global Rules (`docs/agents/AGENTS.md`)
+
 ```markdown
 # Agent Configuration
 
@@ -92,10 +127,7 @@ You are working with this repository. Always reference the instruction files und
 3. **Write ADRs**: Document all significant design choices as new ADRs using the `/create-adr` skill.
 ```
 
----
-
 ### Template B: Path-Scoped Context File (`docs/agents/context/docker-build.instructions.md`)
-Path-scoped files use YAML frontmatter with `applyTo` globs. Copilot loads them automatically only when you edit matching files.
 
 ```markdown
 ---
@@ -114,10 +146,7 @@ applyTo:
 - Verify Docker daemon connectivity: `docker ps`.
 ```
 
----
-
 ### Template C: Skill Standard (`docs/agents/skills/agent-skills/SKILL.md`)
-Defines the standard format for modular, executable skills.
 
 ```markdown
 ---
@@ -147,7 +176,7 @@ Every `SKILL.md` file must adhere to these guidelines:
    ```yaml
    ---
    name: Skill Name
-   description: 1-2 sentence summary of when and why this skill is active.
+   description: 1-2 summary of when and why this skill is active.
    applyTo:
      - path/to/target/**
    ---
@@ -158,10 +187,7 @@ Every `SKILL.md` file must adhere to these guidelines:
 2. **Markdown formatting**: Use standard Markdown format for headings, bullet points, and code samples.
 ```
 
----
-
 ### Template D: ADR Skill (`docs/agents/skills/create-adr/SKILL.md`)
-Exposes a command shortcut to generate new ADRs following standard naming and structure.
 
 ```markdown
 ---
@@ -183,8 +209,6 @@ Use this skill when you need to document a new architectural or design decision.
   * Use lowercase kebab-case for the name.
 
 ## ADR Template
-
-Use this Markdown skeleton for the file:
 
 ```markdown
 # ADR 00X: Title of Decision
@@ -210,10 +234,7 @@ Detail the impact of this decision (both positive and negative):
 ```
 ```
 
----
-
 ### Template E: First ADR (`docs/architecture-design-records/adr-001-use-architecture-design-records.md`)
-Saves a baseline ADR documenting the decision to adopt ADRs in the repository.
 
 ```markdown
 # ADR 001: Use Architecture Design Records

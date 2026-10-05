@@ -1,0 +1,17 @@
+{
+  "id": "gyrus",
+  "version": "1.0.0",
+  "name": "Gyrus",
+  "description": "Installs the Gyrus CLI, a high-performance local-first memory and context engine for software development teams and AI agents.",
+  "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/gyrus",
+  "options": {
+    "version": {
+      "type": "string",
+      "proposals": [
+        "latest"
+      ],
+      "default": "latest",
+      "description": "Select or enter a version of Gyrus to install."
+    }
+  }
+}

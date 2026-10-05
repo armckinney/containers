@@ -1,12 +1,36 @@
-# ADR 004: Three-Tiered AI Context Classification
+---
+id: adr-004-three-tiered-ai-context-classification
+title: Three-Tiered AI Context Classification
+category: architecture
+type: adr
+format: markdown
+owner_group: root
+version: 1
+status: accepted
+immutable: true
+last_modified_by: Antigravity
+last_updated: 2026-07-06
+tags:
+  - architecture
+  - adr
+  - ai
+  - context
+  - skills
+dependencies:
+  - adr-003-agent-context-mapping-via-dev-container-features
+---
 
-* **Status**: Accepted
-* **Date**: 2026-07-06
-* **Author**: Antigravity
+# Architecture Decision Record: Three-Tiered AI Context Classification
 
 ## Context
 
+* **Status:** Accepted
+* **Date:** 2026-07-06
+* **Author:** Antigravity
+
 AI agent instructions and capabilities in a repository are consumed differently depending on the tool (e.g., Google Antigravity vs. GitHub Copilot). Previously, we mapped all instruction sets as "skills." However, treating all guidelines as skills resulted in Copilot treating passive, directory-scoped rules (like Docker build instructions) as manual slash commands. Conversely, treating all guidelines as global rules results in context pollution. We need to distinguish between global rules, path-specific contexts, and explicit skills, and map them to their corresponding native locations for each AI tool.
+
+---
 
 ## Decision
 
@@ -32,11 +56,13 @@ We will structure and map repository-specific AI instructions using a three-tier
 
 We introduce the option `contextPath` (default `docs/agents/context`) alongside `rulefilePath` and `skillsPath` in the devcontainer features to configure this mapping.
 
+---
+
 ## Consequences
 
-* **Positive**:
+* **Positive / Gains:**
   * Tools consume guidelines in their native-friendly way: Copilot uses automatic path-scoped context triggers and manual prompt commands.
   * Context pollution is reduced since path-scoped instructions are loaded only when relevant.
   * Agy registers modular skills cleanly.
-* **Neutral/Negative**:
+* **Negative / Trade-offs:**
   * Slightly more files to maintain, but follows standard tool layouts.

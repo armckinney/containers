@@ -10,6 +10,7 @@ This release contains devcontainer features that can be consumed from other repo
 - [Databricks](#databricks)
 - [Docker-in-Docker](#docker-in-docker)
 - [GitHub Copilot](#github-copilot)
+- [Gyrus](#gyrus)
 - [VS Code Customizations](#vs-code-customizations)
 
 Add features to your `.devcontainer/devcontainer.json`:
@@ -24,6 +25,7 @@ Replace `<VERSION>` with your release tag (for example `v1.2.3`).
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-databricks.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-docker-in-docker.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {},
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-gyrus.tgz": {},
     "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-vscode-customizations.tgz": {}
   }
 }
@@ -283,6 +285,49 @@ Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI 
 
 ---
 
+## Gyrus
+
+Installs the Gyrus CLI, a high-performance local-first memory and context engine for software development teams and AI agents.
+
+### Usage
+
+```jsonc
+{
+  "features": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-gyrus.tgz": {}
+  }
+}
+```
+
+### Options
+
+- `version`: Version of Gyrus to install (e.g., `"latest"`, `"0.1.11"`). Default is `"latest"`.
+
+#### Example
+
+```jsonc
+{
+  "features": {
+    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-gyrus.tgz": {
+      "version": "latest"
+    }
+  }
+}
+```
+
+### Features
+
+- Gyrus CLI installation (available as `gyrus` globally in `/usr/local/bin`)
+
+### Verify Installation
+
+```bash
+gyrus --help
+gyrus config show
+```
+
+---
+
 ## VS Code Customizations
 
 Applies standardized VS Code settings and extension recommendations for a consistent development environment.
@@ -316,3 +361,4 @@ Applies standardized VS Code settings and extension recommendations for a consis
 - [VS Code Docker Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
 - [Databricks CLI Documentation](https://docs.databricks.com/en/dev-tools/cli/index.html)
 - [Databricks VS Code Extension](https://marketplace.visualstudio.com/items?itemName=databricks.databricks)
+- [Gyrus Repository](https://github.com/armckinney/gyrus)
