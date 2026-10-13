@@ -1,10 +1,3 @@
----
-name: Testing & Validation
-description: Detailed manual validation commands and end-to-end testing scenarios.
-applyTo:
-  - containers/**
----
-
 # Testing and Validation
 
 ## Manual Validation Steps

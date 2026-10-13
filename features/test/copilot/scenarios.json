@@ -12,7 +12,6 @@
     "features": {
       "copilot": {
         "rulefilePath": "docs/agents/AGENTS.md",
-        "contextPath": "docs/agents/context",
         "skillsPath": "docs/agents/skills"
       }
     }

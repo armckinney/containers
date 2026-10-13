@@ -1,10 +1,3 @@
----
-name: Development Tasks
-description: Step-by-step instructions for adding new container images or modifying existing ones.
-applyTo:
-  - containers/**
----
-
 # Development Tasks
 
 ## Adding New Images

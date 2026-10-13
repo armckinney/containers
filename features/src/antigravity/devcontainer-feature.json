@@ -1,6 +1,6 @@
 {
   "id": "antigravity",
-  "version": "1.5.0",
+  "version": "1.0.15",
   "name": "Antigravity CLI",
   "description": "Installs Google's Antigravity CLI (agy) and mounts local config files from the host.",
   "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/antigravity",
@@ -9,11 +9,6 @@
       "type": "string",
       "default": "",
       "description": "Path to the central rules file, relative to the workspace root. Default is empty (disabled). Set to a path (e.g. 'docs/agents/AGENTS.md') to enable rules symlinking."
-    },
-    "contextPath": {
-      "type": "string",
-      "default": "",
-      "description": "Path to the path-scoped instructions directory, relative to the workspace root. Default is empty (disabled). Set to a path (e.g. 'docs/agents/context') to enable context mapping."
     },
     "skillsPath": {
       "type": "string",

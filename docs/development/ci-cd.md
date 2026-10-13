@@ -1,10 +1,3 @@
----
-name: CI/CD Workflows
-description: Guidelines and specifications for workflows, continuous integration, and continuous delivery setups in this repository.
-applyTo:
-  - .github/workflows/**
----
-
 # CI/CD and Workflows
 
 ## CI/CD Validation

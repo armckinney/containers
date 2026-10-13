@@ -1,0 +1,34 @@
+{
+  "id": "codex",
+  "version": "1.0.15",
+  "name": "OpenAI Codex",
+  "description": "Installs the OpenAI Codex CLI, mounts host Codex configuration and authentication, and installs the Codex VS Code extension.",
+  "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/codex",
+  "options": {
+    "rulefilePath": {
+      "type": "string",
+      "default": "",
+      "description": "Path to the central AGENTS.md file, relative to the workspace root. Default is empty (disabled). Set a path (e.g. 'docs/agents/AGENTS.md') to link it as the workspace AGENTS.md. An existing AGENTS.md is preserved."
+    },
+    "skillsPath": {
+      "type": "string",
+      "default": "",
+      "description": "Path to the skills directory, relative to the workspace root. Default is empty (disabled). Set a path (e.g. 'docs/agents/skills') to link it into .agents/skills. An existing .agents/skills directory or link is preserved."
+    }
+  },
+  "mounts": [
+    {
+      "source": "${localEnv:HOME}/.codex",
+      "target": "/root/.codex",
+      "type": "bind"
+    }
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "OpenAI.chatgpt"
+      ]
+    }
+  },
+  "postCreateCommand": "/usr/local/share/codex/setup-symlinks.sh"
+}

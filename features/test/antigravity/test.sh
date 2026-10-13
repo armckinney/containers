@@ -14,9 +14,7 @@ check "Antigravity CLI version works" agy --version
 check "Antigravity config directory exists" [ -d "/root/.gemini/antigravity-cli" ]
 
 # Setup dummy workspace files for testing symlinking
-mkdir -p docs/agents/context
 echo "# Agent Configuration" > docs/agents/AGENTS.md
-echo "# Context Rules" > docs/agents/context/docker-build.instructions.md
 mkdir -p docs/agents/skills
 
 # Re-execute setup-symlinks.sh to ensure symlinks are created based on these files
@@ -25,10 +23,7 @@ mkdir -p docs/agents/skills
 # Test 4: Verify default rules symlink is disabled
 check "Default rules symlink is disabled" [ ! -e ".agents/AGENTS.md" ]
 
-# Test 5: Verify default context folder symlink is disabled
-check "Default context symlink is disabled" [ ! -e ".agents/context" ]
-
-# Test 6: Verify default skills folder symlink is disabled
+# Test 5: Verify default skills folder symlink is disabled
 check "Default skills symlink is disabled" [ ! -e ".agents/skills" ]
 
 # Report results

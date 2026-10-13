@@ -1,11 +1,4 @@
----
-name: Scripts
-description: Documented workarounds and usage conventions for repository automation scripts.
-applyTo:
-  - scripts/**
----
-
-# Scripts Instructions
+# Scripts
 
 ## Build Script Usage
 
