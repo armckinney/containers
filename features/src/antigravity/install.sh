@@ -30,7 +30,6 @@ fi
 
 # AI Agent Rules Symlinker Setup
 RULEFILEPATH="${RULEFILEPATH:-}"
-CONTEXTPATH="${CONTEXTPATH:-}"
 SKILLSPATH="${SKILLSPATH:-}"
 FEATURE_ID="antigravity"
 TARGET_SUBDIR=".agents"
@@ -38,7 +37,6 @@ TARGET_FILENAME="AGENTS.md"
 
 echo "Configuring Antigravity rules symlink..."
 echo "Central rule file path: ${RULEFILEPATH}"
-echo "Context path: ${CONTEXTPATH}"
 echo "Skills path: ${SKILLSPATH}"
 
 INSTALL_DIR="/usr/local/share/antigravity"
@@ -47,7 +45,6 @@ mkdir -p "${INSTALL_DIR}"
 # 1. Store option configuration for runtime lifecycle hooks
 cat << EOF > "${INSTALL_DIR}/config.env"
 RULEFILE_PATH="${RULEFILEPATH}"
-CONTEXT_PATH="${CONTEXTPATH}"
 SKILLS_PATH="${SKILLSPATH}"
 FEATURE_ID="${FEATURE_ID}"
 TARGET_SUBDIR="${TARGET_SUBDIR}"

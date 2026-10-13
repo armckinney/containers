@@ -12,7 +12,15 @@
     "features": {
       "antigravity": {
         "rulefilePath": "docs/agents/AGENTS.md",
-        "contextPath": "docs/agents/context",
+        "skillsPath": "docs/agents/skills"
+      }
+    }
+  },
+  "existing_destinations": {
+    "image": "ubuntu:focal",
+    "features": {
+      "antigravity": {
+        "rulefilePath": "docs/agents/AGENTS.md",
         "skillsPath": "docs/agents/skills"
       }
     }

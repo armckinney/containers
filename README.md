@@ -1,40 +1,11 @@
-<!-- header -->
-<div align="center">
-    <p>
-    <!-- Header -->
-        <img width="100px" src="https://img.stackshare.io/stack/979421/default_7b21deccd8ef4e667218f8a46721601eec9455f4.png"  alt="Containers" />
-        <h2>Containers</h2>
-        <p><i>A layered image vault.</i></p>
-    </p>
-    <p>
-    <!-- Shields -->
-        <a href="https://github.com/armckinney/containers/LICENSE.txt">
-            <img alt="License" src="https://img.shields.io/github/license/armckinney/containers.svg" />
-        </a>
-        <a href="https://github.com/armckinney/containers/actions">
-            <img alt="Tests Passing" src="https://github.com/armckinney/containers/workflows/Test/badge.svg" />
-        </a>
-        <a href="https://codecov.io/gh/armckinney/containers">
-            <img src="https://codecov.io/gh/armckinney/containers/branch/master/graph/badge.svg" />
-        </a>
-        <a href="https://github.com/armckinney/containers/issues">
-            <img alt="Issues" src="https://img.shields.io/github/issues/armckinney/containers" />
-        </a>
-        <a href="https://github.com/armckinney/containers/pulls">
-            <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/armckinney/containers" />
-        </a>
-    </p>
-    <p>
-    <!-- Links -->
-        <a href="https://github.com/armckinney/containers/issues/new/choose">Report Bug</a>
-        ·
-        <a href="https://github.com/armckinney/containers/issues/new/choose">Request Feature</a>
-    </p>
-</div>
-<br>
-<br>
+<p align="center">
+  <img width="100px" src="https://img.stackshare.io/stack/979421/default_7b21deccd8ef4e667218f8a46721601eec9455f4.png" alt="Containers" />
+</p>
 
-<!-- Description -->
+# Containers
+
+*A layered image vault.*
+
 Containers is a repository of standardized `Dockerfiles` that are built into images and hosted on the [GitHub Container Registry (GHCR)](https://github.com/armckinney?tab=packages), as well as reusable [Dev Container Features](features/src/RELEASE.md).
 Many of these images are built on top of each other (i.e. `Ubuntu` > `Python` > `Pyspark`).
 
@@ -84,6 +55,7 @@ For detailed documentation, configuration options, and release assets, see [feat
 | --- | --- | --- | --- |
 | Antigravity CLI | `antigravity` | Installs Google's Antigravity CLI (`agy`), mounts host config, and sets up VS Code integration with optional agent rules mapping | [features/src/antigravity](features/src/antigravity) |
 | Antigravity Remote | `antigravity-remote` | Runs the Antigravity daemon to connect to the devcontainer remotely | [features/src/antigravity-remote](features/src/antigravity-remote) |
+| OpenAI Codex | `codex` | Installs the Codex CLI and VS Code extension, mounts host Codex configuration, and supports optional instruction and skills links | [features/src/codex](features/src/codex) |
 | GitHub Copilot | `copilot` | Installs GitHub Copilot CLI, mounts host config, and sets up VS Code extensions with optional agent rules mapping | [features/src/copilot](features/src/copilot) |
 | Databricks | `databricks` | Installs the Databricks CLI, mounts host credentials (`~/.databrickscfg`), and configures VS Code extensions | [features/src/databricks](features/src/databricks) |
 | Docker-in-Docker | `docker-in-docker` | Enables running Docker inside the container using privileged mode | [features/src/docker-in-docker](features/src/docker-in-docker) |
@@ -92,15 +64,19 @@ For detailed documentation, configuration options, and release assets, see [feat
 
 #### Using Features in `devcontainer.json`
 
-Reference packaged feature tarballs from GitHub Releases:
+Reference the latest packaged feature tarballs from GitHub Releases:
 
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {},
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {},
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-databricks.tgz": {},
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-gyrus.tgz": {}
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-antigravity.tgz": {},
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-antigravity-remote.tgz": {},
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-codex.tgz": {},
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-copilot.tgz": {},
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-databricks.tgz": {},
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-docker-in-docker.tgz": {},
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-gyrus.tgz": {},
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-vscode-customizations.tgz": {}
   }
 }
 ```

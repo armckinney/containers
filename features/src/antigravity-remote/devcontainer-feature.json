@@ -1,6 +1,6 @@
 {
   "id": "antigravity-remote",
-  "version": "1.5.0",
+  "version": "1.0.15",
   "name": "Antigravity Remote Control",
   "description": "Installs the Antigravity CLI and configures the headless Remote Control daemon.",
   "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/antigravity-remote",

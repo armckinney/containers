@@ -10,26 +10,11 @@ This release contains devcontainer features that can be consumed from other repo
 - [Databricks](#databricks)
 - [Docker-in-Docker](#docker-in-docker)
 - [GitHub Copilot](#github-copilot)
+- [OpenAI Codex](#openai-codex)
 - [Gyrus](#gyrus)
 - [VS Code Customizations](#vs-code-customizations)
 
-Add features to your `.devcontainer/devcontainer.json`:
-
-Replace `<VERSION>` with your release tag (for example `v1.2.3`).
-
-```jsonc
-{
-  "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {},
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity-remote.tgz": {},
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-databricks.tgz": {},
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-docker-in-docker.tgz": {},
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {},
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-gyrus.tgz": {},
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-vscode-customizations.tgz": {}
-  }
-}
-```
+Each feature below has its own `devcontainer.json` snippet. The examples install the latest release. To pin a specific release, use `https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-<FEATURE>.tgz` and replace `<VERSION>` with the release tag (for example `v1.2.3`).
 
 ---
 
@@ -42,33 +27,21 @@ Installs Google's Antigravity CLI (`agy`), mounts local config files from the ho
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {}
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-antigravity.tgz": {
+      "rulefilePath": "docs/agents/AGENTS.md", // Optional: central rules file
+      "skillsPath": "docs/agents/skills" // Optional: skills directory
+    }
   }
 }
 ```
 
 ### Options
 
-- `rulefilePath`: Path to the central rules file, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/AGENTS.md`) to enable rules symlinking.
-- `contextPath`: Path to the path-scoped instructions directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/context`) to enable context mapping.
-- `skillsPath`: Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/skills`) to enable skills mapping.
+- `rulefilePath` (optional): Path to the central rules file, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/AGENTS.md`) to enable rules symlinking.
+- `skillsPath` (optional): Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/skills`) to enable skills mapping.
 
 > [!NOTE]
 > All path options are strictly **opt-in** and default to empty (`""`). When omitted or left empty, no symlinks or files are created. When configured, symlinks are only created if the target file or directory already exists in the workspace—baseline files are never auto-generated.
-
-#### Example
-
-```jsonc
-{
-  "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity.tgz": {
-      "rulefilePath": "docs/agents/AGENTS.md",
-      "contextPath": "docs/agents/context",
-      "skillsPath": "docs/agents/skills"
-    }
-  }
-}
-```
 
 ### Features
 
@@ -94,26 +67,16 @@ Installs the Antigravity CLI and configures the headless Remote Control daemon. 
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity-remote.tgz": {}
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-antigravity-remote.tgz": {
+      "registrationName": "my-box" // Optional: defaults to a generated persistent name
+    }
   }
 }
 ```
 
 ### Options
 
-- `registrationName`: Custom registration/session name for this Antigravity Remote daemon (e.g. `"my-box"`). Will be prefixed with `devcontainer-`. If omitted or empty, a persistent unique GUID is automatically generated and saved with `devcontainer-` prefix.
-
-#### Example
-
-```jsonc
-{
-  "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-antigravity-remote.tgz": {
-      "registrationName": "my-box"
-    }
-  }
-}
-```
+- `registrationName` (optional): Custom registration/session name for this Antigravity Remote daemon (e.g. `"my-box"`). Will be prefixed with `devcontainer-`. If omitted or empty, a persistent unique GUID is automatically generated and saved with `devcontainer-` prefix.
 
 ### Features
 
@@ -156,9 +119,11 @@ Installs the Databricks CLI, mounts host Databricks credentials and configuratio
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-databricks.tgz": {}
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-databricks.tgz": {
+      "version": "latest" // Optional: CLI version; defaults to latest
+    }
   },
-  "forwardPorts": [8020],
+  "forwardPorts": [8020], // Required for the Databricks OAuth callback
   "portsAttributes": {
     "8020": {
       "label": "Databricks OAuth",
@@ -171,27 +136,7 @@ Installs the Databricks CLI, mounts host Databricks credentials and configuratio
 
 ### Options
 
-- `version`: Version of the Databricks CLI to install (e.g., `"latest"`, `"1.16.1"`). Default is `"latest"`.
-
-#### Example
-
-```jsonc
-{
-  "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-databricks.tgz": {
-      "version": "latest"
-    }
-  },
-  "forwardPorts": [8020],
-  "portsAttributes": {
-    "8020": {
-      "label": "Databricks OAuth",
-      "onAutoForward": "silent",
-      "requireLocalPort": true
-    }
-  }
-}
-```
+- `version` (optional): Version of the Databricks CLI to install (e.g., `"latest"`, `"1.16.1"`). Defaults to `"latest"`.
 
 ### Features
 
@@ -220,7 +165,7 @@ Installs Docker inside the container using privileged mode. Allows running Docke
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-docker-in-docker.tgz": {}
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-docker-in-docker.tgz": {}
   }
 }
 ```
@@ -255,33 +200,56 @@ Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI 
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {}
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-copilot.tgz": {
+      "rulefilePath": "docs/agents/AGENTS.md", // Optional: central rules file
+      "skillsPath": "docs/agents/skills" // Optional: skills directory
+    }
   }
 }
 ```
 
 ### Options
 
-- `rulefilePath`: Path to the central rules file, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/AGENTS.md`) to enable rules symlinking.
-- `contextPath`: Path to the path-scoped instructions directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/context`) to enable context mapping.
-- `skillsPath`: Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/skills`) to enable skills mapping.
+- `rulefilePath` (optional): Path to the central rules file, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/AGENTS.md`) to enable rules symlinking.
+- `skillsPath` (optional): Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/skills`) to enable skills mapping.
+
+Copilot's path-scoped instruction files use GitHub's native `.github/instructions/*.instructions.md` format and location. Add those files there directly; no shared-directory mapping is provided.
 
 > [!NOTE]
 > All path options are strictly **opt-in** and default to empty (`""`). When omitted or left empty, no symlinks or files are created. When configured, symlinks are only created if the target file or directory already exists in the workspace—baseline files are never auto-generated.
 
-#### Example
+---
+
+## OpenAI Codex
+
+Installs the OpenAI Codex CLI and VS Code extension. The host's `${localEnv:HOME}/.codex` directory is bind-mounted to `/root/.codex` so CLI and extension settings, authentication, and local state are available in the container and persist across rebuilds. Optional path settings can link a central `AGENTS.md` and skills directory into the locations Codex discovers.
+
+### Usage
 
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-copilot.tgz": {
-      "rulefilePath": "docs/agents/AGENTS.md",
-      "contextPath": "docs/agents/context",
-      "skillsPath": "docs/agents/skills"
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-codex.tgz": {
+      "rulefilePath": "docs/agents/AGENTS.md", // Optional: central AGENTS.md
+      "skillsPath": "docs/agents/skills" // Optional: skills directory
     }
   }
 }
 ```
+
+### Options
+
+- `rulefilePath` (optional): Path to the central `AGENTS.md`, relative to the workspace root. When present and the workspace root has no `AGENTS.md`, the feature links it there. Existing files or links are silently preserved.
+- `skillsPath` (optional): Path to the skills directory, relative to the workspace root. When present and `.agents/skills` is unused, the feature links it there. Existing directories or links are silently preserved. Codex discovers project skills in `.agents/skills`.
+
+There is no separate context directory option because Codex does not automatically load a context directory. Reference context files from `AGENTS.md` when needed. These path options default to empty and are disabled unless configured.
+
+### Features
+
+- Codex CLI installed system-wide as `codex`
+- OpenAI Codex VS Code extension (`OpenAI.chatgpt`)
+- Host Codex home bind mount (`${localEnv:HOME}/.codex` to `/root/.codex`) for shared settings, authentication, and state
+- Optional symlink setup for central `AGENTS.md` and skills, silently skipping existing destinations to avoid conflicts with other tools
 
 ---
 
@@ -294,26 +262,16 @@ Installs the Gyrus CLI, a high-performance local-first memory and context engine
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-gyrus.tgz": {}
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-gyrus.tgz": {
+      "version": "latest" // Optional: CLI version; defaults to latest
+    }
   }
 }
 ```
 
 ### Options
 
-- `version`: Version of Gyrus to install (e.g., `"latest"`, `"0.1.11"`). Default is `"latest"`.
-
-#### Example
-
-```jsonc
-{
-  "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-gyrus.tgz": {
-      "version": "latest"
-    }
-  }
-}
-```
+- `version` (optional): Version of Gyrus to install (e.g., `"latest"`, `"0.1.11"`). Defaults to `"latest"`.
 
 ### Features
 
@@ -337,7 +295,7 @@ Applies standardized VS Code settings and extension recommendations for a consis
 ```jsonc
 {
   "features": {
-    "https://github.com/armckinney/containers/releases/download/<VERSION>/devcontainer-feature-vscode-customizations.tgz": {}
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-vscode-customizations.tgz": {}
   }
 }
 ```

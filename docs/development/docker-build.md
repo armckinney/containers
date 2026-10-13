@@ -1,10 +1,3 @@
----
-name: Docker Build
-description: Precise commands, timing expectations, and order dependencies for building Docker images.
-applyTo:
-  - containers/**
----
-
 # Docker Build
 
 ## Prerequisites and Setup

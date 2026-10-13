@@ -1,10 +1,3 @@
----
-name: Repository Overview
-description: High-level overview of the layered image hierarchy and repository directory layout.
-applyTo:
-  - "**"
----
-
 # Repository Overview
 
 This repository contains standardized Dockerfiles that are built into layered container images and hosted on DockerHub. Images build on top of each other (Ubuntu → Python → Pyspark).

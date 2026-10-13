@@ -1,0 +1,29 @@
+{
+  "symlink_disabled": {
+    "image": "ubuntu:focal",
+    "features": {
+      "codex": {
+        "rulefilePath": "",
+        "skillsPath": ""
+      }
+    }
+  },
+  "rules_enabled": {
+    "image": "ubuntu:focal",
+    "features": {
+      "codex": {
+        "rulefilePath": "docs/agents/AGENTS.md",
+        "skillsPath": "docs/agents/skills"
+      }
+    }
+  },
+  "existing_destinations": {
+    "image": "ubuntu:focal",
+    "features": {
+      "codex": {
+        "rulefilePath": "docs/agents/AGENTS.md",
+        "skillsPath": "docs/agents/skills"
+      }
+    }
+  }
+}

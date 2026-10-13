@@ -11,9 +11,8 @@ check "GitHub Copilot CLI is installed" command -v copilot
 check "GitHub Copilot CLI help works" copilot help
 
 # Setup dummy workspace files for testing
-mkdir -p docs/agents/context
+mkdir -p docs/agents
 echo "# Agent Configuration" > docs/agents/AGENTS.md
-echo -e "---\napplyTo:\n  - containers/**\n---\n# Docker Build\nRules..." > docs/agents/context/docker-build.instructions.md
 mkdir -p docs/agents/skills/docker-build
 echo -e "---\nname: Docker Build\n---\n# Docker Build\nRules..." > docs/agents/skills/docker-build/SKILL.md
 
@@ -23,10 +22,7 @@ echo -e "---\nname: Docker Build\n---\n# Docker Build\nRules..." > docs/agents/s
 # Test 3: Verify Copilot central instructions symlink is disabled by default
 check "Copilot central rules symlink is disabled" [ ! -e ".github/copilot-instructions.md" ]
 
-# Test 4: Verify Copilot path-scoped context instructions directory symlink is disabled
-check "Copilot instructions directory symlink is disabled" [ ! -e ".github/instructions" ]
-
-# Test 5: Verify Copilot prompts symlink is disabled
+# Test 4: Verify Copilot prompts symlink is disabled
 check "Copilot prompts symlink is disabled" [ ! -e ".github/prompts" ]
 
 # Report results
