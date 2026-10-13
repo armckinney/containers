@@ -11,6 +11,7 @@
     "./features/docker-in-docker": {},
     "./features/gyrus": {},
     "./features/antigravity": {},
+    "./features/codex": {},
     "./features/vscode-customizations": {}
   }
 }
