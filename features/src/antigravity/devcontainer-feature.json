@@ -1,6 +1,6 @@
 {
   "id": "antigravity",
-  "version": "1.0.15",
+  "version": "1.0.0",
   "name": "Antigravity CLI",
   "description": "Installs Google's Antigravity CLI (agy) and mounts local config files from the host.",
   "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/antigravity",

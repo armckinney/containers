@@ -1,6 +1,6 @@
 {
   "id": "codex",
-  "version": "1.0.15",
+  "version": "1.0.0",
   "name": "OpenAI Codex",
   "description": "Installs the OpenAI Codex CLI, mounts host Codex configuration and authentication, and installs the Codex VS Code extension.",
   "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/codex",
