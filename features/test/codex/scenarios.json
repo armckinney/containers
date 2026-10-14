@@ -3,7 +3,8 @@
     "image": "ubuntu:focal",
     "features": {
       "codex": {
-        "rulefilePath": "",
+        "instructionFilePath": "",
+        "rulesPath": "",
         "skillsPath": ""
       }
     }
@@ -12,7 +13,8 @@
     "image": "ubuntu:focal",
     "features": {
       "codex": {
-        "rulefilePath": "docs/agents/AGENTS.md",
+        "instructionFilePath": "docs/agents/AGENTS.md",
+        "rulesPath": "docs/agents/rules",
         "skillsPath": "docs/agents/skills"
       }
     }
@@ -21,7 +23,8 @@
     "image": "ubuntu:focal",
     "features": {
       "codex": {
-        "rulefilePath": "docs/agents/AGENTS.md",
+        "instructionFilePath": "docs/agents/AGENTS.md",
+        "rulesPath": "docs/agents/rules",
         "skillsPath": "docs/agents/skills"
       }
     }

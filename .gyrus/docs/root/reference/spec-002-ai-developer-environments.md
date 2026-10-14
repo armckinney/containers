@@ -60,7 +60,7 @@ To align with the three-tiered AI context model, consuming repositories maintain
 │       │   └── ...
 │       │
 │       └── skills/             # Modular task-specific skill folders
-│           ├── agent-skills/
+│           ├── create-skill/
 │           │   └── SKILL.md    # Guide for writing skills
 │           └── create-adr/
 │               └── SKILL.md    # Tool/Shortcut to create new ADRs
@@ -118,7 +118,7 @@ This document serves as the central index and entry point for AI agents working 
 
 ## System Message
 
-You are working with this repository. Always reference the instruction files under `docs/agents/context/` and execute specific task templates under `docs/agents/skills/` where applicable.
+You are working with this repository. Always reference the instruction files under `docs/agents/context/` and use specific task skills under `.agents/skills/` where applicable.
 
 ## Key Principles
 
@@ -146,26 +146,26 @@ applyTo:
 - Verify Docker daemon connectivity: `docker ps`.
 ```
 
-### Template C: Skill Standard (`docs/agents/skills/agent-skills/SKILL.md`)
+### Template C: Skill Creation (`.agents/skills/create-skill/SKILL.md`)
 
 ```markdown
 ---
-name: Agent Skills
-description: Rules and guidelines for creating and structuring reusable agent skills in this repository.
+name: create-skill
+description: Create and maintain focused, reusable agent skills in this repository.
 applyTo:
-  - docs/agents/skills/**
+  - .agents/skills/**
 ---
 
-# Agent Skills Standard
+# Create Skills
 
 All instruction files are structured as modular **skills** to ensure reusability, isolation, and tooling compatibility.
 
 ## Structure
 
-Each skill must live in a dedicated subfolder under `docs/agents/skills/` and have a `SKILL.md` entry point:
+Each skill must live in a dedicated subfolder under `.agents/skills/` and have a `SKILL.md` entry point:
 
 ```text
-docs/agents/skills/<skill-name>/
+.agents/skills/<skill-name>/
 └── SKILL.md
 ```
 
@@ -181,13 +181,13 @@ Every `SKILL.md` file must adhere to these guidelines:
      - path/to/target/**
    ---
    ```
-   * `name`: The human-readable name of the skill.
+   * `name`: Kebab-case skill identifier matching its directory name.
    * `description`: The purpose of this skill.
    * `applyTo`: YAML list of glob patterns mapping this skill to specific workspace paths for Copilot. Use `**` for repository-wide.
 2. **Markdown formatting**: Use standard Markdown format for headings, bullet points, and code samples.
 ```
 
-### Template D: ADR Skill (`docs/agents/skills/create-adr/SKILL.md`)
+### Template D: ADR Skill (`.agents/skills/create-adr/SKILL.md`)
 
 ```markdown
 ---

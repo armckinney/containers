@@ -3,7 +3,7 @@
     "image": "ubuntu:focal",
     "features": {
       "antigravity": {
-        "rulefilePath": ""
+        "instructionFilePath": ""
       }
     }
   },
@@ -11,7 +11,8 @@
     "image": "ubuntu:focal",
     "features": {
       "antigravity": {
-        "rulefilePath": "docs/agents/AGENTS.md",
+        "instructionFilePath": "docs/agents/AGENTS.md",
+        "rulesPath": "docs/agents/rules",
         "skillsPath": "docs/agents/skills"
       }
     }
@@ -20,7 +21,8 @@
     "image": "ubuntu:focal",
     "features": {
       "antigravity": {
-        "rulefilePath": "docs/agents/AGENTS.md",
+        "instructionFilePath": "docs/agents/AGENTS.md",
+        "rulesPath": "docs/agents/rules",
         "skillsPath": "docs/agents/skills"
       }
     }

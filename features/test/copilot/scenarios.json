@@ -3,7 +3,8 @@
     "image": "ubuntu:focal",
     "features": {
       "copilot": {
-        "rulefilePath": ""
+        "instructionFilePath": "",
+        "instructionsPath": ""
       }
     }
   },
@@ -11,7 +12,8 @@
     "image": "ubuntu:focal",
     "features": {
       "copilot": {
-        "rulefilePath": "docs/agents/AGENTS.md",
+        "instructionFilePath": "docs/agents/AGENTS.md",
+        "instructionsPath": "docs/agents/rules",
         "skillsPath": "docs/agents/skills"
       }
     }

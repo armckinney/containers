@@ -1,0 +1,32 @@
+{
+  "symlink_disabled": {
+    "image": "ubuntu:focal",
+    "features": {
+      "claude-code": {
+        "instructionFilePath": "",
+        "rulesPath": "",
+        "skillsPath": ""
+      }
+    }
+  },
+  "rules_enabled": {
+    "image": "ubuntu:focal",
+    "features": {
+      "claude-code": {
+        "instructionFilePath": "docs/agents/CLAUDE.md",
+        "rulesPath": "docs/agents/rules",
+        "skillsPath": "docs/agents/skills"
+      }
+    }
+  },
+  "existing_destinations": {
+    "image": "ubuntu:focal",
+    "features": {
+      "claude-code": {
+        "instructionFilePath": "docs/agents/CLAUDE.md",
+        "rulesPath": "docs/agents/rules",
+        "skillsPath": "docs/agents/skills"
+      }
+    }
+  }
+}

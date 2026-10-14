@@ -20,14 +20,16 @@ else
 fi
 
 # AI agent instructions and skills symlink setup
-RULEFILEPATH="${RULEFILEPATH:-}"
+INSTRUCTIONFILEPATH="${INSTRUCTIONFILEPATH:-}"
+RULESPATH="${RULESPATH:-}"
 SKILLSPATH="${SKILLSPATH:-}"
 INSTALL_DIR="/usr/local/share/codex"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 mkdir -p "${INSTALL_DIR}"
 {
-  printf 'RULEFILE_PATH=%q\n' "${RULEFILEPATH}"
+  printf 'INSTRUCTION_FILE_PATH=%q\n' "${INSTRUCTIONFILEPATH}"
+  printf 'RULES_PATH=%q\n' "${RULESPATH}"
   printf 'SKILLS_PATH=%q\n' "${SKILLSPATH}"
 } > "${INSTALL_DIR}/config.env"
 install -m 0755 "${SCRIPT_DIR}/setup-symlinks.sh" "${INSTALL_DIR}/setup-symlinks.sh"

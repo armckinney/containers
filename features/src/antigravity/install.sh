@@ -29,27 +29,30 @@ else
 fi
 
 # AI Agent Rules Symlinker Setup
-RULEFILEPATH="${RULEFILEPATH:-}"
+INSTRUCTIONFILEPATH="${INSTRUCTIONFILEPATH:-}"
+RULESPATH="${RULESPATH:-}"
 SKILLSPATH="${SKILLSPATH:-}"
 FEATURE_ID="antigravity"
 TARGET_SUBDIR=".agents"
 TARGET_FILENAME="AGENTS.md"
 
-echo "Configuring Antigravity rules symlink..."
-echo "Central rule file path: ${RULEFILEPATH}"
+echo "Configuring Antigravity instruction and rules symlinks..."
+echo "Central instruction file path: ${INSTRUCTIONFILEPATH}"
+echo "Rules path: ${RULESPATH}"
 echo "Skills path: ${SKILLSPATH}"
 
 INSTALL_DIR="/usr/local/share/antigravity"
 mkdir -p "${INSTALL_DIR}"
 
 # 1. Store option configuration for runtime lifecycle hooks
-cat << EOF > "${INSTALL_DIR}/config.env"
-RULEFILE_PATH="${RULEFILEPATH}"
-SKILLS_PATH="${SKILLSPATH}"
-FEATURE_ID="${FEATURE_ID}"
-TARGET_SUBDIR="${TARGET_SUBDIR}"
-TARGET_FILENAME="${TARGET_FILENAME}"
-EOF
+{
+  printf 'INSTRUCTION_FILE_PATH=%q\n' "${INSTRUCTIONFILEPATH}"
+  printf 'RULES_PATH=%q\n' "${RULESPATH}"
+  printf 'SKILLS_PATH=%q\n' "${SKILLSPATH}"
+  printf 'FEATURE_ID=%q\n' "${FEATURE_ID}"
+  printf 'TARGET_SUBDIR=%q\n' "${TARGET_SUBDIR}"
+  printf 'TARGET_FILENAME=%q\n' "${TARGET_FILENAME}"
+} > "${INSTALL_DIR}/config.env"
 
 # 2. Copy the symlink setup script
 cp "$(dirname "$0")/setup-symlinks.sh" "${INSTALL_DIR}/setup-symlinks.sh"

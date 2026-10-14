@@ -14,6 +14,7 @@ check "Codex root AGENTS.md link is disabled" [ ! -e "AGENTS.md" ]
 check "Codex root AGENTS.md has no dangling link" [ ! -L "AGENTS.md" ]
 check "Codex skills link is disabled" [ ! -e ".agents/skills" ]
 check "Codex skills path has no dangling link" [ ! -L ".agents/skills" ]
+check "Codex rules link is disabled" [ ! -L ".codex/rules" ]
 
 # Report results
 reportResults

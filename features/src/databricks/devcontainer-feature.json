@@ -1,6 +1,6 @@
 {
   "id": "databricks",
-  "version": "1.0.15",
+  "version": "1.0.0",
   "name": "Databricks",
   "description": "Installs the Databricks CLI and Databricks VS Code extension. Port forwarding for OAuth authentication (port 8020) must be configured in the consuming devcontainer.json.",
   "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/databricks",

@@ -8,7 +8,8 @@ if [[ -f "${SCRIPT_DIR}/config.env" ]]; then
 fi
 
 WORKSPACE_ROOT="$(pwd -P)"
-RULEFILE_PATH="${RULEFILE_PATH:-}"
+INSTRUCTION_FILE_PATH="${INSTRUCTION_FILE_PATH:-}"
+RULES_PATH="${RULES_PATH:-}"
 SKILLS_PATH="${SKILLS_PATH:-}"
 
 link_if_missing() {
@@ -24,9 +25,13 @@ link_if_missing() {
 
 # Only create links when the configured source exists. Existing destinations
 # may have been created by the workspace or another tool, so preserve them.
-if [[ -n "${RULEFILE_PATH}" && -f "${WORKSPACE_ROOT}/${RULEFILE_PATH}" \
-  && "${RULEFILE_PATH}" != "AGENTS.md" ]]; then
-  link_if_missing "${RULEFILE_PATH}" "${WORKSPACE_ROOT}/AGENTS.md"
+if [[ -n "${INSTRUCTION_FILE_PATH}" && -f "${WORKSPACE_ROOT}/${INSTRUCTION_FILE_PATH}" \
+  && "${INSTRUCTION_FILE_PATH}" != "AGENTS.md" ]]; then
+  link_if_missing "${INSTRUCTION_FILE_PATH}" "${WORKSPACE_ROOT}/AGENTS.md"
+fi
+
+if [[ -n "${RULES_PATH}" && -d "${WORKSPACE_ROOT}/${RULES_PATH}" ]]; then
+  link_if_missing "../${RULES_PATH}" "${WORKSPACE_ROOT}/.codex/rules"
 fi
 
 if [[ -n "${SKILLS_PATH}" && -d "${WORKSPACE_ROOT}/${SKILLS_PATH}" \

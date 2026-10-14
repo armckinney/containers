@@ -12,6 +12,8 @@ check "GitHub Copilot CLI help works" copilot help
 
 # Test 3: Verify symlink does not exist
 check "Rules symlink is disabled" [ ! -f ".github/copilot-instructions.md" ]
+check "Path-specific instruction file symlinks are disabled" [ ! -L ".github/instructions/example.instructions.md" ]
+check "Copilot skills symlink is disabled" [ ! -L ".agents/skills" ]
 
 # Report results
 reportResults

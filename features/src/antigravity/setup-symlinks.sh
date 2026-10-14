@@ -8,7 +8,8 @@ if [ -f "${SCRIPT_DIR}/config.env" ]; then
 fi
 
 WORKSPACE_ROOT="$(pwd -P)"
-RULEFILE_PATH="${RULEFILE_PATH:-}"
+INSTRUCTION_FILE_PATH="${INSTRUCTION_FILE_PATH:-}"
+RULES_PATH="${RULES_PATH:-}"
 SKILLS_PATH="${SKILLS_PATH:-}"
 TARGET_SUBDIR="${TARGET_SUBDIR:-.agents}"
 TARGET_FILENAME="${TARGET_FILENAME:-AGENTS.md}"
@@ -24,15 +25,23 @@ link_if_missing() {
     fi
 }
 
-# 1. Setup central rule symlink if configured
-if [[ -n "${RULEFILE_PATH}" && -f "${WORKSPACE_ROOT}/${RULEFILE_PATH}" ]]; then
+# 1. Setup central instruction symlink if configured
+if [[ -n "${INSTRUCTION_FILE_PATH}" && -f "${WORKSPACE_ROOT}/${INSTRUCTION_FILE_PATH}" ]]; then
     DESTINATION="${WORKSPACE_ROOT}/${TARGET_SUBDIR}/${TARGET_FILENAME}"
-    link_if_missing "../${RULEFILE_PATH}" "${DESTINATION}"
-elif [[ -n "${RULEFILE_PATH}" ]]; then
-    echo "Rule file ${RULEFILE_PATH} not found. Skipping rules symlink."
+    link_if_missing "../${INSTRUCTION_FILE_PATH}" "${DESTINATION}"
+elif [[ -n "${INSTRUCTION_FILE_PATH}" ]]; then
+    echo "Instruction file ${INSTRUCTION_FILE_PATH} not found. Skipping instruction symlink."
 fi
 
-# 2. Setup skills folder symlink if configured
+# 2. Setup rules folder symlink if configured
+if [[ -n "${RULES_PATH}" && -d "${WORKSPACE_ROOT}/${RULES_PATH}" ]]; then
+    DESTINATION="${WORKSPACE_ROOT}/${TARGET_SUBDIR}/rules"
+    link_if_missing "../${RULES_PATH}" "${DESTINATION}"
+elif [[ -n "${RULES_PATH}" ]]; then
+    echo "Rules directory ${RULES_PATH} not found. Skipping rules symlink."
+fi
+
+# 3. Setup skills folder symlink if configured
 if [[ -n "${SKILLS_PATH}" && -d "${WORKSPACE_ROOT}/${SKILLS_PATH}" ]]; then
     DESTINATION="${WORKSPACE_ROOT}/${TARGET_SUBDIR}/skills"
     link_if_missing "../${SKILLS_PATH}" "${DESTINATION}"
