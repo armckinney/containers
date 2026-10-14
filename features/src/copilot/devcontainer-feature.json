@@ -13,12 +13,12 @@
     "instructionsPath": {
       "type": "string",
       "default": "",
-      "description": "Path to the path-specific instructions directory, relative to the workspace root. Default is empty (disabled). Set to a path (e.g. 'docs/agents/instructions') to link it to .github/instructions."
+      "description": "Path to the source directory of Markdown instructions, relative to the workspace root. Default is empty (disabled). Each file is linked into .github/instructions with a .instructions.md suffix."
     },
     "skillsPath": {
       "type": "string",
       "default": "",
-      "description": "Path to the modular skills directory, relative to the workspace root. Default is empty (disabled). Set to a path (e.g. 'docs/agents/skills') to enable skills mapping."
+      "description": "Path to the source skills directory, relative to the workspace root. Default is empty (disabled). When configured, it is linked to .agents/skills."
     }
   },
   "mounts": [

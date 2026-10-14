@@ -22,9 +22,9 @@ echo -e "---\nname: Docker Build\n---\n# Docker Build\nRules..." > docs/agents/s
 # Test 3: Verify Copilot central instructions symlink is disabled by default
 check "Copilot central rules symlink is disabled" [ ! -e ".github/copilot-instructions.md" ]
 
-# Test 4: Verify Copilot prompts symlink is disabled
-check "Copilot prompts symlink is disabled" [ ! -e ".github/prompts" ]
-check "Copilot instructions directory symlink is disabled by default" [ ! -L ".github/instructions" ]
+# Test 4: Verify Copilot skills symlink is disabled
+check "Copilot skills symlink is disabled by default" [ ! -L ".agents/skills" ]
+check "Copilot path-specific instruction file symlinks are disabled by default" [ ! -L ".github/instructions/example.instructions.md" ]
 
 # Report results
 reportResults

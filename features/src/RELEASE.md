@@ -40,7 +40,7 @@ Installs Google's Antigravity CLI (`agy`), mounts local config files from the ho
 
 - `instructionFilePath` (optional): Path to the central instruction file, relative to the workspace root. When present, the feature links it to `.agents/AGENTS.md` if that destination is unused.
 - `rulesPath` (optional): Path to the rules directory, relative to the workspace root. When present, the feature links it to `.agents/rules` if that destination is unused.
-- `skillsPath` (optional): Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `.agents/skills`) to enable skills mapping.
+- `skillsPath` (optional): Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). When configured, the feature links it to `.agents/skills` if that destination is unused.
 
 > [!NOTE]
 > All path options are strictly **opt-in** and default to empty (`""`). When omitted or left empty, no symlinks or files are created. When configured, symlinks are only created if the target file or directory already exists in the workspace—baseline files are never auto-generated.
@@ -204,7 +204,7 @@ Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI 
   "features": {
     "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-copilot.tgz": {
       "instructionFilePath": ".agents/AGENTS.md", // Optional: central instruction file
-      "instructionsPath": ".github/instructions", // Optional: path-specific instructions
+      "instructionsPath": ".github/instructions", // Optional: source instructions directory
       "skillsPath": ".agents/skills" // Optional: skills directory
     }
   }
@@ -214,8 +214,8 @@ Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI 
 ### Options
 
 - `instructionFilePath` (optional): Path to the central instruction file, relative to the workspace root. When present, the feature links it to `.github/copilot-instructions.md` if that destination is unused.
-- `instructionsPath` (optional): Path to the path-specific instructions directory, relative to the workspace root. When present, the feature links it to `.github/instructions` if that destination is unused. The directory should contain GitHub compatible `*.instructions.md` files.
-- `skillsPath` (optional): Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `.agents/skills`) to enable skills mapping.
+- `instructionsPath` (optional): Path to the source directory of Markdown instructions, relative to the workspace root. Each source file is linked separately under `.github/instructions` with a `.instructions.md` suffix (for example, `rules.md` becomes `rules.instructions.md`). Existing destination files are preserved. The example uses Copilot's `.github/instructions` directory.
+- `skillsPath` (optional): Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). When configured, the feature links it to `.agents/skills` if that destination is unused.
 
 > [!NOTE]
 > All path options are strictly **opt-in** and default to empty (`""`). When omitted or left empty, no symlinks or files are created. When configured, symlinks are only created if the target file or directory already exists in the workspace—baseline files are never auto-generated.

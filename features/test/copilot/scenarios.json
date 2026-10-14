@@ -13,7 +13,7 @@
     "features": {
       "copilot": {
         "instructionFilePath": "docs/agents/AGENTS.md",
-        "instructionsPath": "docs/agents/instructions",
+        "instructionsPath": "docs/agents/rules",
         "skillsPath": "docs/agents/skills"
       }
     }
