@@ -18,27 +18,30 @@ else
 fi
 
 # AI Agent Rules Symlinker Setup
-RULEFILEPATH="${RULEFILEPATH:-}"
+INSTRUCTIONFILEPATH="${INSTRUCTIONFILEPATH:-}"
+INSTRUCTIONSPATH="${INSTRUCTIONSPATH:-}"
 SKILLSPATH="${SKILLSPATH:-}"
 FEATURE_ID="copilot"
 TARGET_SUBDIR=".github"
 TARGET_FILENAME="copilot-instructions.md"
 
-echo "Configuring GitHub Copilot rules symlink..."
-echo "Central rule file path: ${RULEFILEPATH}"
+echo "Configuring GitHub Copilot instruction symlinks..."
+echo "Central instruction file path: ${INSTRUCTIONFILEPATH}"
+echo "Instructions path: ${INSTRUCTIONSPATH}"
 echo "Skills path: ${SKILLSPATH}"
 
 INSTALL_DIR="/usr/local/share/copilot"
 mkdir -p "${INSTALL_DIR}"
 
 # 1. Store option configuration for runtime lifecycle hooks
-cat << EOF > "${INSTALL_DIR}/config.env"
-RULEFILE_PATH="${RULEFILEPATH}"
-SKILLS_PATH="${SKILLSPATH}"
-FEATURE_ID="${FEATURE_ID}"
-TARGET_SUBDIR="${TARGET_SUBDIR}"
-TARGET_FILENAME="${TARGET_FILENAME}"
-EOF
+{
+  printf 'INSTRUCTION_FILE_PATH=%q\n' "${INSTRUCTIONFILEPATH}"
+  printf 'INSTRUCTIONS_PATH=%q\n' "${INSTRUCTIONSPATH}"
+  printf 'SKILLS_PATH=%q\n' "${SKILLSPATH}"
+  printf 'FEATURE_ID=%q\n' "${FEATURE_ID}"
+  printf 'TARGET_SUBDIR=%q\n' "${TARGET_SUBDIR}"
+  printf 'TARGET_FILENAME=%q\n' "${TARGET_FILENAME}"
+} > "${INSTALL_DIR}/config.env"
 
 # 2. Copy the symlink setup script
 cp "$(dirname "$0")/setup-symlinks.sh" "${INSTALL_DIR}/setup-symlinks.sh"

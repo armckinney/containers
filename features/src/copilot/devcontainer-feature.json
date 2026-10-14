@@ -5,10 +5,15 @@
   "description": "Installs the GitHub Copilot CLI and configures GitHub Copilot VS Code extensions.",
   "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/copilot",
   "options": {
-    "rulefilePath": {
+    "instructionFilePath": {
       "type": "string",
       "default": "",
-      "description": "Path to the central rules file, relative to the workspace root. Default is empty (disabled). Set to a path (e.g. 'docs/agents/AGENTS.md') to enable rules symlinking."
+      "description": "Path to the central instruction file, relative to the workspace root. Default is empty (disabled). Set to a path (e.g. 'docs/agents/AGENTS.md') to enable instruction symlinking."
+    },
+    "instructionsPath": {
+      "type": "string",
+      "default": "",
+      "description": "Path to the path-specific instructions directory, relative to the workspace root. Default is empty (disabled). Set to a path (e.g. 'docs/agents/instructions') to link it to .github/instructions."
     },
     "skillsPath": {
       "type": "string",

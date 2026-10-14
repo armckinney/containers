@@ -12,6 +12,7 @@ check "GitHub Copilot CLI help works" copilot help
 
 # Test 3: Verify symlink does not exist
 check "Rules symlink is disabled" [ ! -f ".github/copilot-instructions.md" ]
+check "Instructions directory symlink is disabled" [ ! -L ".github/instructions" ]
 
 # Report results
 reportResults

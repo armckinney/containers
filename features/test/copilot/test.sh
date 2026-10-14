@@ -24,6 +24,7 @@ check "Copilot central rules symlink is disabled" [ ! -e ".github/copilot-instru
 
 # Test 4: Verify Copilot prompts symlink is disabled
 check "Copilot prompts symlink is disabled" [ ! -e ".github/prompts" ]
+check "Copilot instructions directory symlink is disabled by default" [ ! -L ".github/instructions" ]
 
 # Report results
 reportResults

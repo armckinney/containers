@@ -12,6 +12,7 @@ check "Antigravity CLI version works" agy --version
 
 # Test 3: Verify symlink does not exist
 check "Rules symlink is disabled" [ ! -f ".agents/AGENTS.md" ]
+check "Rules directory symlink is disabled" [ ! -L ".agents/rules" ]
 
 # Report results
 reportResults
