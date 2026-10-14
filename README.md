@@ -55,6 +55,7 @@ For detailed documentation, configuration options, and release assets, see [feat
 | --- | --- | --- | --- |
 | Antigravity CLI | `antigravity` | Installs Google's Antigravity CLI (`agy`), mounts host config, and sets up VS Code integration with optional agent rules mapping | [features/src/antigravity](features/src/antigravity) |
 | Antigravity Remote | `antigravity-remote` | Runs the Antigravity daemon to connect to the devcontainer remotely | [features/src/antigravity-remote](features/src/antigravity-remote) |
+| Claude Code | `claude-code` | Installs the Claude Code CLI and VS Code extension, mounts host Claude configuration, and supports optional instruction, rules, and skills links | [features/src/claude-code](features/src/claude-code) |
 | OpenAI Codex | `codex` | Installs the Codex CLI and VS Code extension, mounts host Codex configuration, and supports optional instruction and skills links | [features/src/codex](features/src/codex) |
 | GitHub Copilot | `copilot` | Installs GitHub Copilot CLI, mounts host config, and sets up VS Code extensions with optional agent rules mapping | [features/src/copilot](features/src/copilot) |
 | Databricks | `databricks` | Installs the Databricks CLI, mounts host credentials (`~/.databrickscfg`), and configures VS Code extensions | [features/src/databricks](features/src/databricks) |
@@ -71,6 +72,7 @@ Reference the latest packaged feature tarballs from GitHub Releases:
   "features": {
     "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-antigravity.tgz": {},
     "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-antigravity-remote.tgz": {},
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-claude-code.tgz": {},
     "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-codex.tgz": {},
     "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-copilot.tgz": {},
     "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-databricks.tgz": {},

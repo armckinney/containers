@@ -7,6 +7,7 @@ This release contains devcontainer features that can be consumed from other repo
 ### Table of Contents
 - [Antigravity CLI](#antigravity-cli)
 - [Antigravity Remote Control](#antigravity-remote-control)
+- [Claude Code](#claude-code)
 - [Databricks](#databricks)
 - [Docker-in-Docker](#docker-in-docker)
 - [GitHub Copilot](#github-copilot)
@@ -28,9 +29,9 @@ Installs Google's Antigravity CLI (`agy`), mounts local config files from the ho
 {
   "features": {
     "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-antigravity.tgz": {
-      "instructionFilePath": ".agents/AGENTS.md", // Optional: central instruction file
-      "rulesPath": ".agents/rules", // Optional: rules directory
-      "skillsPath": ".agents/skills" // Optional: skills directory
+      "instructionFilePath": ".claude/CLAUDE.md", // Optional: central instruction file
+      "rulesPath": ".claude/rules", // Optional: rules directory
+      "skillsPath": ".claude/skills" // Optional: skills directory
     }
   }
 }
@@ -106,6 +107,41 @@ To keep the devcontainer and its Antigravity Remote Control daemon running on yo
    - Docker Desktop and the container daemon will continue running in the background.
 
 You can now connect to and control your desktop container from anywhere via [https://antigravity.google.com/](https://antigravity.google.com/).
+
+---
+
+## Claude Code
+
+Installs the Claude Code CLI and VS Code extension. The host's `${localEnv:HOME}/.claude` directory is bind-mounted to `/root/.claude` so Claude Code settings, authentication, and local state are available in the container and persist across rebuilds. Optional path settings link a central `CLAUDE.md`, project rules, and skills into the locations Claude Code discovers.
+
+### Usage
+
+```jsonc
+{
+  "features": {
+    "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-claude-code.tgz": {
+      "instructionFilePath": ".agents/AGENTS.md", // Optional: central CLAUDE.md
+      "rulesPath": ".agents/rules", // Optional: rules directory
+      "skillsPath": ".agents/skills" // Optional: skills directory
+    }
+  }
+}
+```
+
+### Options
+
+- `instructionFilePath` (optional): Path to the central instruction file, relative to the workspace root. When present and the workspace root has no `CLAUDE.md`, the feature links it there. Existing files or links are preserved.
+- `rulesPath` (optional): Path to the rules directory, relative to the workspace root. When present, the feature links it to `.claude/rules` if that destination is unused.
+- `skillsPath` (optional): Path to the skills directory, relative to the workspace root. When present, the feature links it to `.claude/skills` if that destination is unused.
+
+All path options default to empty (`""`) and are disabled unless configured. The setup hook skips missing source paths and preserves any existing destinations.
+
+### Features
+
+- Claude Code CLI installed system-wide as `claude`
+- Anthropic Claude Code VS Code extension (`anthropic.claude-code`)
+- Host Claude Code home bind mount (`${localEnv:HOME}/.claude` to `/root/.claude`) for shared settings, authentication, and state
+- Optional symlink setup for `CLAUDE.md`, rules, and skills
 
 ---
 
@@ -203,9 +239,9 @@ Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI 
 {
   "features": {
     "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-copilot.tgz": {
-      "instructionFilePath": ".agents/AGENTS.md", // Optional: central instruction file
-      "instructionsPath": ".github/instructions", // Optional: source instructions directory
-      "skillsPath": ".agents/skills" // Optional: skills directory
+      "instructionFilePath": ".claude/CLAUDE.md", // Optional: central instruction file
+      "instructionsPath": ".claude/rules", // Optional: source instructions directory
+      "skillsPath": ".claude/skills" // Optional: skills directory
     }
   }
 }
@@ -214,7 +250,7 @@ Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI 
 ### Options
 
 - `instructionFilePath` (optional): Path to the central instruction file, relative to the workspace root. When present, the feature links it to `.github/copilot-instructions.md` if that destination is unused.
-- `instructionsPath` (optional): Path to the source directory of Markdown instructions, relative to the workspace root. Each source file is linked separately under `.github/instructions` with a `.instructions.md` suffix (for example, `rules.md` becomes `rules.instructions.md`). Existing destination files are preserved. The example uses Copilot's `.github/instructions` directory.
+- `instructionsPath` (optional): Path to the source directory of Markdown instructions, relative to the workspace root. Each source file is linked separately under `.github/instructions` with a `.instructions.md` suffix (for example, `rules.md` becomes `rules.instructions.md`). Existing destination files are preserved. The example uses `.claude/rules` as the source directory.
 - `skillsPath` (optional): Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). When configured, the feature links it to `.agents/skills` if that destination is unused.
 
 > [!NOTE]
@@ -224,7 +260,7 @@ Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI 
 
 ## OpenAI Codex
 
-Installs the OpenAI Codex CLI and VS Code extension. The host's `${localEnv:HOME}/.codex` directory is bind-mounted to `/root/.codex` so CLI and extension settings, authentication, and local state are available in the container and persist across rebuilds. Optional path settings can link a central `AGENTS.md`, project rules, and skills into the locations Codex discovers.
+Installs the OpenAI Codex CLI and VS Code extension. The host's `${localEnv:HOME}/.codex` directory is bind-mounted to `/root/.codex` so CLI and extension settings, authentication, and local state are available in the container and persist across rebuilds. Optional paths can map a central instruction file, project rules, and skills into the locations Codex discovers.
 
 ### Usage
 
@@ -232,9 +268,9 @@ Installs the OpenAI Codex CLI and VS Code extension. The host's `${localEnv:HOME
 {
   "features": {
     "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-codex.tgz": {
-      "instructionFilePath": ".agents/AGENTS.md", // Optional: central AGENTS.md
-      "rulesPath": ".agents/rules", // Optional: Codex rules directory
-      "skillsPath": ".agents/skills" // Optional: skills directory
+      "instructionFilePath": ".claude/CLAUDE.md", // Optional: central instructions source
+      "rulesPath": ".claude/rules", // Optional: Codex rules directory
+      "skillsPath": ".claude/skills" // Optional: skills directory
     }
   }
 }

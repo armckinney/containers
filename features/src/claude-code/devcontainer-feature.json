@@ -1,0 +1,39 @@
+{
+  "id": "claude-code",
+  "version": "1.0.0",
+  "name": "Claude Code",
+  "description": "Installs the Claude Code CLI, mounts host Claude configuration, and installs the Claude Code VS Code extension.",
+  "documentationURL": "https://github.com/armckinney/containers/blob/main/features/src/claude-code",
+  "options": {
+    "instructionFilePath": {
+      "type": "string",
+      "default": "",
+      "description": "Path to the central CLAUDE.md instruction file, relative to the workspace root. Default is empty (disabled). Set a path (e.g. '.agents/CLAUDE.md') to link it as the workspace CLAUDE.md. An existing CLAUDE.md is preserved."
+    },
+    "rulesPath": {
+      "type": "string",
+      "default": "",
+      "description": "Path to the rules directory, relative to the workspace root. Default is empty (disabled). Set to a path (e.g. '.agents/rules') to link it to .claude/rules."
+    },
+    "skillsPath": {
+      "type": "string",
+      "default": "",
+      "description": "Path to the skills directory, relative to the workspace root. Default is empty (disabled). Set a path (e.g. '.agents/skills') to link it to .claude/skills."
+    }
+  },
+  "mounts": [
+    {
+      "source": "${localEnv:HOME}/.claude",
+      "target": "/root/.claude",
+      "type": "bind"
+    }
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code"
+      ]
+    }
+  },
+  "postCreateCommand": "/usr/local/share/claude-code/setup-symlinks.sh"
+}
