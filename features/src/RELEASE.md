@@ -28,8 +28,9 @@ Installs Google's Antigravity CLI (`agy`), mounts local config files from the ho
 {
   "features": {
     "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-antigravity.tgz": {
-      "rulefilePath": "docs/agents/AGENTS.md", // Optional: central rules file
-      "skillsPath": "docs/agents/skills" // Optional: skills directory
+      "instructionFilePath": ".agents/AGENTS.md", // Optional: central instruction file
+      "rulesPath": ".agents/rules", // Optional: rules directory
+      "skillsPath": ".agents/skills" // Optional: skills directory
     }
   }
 }
@@ -37,8 +38,9 @@ Installs Google's Antigravity CLI (`agy`), mounts local config files from the ho
 
 ### Options
 
-- `rulefilePath` (optional): Path to the central rules file, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/AGENTS.md`) to enable rules symlinking.
-- `skillsPath` (optional): Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/skills`) to enable skills mapping.
+- `instructionFilePath` (optional): Path to the central instruction file, relative to the workspace root. When present, the feature links it to `.agents/AGENTS.md` if that destination is unused.
+- `rulesPath` (optional): Path to the rules directory, relative to the workspace root. When present, the feature links it to `.agents/rules` if that destination is unused.
+- `skillsPath` (optional): Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `.agents/skills`) to enable skills mapping.
 
 > [!NOTE]
 > All path options are strictly **opt-in** and default to empty (`""`). When omitted or left empty, no symlinks or files are created. When configured, symlinks are only created if the target file or directory already exists in the workspace—baseline files are never auto-generated.
@@ -201,8 +203,9 @@ Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI 
 {
   "features": {
     "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-copilot.tgz": {
-      "rulefilePath": "docs/agents/AGENTS.md", // Optional: central rules file
-      "skillsPath": "docs/agents/skills" // Optional: skills directory
+      "instructionFilePath": ".agents/AGENTS.md", // Optional: central instruction file
+      "instructionsPath": ".github/instructions", // Optional: path-specific instructions
+      "skillsPath": ".agents/skills" // Optional: skills directory
     }
   }
 }
@@ -210,10 +213,9 @@ Installs GitHub CLI and GitHub Copilot VS Code extensions. The `gh-copilot` CLI 
 
 ### Options
 
-- `rulefilePath` (optional): Path to the central rules file, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/AGENTS.md`) to enable rules symlinking.
-- `skillsPath` (optional): Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `docs/agents/skills`) to enable skills mapping.
-
-Copilot's path-scoped instruction files use GitHub's native `.github/instructions/*.instructions.md` format and location. Add those files there directly; no shared-directory mapping is provided.
+- `instructionFilePath` (optional): Path to the central instruction file, relative to the workspace root. When present, the feature links it to `.github/copilot-instructions.md` if that destination is unused.
+- `instructionsPath` (optional): Path to the path-specific instructions directory, relative to the workspace root. When present, the feature links it to `.github/instructions` if that destination is unused. The directory should contain GitHub compatible `*.instructions.md` files.
+- `skillsPath` (optional): Path to the modular skills directory, relative to the workspace root. Default is `""` (disabled). Set to a path (e.g., `.agents/skills`) to enable skills mapping.
 
 > [!NOTE]
 > All path options are strictly **opt-in** and default to empty (`""`). When omitted or left empty, no symlinks or files are created. When configured, symlinks are only created if the target file or directory already exists in the workspace—baseline files are never auto-generated.
@@ -222,7 +224,7 @@ Copilot's path-scoped instruction files use GitHub's native `.github/instruction
 
 ## OpenAI Codex
 
-Installs the OpenAI Codex CLI and VS Code extension. The host's `${localEnv:HOME}/.codex` directory is bind-mounted to `/root/.codex` so CLI and extension settings, authentication, and local state are available in the container and persist across rebuilds. Optional path settings can link a central `AGENTS.md` and skills directory into the locations Codex discovers.
+Installs the OpenAI Codex CLI and VS Code extension. The host's `${localEnv:HOME}/.codex` directory is bind-mounted to `/root/.codex` so CLI and extension settings, authentication, and local state are available in the container and persist across rebuilds. Optional path settings can link a central `AGENTS.md`, project rules, and skills into the locations Codex discovers.
 
 ### Usage
 
@@ -230,8 +232,9 @@ Installs the OpenAI Codex CLI and VS Code extension. The host's `${localEnv:HOME
 {
   "features": {
     "https://github.com/armckinney/containers/releases/latest/download/devcontainer-feature-codex.tgz": {
-      "rulefilePath": "docs/agents/AGENTS.md", // Optional: central AGENTS.md
-      "skillsPath": "docs/agents/skills" // Optional: skills directory
+      "instructionFilePath": ".agents/AGENTS.md", // Optional: central AGENTS.md
+      "rulesPath": ".agents/rules", // Optional: Codex rules directory
+      "skillsPath": ".agents/skills" // Optional: skills directory
     }
   }
 }
@@ -239,7 +242,8 @@ Installs the OpenAI Codex CLI and VS Code extension. The host's `${localEnv:HOME
 
 ### Options
 
-- `rulefilePath` (optional): Path to the central `AGENTS.md`, relative to the workspace root. When present and the workspace root has no `AGENTS.md`, the feature links it there. Existing files or links are silently preserved.
+- `instructionFilePath` (optional): Path to the central `AGENTS.md`, relative to the workspace root. When present and the workspace root has no `AGENTS.md`, the feature links it there. Existing files or links are silently preserved.
+- `rulesPath` (optional): Path to the Codex rules directory, relative to the workspace root. When present, the feature links it to `.codex/rules` if that destination is unused.
 - `skillsPath` (optional): Path to the skills directory, relative to the workspace root. When present and `.agents/skills` is unused, the feature links it there. Existing directories or links are silently preserved. Codex discovers project skills in `.agents/skills`.
 
 There is no separate context directory option because Codex does not automatically load a context directory. Reference context files from `AGENTS.md` when needed. These path options default to empty and are disabled unless configured.
