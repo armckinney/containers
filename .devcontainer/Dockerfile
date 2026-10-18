@@ -12,7 +12,7 @@ RUN mkdir /tmp/container \
     # signing key locations
     && mkdir -p /etc/apt/keyrings \
     # supporting installs
-    && apt update && apt install -y \
+    && apt-get update && apt-get install -y \
         apt-transport-https \
         ca-certificates \
         curl \
@@ -23,13 +23,13 @@ RUN mkdir /tmp/container \
         software-properties-common \
         wget \
     # primary installs
-    && apt update && apt install -y \
+    && apt-get update && apt-get install -y \
         git \
     # install devcontainer cli
     && npm install -g @devcontainers/cli \
     # cleanup
-    && apt autoremove -y \
-    && apt clean -y \
+    && apt-get autoremove -y \
+    && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/container
 
@@ -39,5 +39,5 @@ RUN mkdir -p /root/.copilot /root/.gemini/ /root/.databricks && touch /root/.dat
 
 WORKDIR ${WORKSPACE}
 
-# switch back to dialog for any ad-hoc use of apt
+# switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog

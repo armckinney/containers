@@ -8,14 +8,20 @@ echo "Installing OpenAI Codex CLI..."
 apt-get update
 apt-get install -y --no-install-recommends ca-certificates curl
 
-# Install to a system-wide location so Codex is available to all container users.
+# The installer stores packages under CODEX_HOME and links the visible command
+# to them. Keep both outside /root and the host-mounted /root/.codex directory.
+# Scope CODEX_HOME to installation so runtime config remains per-user.
+INSTALL_DIR="/usr/local/share/codex"
+mkdir -p "${INSTALL_DIR}"
 curl -fsSL https://chatgpt.com/codex/install.sh \
-  | CODEX_INSTALL_DIR=/usr/local/bin CODEX_NON_INTERACTIVE=1 sh
+  | CODEX_HOME="${INSTALL_DIR}" CODEX_INSTALL_DIR=/usr/local/bin CODEX_NON_INTERACTIVE=1 sh
 
-if command -v codex >/dev/null 2>&1; then
-  echo "✓ OpenAI Codex CLI is available via 'codex' ($(codex --version 2>/dev/null || true))"
+chmod -R a+rX "${INSTALL_DIR}"
+
+if CODEX_VERSION="$(/usr/local/bin/codex --version)"; then
+  echo "✓ OpenAI Codex CLI is available via 'codex' (${CODEX_VERSION})"
 else
-  echo "ERROR: OpenAI Codex CLI install completed but 'codex' is not on PATH"
+  echo "ERROR: OpenAI Codex CLI install completed but /usr/local/bin/codex cannot run"
   exit 1
 fi
 
@@ -23,7 +29,6 @@ fi
 INSTRUCTIONFILEPATH="${INSTRUCTIONFILEPATH:-}"
 RULESPATH="${RULESPATH:-}"
 SKILLSPATH="${SKILLSPATH:-}"
-INSTALL_DIR="/usr/local/share/codex"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 mkdir -p "${INSTALL_DIR}"

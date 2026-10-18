@@ -286,7 +286,7 @@ There is no separate context directory option because Codex does not automatical
 
 ### Features
 
-- Codex CLI installed system-wide as `codex`
+- Codex CLI installed in `/usr/local/share/codex` and linked from `/usr/local/bin/codex`, available to root and non-root users even when `/root/.codex` is mounted from the host
 - OpenAI Codex VS Code extension (`OpenAI.chatgpt`)
 - Host Codex home bind mount (`${localEnv:HOME}/.codex` to `/root/.codex`) for shared settings, authentication, and state
 - Optional symlink setup for central `AGENTS.md` and skills, silently skipping existing destinations to avoid conflicts with other tools
