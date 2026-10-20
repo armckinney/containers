@@ -1,20 +1,18 @@
 ---
-id: adr-001-use-architecture-design-records
 title: Use Architecture Design Records
-category: architecture
+id: adr-001-use-architecture-design-records
 type: adr
-format: markdown
-owner_group: root
+format: ""
+category: architecture
 version: 1
 status: accepted
-immutable: true
-last_modified_by: Antigravity
-last_updated: 2026-07-06
+last_updated: 2026-10-20T03:58:31Z
+last_modified_by: ""
+tenant: root
 tags:
-  - architecture
-  - adr
-  - governance
-dependencies: []
+    - architecture
+    - adr
+    - governance
 ---
 
 # Architecture Decision Record: Use Architecture Design Records

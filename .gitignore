@@ -11,3 +11,4 @@
 
 # gyrus
 .gyrus/cache
+.gyrus-*

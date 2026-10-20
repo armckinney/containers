@@ -1,25 +1,34 @@
 ---
-id: spec-002-ai-developer-environments
 title: AI Developer Environments & Context Mapping Specification
-category: architecture
+id: spec-002-ai-developer-environments
 type: specification
 format: markdown
-owner_group: root
-version: 1
+category: architecture
+version: 7
 status: active
-last_modified_by: Antigravity
-last_updated: 2026-10-05
+last_updated: 2026-10-20T03:58:31Z
+last_modified_by: ""
+tenant: root
 tags:
-  - architecture
-  - ai
-  - context
-  - devcontainer
-  - antigravity
-  - copilot
-dependencies:
-  - adr-002-dev-container-features-for-ai-tooling
-  - adr-003-agent-context-mapping-via-dev-container-features
-  - adr-004-three-tiered-ai-context-classification
+    - architecture
+    - ai
+    - context
+    - devcontainer
+    - antigravity
+    - copilot
+links:
+    - concept: root/reference/adr-002-dev-container-features-for-ai-tooling
+      rel: depends_on
+    - concept: root/reference/adr-002-dev-container-features-for-ai-tooling
+      rel: implements
+    - concept: root/reference/adr-003-agent-context-mapping-via-dev-container-features
+      rel: depends_on
+    - concept: root/reference/adr-003-agent-context-mapping-via-dev-container-features
+      rel: implements
+    - concept: root/reference/adr-004-three-tiered-ai-context-classification
+      rel: depends_on
+    - concept: root/reference/adr-004-three-tiered-ai-context-classification
+      rel: implements
 ---
 
 # Specification: AI Developer Environments & Context Mapping

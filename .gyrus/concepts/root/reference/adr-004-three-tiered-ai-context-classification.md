@@ -1,23 +1,23 @@
 ---
-id: adr-004-three-tiered-ai-context-classification
 title: Three-Tiered AI Context Classification
-category: architecture
+id: adr-004-three-tiered-ai-context-classification
 type: adr
 format: markdown
-owner_group: root
-version: 1
+category: architecture
+version: 2
 status: accepted
-immutable: true
-last_modified_by: Antigravity
-last_updated: 2026-07-06
+last_updated: 2026-10-20T03:58:31Z
+last_modified_by: ""
+tenant: root
 tags:
-  - architecture
-  - adr
-  - ai
-  - context
-  - skills
-dependencies:
-  - adr-003-agent-context-mapping-via-dev-container-features
+    - architecture
+    - adr
+    - ai
+    - context
+    - skills
+links:
+    - concept: root/reference/adr-003-agent-context-mapping-via-dev-container-features
+      rel: depends_on
 ---
 
 # Architecture Decision Record: Three-Tiered AI Context Classification
