@@ -1,23 +1,23 @@
 ---
-id: adr-003-agent-context-mapping-via-dev-container-features
 title: Agent Context Mapping via Dev Container Features
-category: architecture
+id: adr-003-agent-context-mapping-via-dev-container-features
 type: adr
 format: markdown
-owner_group: root
-version: 1
+category: architecture
+version: 2
 status: accepted
-immutable: true
-last_modified_by: Antigravity
-last_updated: 2026-07-06
+last_updated: 2026-10-20T03:58:31Z
+last_modified_by: ""
+tenant: root
 tags:
-  - architecture
-  - adr
-  - ai
-  - context
-  - devcontainer
-dependencies:
-  - adr-002-dev-container-features-for-ai-tooling
+    - architecture
+    - adr
+    - ai
+    - context
+    - devcontainer
+links:
+    - concept: root/reference/adr-002-dev-container-features-for-ai-tooling
+      rel: depends_on
 ---
 
 # Architecture Decision Record: Agent Context Mapping via Dev Container Features

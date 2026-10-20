@@ -1,22 +1,22 @@
 ---
-id: adr-002-dev-container-features-for-ai-tooling
 title: Dev Container Features for AI Tooling
-category: architecture
+id: adr-002-dev-container-features-for-ai-tooling
 type: adr
 format: markdown
-owner_group: root
-version: 1
+category: architecture
+version: 2
 status: accepted
-immutable: true
-last_modified_by: Antigravity
-last_updated: 2026-07-06
+last_updated: 2026-10-20T03:58:31Z
+last_modified_by: ""
+tenant: root
 tags:
-  - architecture
-  - adr
-  - devcontainer
-  - ai
-dependencies:
-  - adr-001-use-architecture-design-records
+    - architecture
+    - adr
+    - devcontainer
+    - ai
+links:
+    - concept: root/reference/adr-001-use-architecture-design-records
+      rel: depends_on
 ---
 
 # Architecture Decision Record: Dev Container Features for AI Tooling

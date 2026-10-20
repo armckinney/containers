@@ -1,22 +1,23 @@
 ---
-id: spec-001-architecture
 title: Layered Container Vault & Dev Container Features Architecture
-category: architecture
+id: spec-001-architecture
 type: specification
 format: markdown
-owner_group: root
-version: 1
+category: architecture
+version: 2
 status: active
-last_modified_by: Antigravity
-last_updated: 2026-10-05
+last_updated: 2026-10-20T03:58:31Z
+last_modified_by: ""
+tenant: root
 tags:
-  - architecture
-  - containers
-  - docker
-  - devcontainer
-  - layers
-dependencies:
-  - spec-002-ai-developer-environments
+    - architecture
+    - containers
+    - docker
+    - devcontainer
+    - layers
+links:
+    - concept: root/reference/spec-002-ai-developer-environments
+      rel: depends_on
 ---
 
 # Specification: Layered Container Vault & Dev Container Features Architecture

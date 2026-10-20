@@ -1,23 +1,25 @@
 ---
-id: guide-001-onboarding
 title: Developer Onboarding & Image Authoring Runbook
-category: technical
+id: guide-001-onboarding
 type: guide
 format: markdown
-owner_group: root
-version: 1
+category: technical
+version: 3
 status: active
-last_modified_by: Antigravity
-last_updated: 2026-10-05
+last_updated: 2026-10-20T03:58:31Z
+last_modified_by: ""
+tenant: root
 tags:
-  - guide
-  - onboarding
-  - runbook
-  - docker
-  - features
-dependencies:
-  - standards-001-guidelines
-  - tech-ref-001-api-cli
+    - guide
+    - onboarding
+    - runbook
+    - docker
+    - features
+links:
+    - concept: root/reference/standards-001-guidelines
+      rel: depends_on
+    - concept: root/reference/tech-ref-001-api-cli
+      rel: depends_on
 ---
 
 # Guide: Developer Onboarding & Image Authoring Runbook

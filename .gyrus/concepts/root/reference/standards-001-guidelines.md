@@ -1,21 +1,20 @@
 ---
-id: standards-001-guidelines
 title: Container Development & Quality Standards
-category: technical
+id: standards-001-guidelines
 type: standards
-format: markdown
-owner_group: root
+format: ""
+category: technical
 version: 1
 status: active
-last_modified_by: Antigravity
-last_updated: 2026-10-05
+last_updated: 2026-10-20T03:58:31Z
+last_modified_by: ""
+tenant: root
 tags:
-  - standards
-  - docker
-  - devcontainer
-  - quality
-  - testing
-dependencies: []
+    - standards
+    - docker
+    - devcontainer
+    - quality
+    - testing
 ---
 
 # Process & Engineering Standard: Container Development & Quality Standards

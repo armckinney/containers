@@ -1,21 +1,20 @@
 ---
-id: tech-ref-001-api-cli
 title: Automation CLI & Dev Container Features Reference
-category: technical
+id: tech-ref-001-api-cli
 type: technical-reference
-format: markdown
-owner_group: root
+format: ""
+category: technical
 version: 1
 status: active
-last_modified_by: Antigravity
-last_updated: 2026-10-05
+last_updated: 2026-10-20T03:58:31Z
+last_modified_by: ""
+tenant: root
 tags:
-  - technical-reference
-  - cli
-  - makefile
-  - features
-  - options
-dependencies: []
+    - technical-reference
+    - cli
+    - makefile
+    - features
+    - options
 ---
 
 # Technical Reference: Automation CLI & Dev Container Features Reference
